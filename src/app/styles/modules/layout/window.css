@@ -16,15 +16,6 @@
   max-width: 32rem;
 }
 
-.window-hero__mark {
-  width: 48px;
-  height: 48px;
-  margin-bottom: 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background-color: var(--nord2);
-}
-
 .window-hero__title {
   margin: 0;
   font-size: 2rem;

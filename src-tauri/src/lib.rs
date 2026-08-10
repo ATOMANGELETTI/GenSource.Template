@@ -8,6 +8,7 @@ mod mdoels;
 #[path = "state/state.rs"]
 mod state;
 
+use tauri::image::Image;
 use tauri::menu::{Menu, MenuItem};
 use tauri::tray::TrayIconBuilder;
 use tauri::{Manager, RunEvent};
@@ -98,32 +99,29 @@ pub fn run() {
                 let _ = app.deep_link().register_all();
             }
 
-            // Best-effort system tray: skip entirely if no window icon was
-            // configured (e.g. `icons/` placeholders not yet generated)
-            // rather than failing the build/startup.
-            if let Some(icon) = app.default_window_icon().cloned() {
-                let show_item = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
-                let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-                let tray_menu = Menu::with_items(app, &[&show_item, &quit_item])?;
+            // System tray uses the bundled PNG (RGBA) so the notification-area
+            // glyph stays sharp with transparency on Windows.
+            let tray_icon = Image::from_bytes(include_bytes!("../icons/32x32.png"))?;
+            let show_item = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
+            let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
+            let tray_menu = Menu::with_items(app, &[&show_item, &quit_item])?;
 
-                TrayIconBuilder::new()
-                    .icon(icon)
-                    .menu(&tray_menu)
-                    .show_menu_on_left_click(true)
-                    .on_menu_event(|app, event| match event.id.as_ref() {
-                        "quit" => app.exit(0),
-                        "show" => {
-                            if let Some(window) = app.get_webview_window("main") {
-                                let _ = window.show();
-                                let _ = window.set_focus();
-                            }
+            TrayIconBuilder::new()
+                .icon(tray_icon)
+                .tooltip("GenSource Template")
+                .menu(&tray_menu)
+                .show_menu_on_left_click(true)
+                .on_menu_event(|app, event| match event.id.as_ref() {
+                    "quit" => app.exit(0),
+                    "show" => {
+                        if let Some(window) = app.get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
                         }
-                        _ => {}
-                    })
-                    .build(app)?;
-            } else {
-                log::warn!("no default window icon configured; skipping system tray");
-            }
+                    }
+                    _ => {}
+                })
+                .build(app)?;
 
             Ok(())
         });
