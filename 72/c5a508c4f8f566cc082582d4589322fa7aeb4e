@@ -1,0 +1,123 @@
+src-tauri/Cargo.toml
+  s_1b7fd4eaa3021d::t_c9d8d623c4a74c 17
+src-tauri/src/lib.rs
+  s_1b7fd4eaa3021d::t_26a7afffc8e976 11
+  s_1b7fd4eaa3021d::t_e0ec12c81b9916 102-103,105-107,109-119,121-124
+  s_1b7fd4eaa3021d::t_f021299d331c47 104
+src-tauri/icons/128x128.png
+  s_1b7fd4eaa3021d::t_43a1fb412fa266 2-3
+src-tauri/icons/128x128@2x.png
+  s_1b7fd4eaa3021d::t_f8d70600a7e62e 2-3
+src-tauri/icons/32x32.png
+  s_1b7fd4eaa3021d::t_2f66419990f1b2 2-3
+src-tauri/icons/64x64.png
+  s_1b7fd4eaa3021d::t_05627d7fb9005a 2-3
+src-tauri/icons/Square107x107Logo.png
+  s_1b7fd4eaa3021d::t_8908e95868cf65 2-3
+src-tauri/icons/Square142x142Logo.png
+  s_1b7fd4eaa3021d::t_a46ca783c041a4 2-3
+src-tauri/icons/Square150x150Logo.png
+  s_1b7fd4eaa3021d::t_9e419ee0caa337 2-3
+src-tauri/icons/Square284x284Logo.png
+  s_1b7fd4eaa3021d::t_fc72ee3fdfd514 2-3
+src-tauri/icons/Square30x30Logo.png
+  s_1b7fd4eaa3021d::t_8719e584011264 2-3
+src-tauri/icons/Square310x310Logo.png
+  s_1b7fd4eaa3021d::t_d18eda7dae7a43 2-3
+src-tauri/icons/Square44x44Logo.png
+  s_1b7fd4eaa3021d::t_c4083ec7871ab5 2-3
+src-tauri/icons/Square71x71Logo.png
+  s_1b7fd4eaa3021d::t_442908bfc0815c 2-3
+src-tauri/icons/Square89x89Logo.png
+  s_1b7fd4eaa3021d::t_8e5632ae470196 2-3
+src-tauri/icons/StoreLogo.png
+  s_1b7fd4eaa3021d::t_d2d481c97cd1cf 2-3
+src-tauri/icons/android/mipmap-hdpi/ic_launcher.png
+  s_1b7fd4eaa3021d::t_de17868afd0739 2-3
+src-tauri/icons/android/mipmap-hdpi/ic_launcher_foreground.png
+  s_1b7fd4eaa3021d::t_488851f43f240e 2-3
+src-tauri/icons/android/mipmap-hdpi/ic_launcher_round.png
+  s_1b7fd4eaa3021d::t_137e3bcd9a5e58 2-3
+src-tauri/icons/android/mipmap-mdpi/ic_launcher.png
+  s_1b7fd4eaa3021d::t_1741e4f7255a04 2-3
+src-tauri/icons/android/mipmap-mdpi/ic_launcher_foreground.png
+  s_1b7fd4eaa3021d::t_42c0f36ca508ee 2-3
+src-tauri/icons/android/mipmap-mdpi/ic_launcher_round.png
+  s_1b7fd4eaa3021d::t_6974c03ae96588 2-3
+src-tauri/icons/android/mipmap-xhdpi/ic_launcher.png
+  s_1b7fd4eaa3021d::t_bab7508bf6b4ee 2-3
+src-tauri/icons/android/mipmap-xhdpi/ic_launcher_foreground.png
+  s_1b7fd4eaa3021d::t_006cf4262436a6 2-3
+src-tauri/icons/android/mipmap-xhdpi/ic_launcher_round.png
+  s_1b7fd4eaa3021d::t_26f67d87de7417 2-3
+src-tauri/icons/android/mipmap-xxhdpi/ic_launcher.png
+  s_1b7fd4eaa3021d::t_0713d277f7b7ea 2-3
+src-tauri/icons/android/mipmap-xxhdpi/ic_launcher_foreground.png
+  s_1b7fd4eaa3021d::t_94a8c00d330138 2-3
+src-tauri/icons/android/mipmap-xxhdpi/ic_launcher_round.png
+  s_1b7fd4eaa3021d::t_610225f4d81d93 2-3
+src-tauri/icons/android/mipmap-xxxhdpi/ic_launcher.png
+  s_1b7fd4eaa3021d::t_783ad1b32d111a 2-3
+src-tauri/icons/android/mipmap-xxxhdpi/ic_launcher_foreground.png
+  s_1b7fd4eaa3021d::t_930918bba77f49 2-3
+src-tauri/icons/android/mipmap-xxxhdpi/ic_launcher_round.png
+  s_1b7fd4eaa3021d::t_a0a864db316032 2-3
+src-tauri/icons/icon.icns
+  s_1b7fd4eaa3021d::t_a8f3fe73190d95 2-3
+src-tauri/icons/icon.ico
+  s_1b7fd4eaa3021d::t_d2df68f607c619 2-3
+src-tauri/icons/icon.png
+  s_1b7fd4eaa3021d::t_dd958bbbe26069 2-3
+src-tauri/icons/ios/AppIcon-20x20@1x.png
+  s_1b7fd4eaa3021d::t_55be6a05327cf2 2-3
+src-tauri/icons/ios/AppIcon-20x20@2x-1.png
+  s_1b7fd4eaa3021d::t_b9267a4f8c844a 2-3
+src-tauri/icons/ios/AppIcon-20x20@2x.png
+  s_1b7fd4eaa3021d::t_8e59d05f7e1690 2-3
+src-tauri/icons/ios/AppIcon-20x20@3x.png
+  s_1b7fd4eaa3021d::t_4a4cc7f7f6c605 2-3
+src-tauri/icons/ios/AppIcon-29x29@1x.png
+  s_1b7fd4eaa3021d::t_2e435b32427e8e 2-3
+src-tauri/icons/ios/AppIcon-29x29@2x-1.png
+  s_1b7fd4eaa3021d::t_bcd2556d269273 2-3
+src-tauri/icons/ios/AppIcon-29x29@2x.png
+  s_1b7fd4eaa3021d::t_fb9cab9538c756 2-3
+src-tauri/icons/ios/AppIcon-29x29@3x.png
+  s_1b7fd4eaa3021d::t_6dd5e8d8ba7fb6 2-3
+src-tauri/icons/ios/AppIcon-40x40@1x.png
+  s_1b7fd4eaa3021d::t_b95e945c426830 2-3
+src-tauri/icons/ios/AppIcon-40x40@2x-1.png
+  s_1b7fd4eaa3021d::t_e4a6d2f55a810c 2-3
+src-tauri/icons/ios/AppIcon-40x40@2x.png
+  s_1b7fd4eaa3021d::t_f666e5142eb3c5 2-3
+src-tauri/icons/ios/AppIcon-40x40@3x.png
+  s_1b7fd4eaa3021d::t_63c598d3b2bb93 2-3
+src-tauri/icons/ios/AppIcon-512@2x.png
+  s_1b7fd4eaa3021d::t_7a7e90fe76d8c6 2-3
+src-tauri/icons/ios/AppIcon-60x60@2x.png
+  s_1b7fd4eaa3021d::t_aad68f719e3763 2-3
+src-tauri/icons/ios/AppIcon-60x60@3x.png
+  s_1b7fd4eaa3021d::t_2b690a5d550e1a 2-3
+src-tauri/icons/ios/AppIcon-76x76@1x.png
+  s_1b7fd4eaa3021d::t_2ad6c8a371a3c8 2-3
+src-tauri/icons/ios/AppIcon-76x76@2x.png
+  s_1b7fd4eaa3021d::t_6e0da19a27cabf 2-3
+src-tauri/icons/ios/AppIcon-83.5x83.5@2x.png
+  s_1b7fd4eaa3021d::t_069882ff145989 2-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "72c5a508c4f8f566cc082582d4589322fa7aeb4e",
+  "prompts": {},
+  "sessions": {
+    "s_1b7fd4eaa3021d": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5fe42ec7-e028-4078-a006-3c6dc01987ce",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
