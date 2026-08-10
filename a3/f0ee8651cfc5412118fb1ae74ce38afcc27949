@@ -1,0 +1,21 @@
+src/configs/vite.config.ts
+  s_bdc806aa287baf::t_c4c45e4093d509 31-33
+.cursor/hooks/state/continual-learning.json
+  s_bdc806aa287baf::t_eecc21ab654976 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "a3f0ee8651cfc5412118fb1ae74ce38afcc27949",
+  "prompts": {},
+  "sessions": {
+    "s_bdc806aa287baf": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e71f574d-c8ee-42e7-babd-d5423c4543b8",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
