@@ -1,0 +1,14 @@
+﻿# Dependencies & build outputs
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/
+
+# Secret-bearing env files (keep .env.example indexed)
+.env
+.env.local
+.env.dev
+.env.prod
+
+# Large local tooling binaries
+other/utilities/
