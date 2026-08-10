@@ -17,15 +17,16 @@ tailored to this repo — not generic boilerplate.
    ≤64 chars), what it does, and when it should trigger. If ambiguous, ask
    before scaffolding.
 2. **Check for overlap.** Look in `.cursor/skills/` for an existing skill
-   covering this; look in `.cursor/rules/` (`.mdc`) and `.cursor/commands/`
-   (`.md`) for whether this is really a different primitive (see
-   [decision guide](#which-cursor-primitive) below).
+   covering this; look in `.cursor/rules/` (`.mdc`), `.cursor/commands/`
+   (`.md`), and `.cursor/agents/` (`.md`) for whether this is really a
+   different primitive (see [decision guide](#which-cursor-primitive) below).
 3. **Scan native `.cursor/` surfaces for material to wire in.** Before
    writing from scratch, check:
    - `rules/` — constraints the skill must obey
    - `commands/` — a slash command that should invoke this skill
+   - `agents/` — a subagent that should run part of the workflow
    - `hooks/` / `hooks.json` — automation that might interact with the skill
-   - `mcp.json` — MCP servers the skill should call
+   - `mcp.json` / `cli.json` — MCP or CLI config the skill should respect
    - sibling skills under `skills/` — overlap or shared references
 
    Skip anything that adds no value.
@@ -98,12 +99,14 @@ flowchart TD
     Q1 -->|Yes| Skill["skills/&lt;name&gt;/SKILL.md"]
     Q1 -->|No| Q2{"Hard constraint or\nalways/file-scoped guidance?"}
     Q2 -->|Yes| Rule["rules/&lt;name&gt;.mdc"]
-    Q2 -->|No| Cmd["commands/&lt;name&gt;.md"]
+    Q2 -->|No| Q3{"Delegated specialist\nwith own system prompt?"}
+    Q3 -->|Yes| Agent["agents/&lt;name&gt;.md"]
+    Q3 -->|No| Cmd["commands/&lt;name&gt;.md"]
 ```
 
 Do **not** create non-native folders (`personas/`, `memory/`, `instructions/`,
-`agents/` as custom trees, `.rules.md`, `.command.md`, `.agent.md`). Use
-Cursor-native rules, skills, and commands only.
+top-level `scripts/`, or `.rules.md` / `.command.md` / `.agent.md` naming).
+Use Cursor-native rules, skills, commands, and `agents/*.md` only.
 
 ## After creation
 

@@ -1,21 +1,21 @@
 # AGENTS.md — GenSource.Template
 
 Root instructions for any AI coding agent working in this repository.
-Cursor loads this file (and project rules/skills/commands) at session start.
+Cursor loads this file (and project rules/skills/commands/agents) at session start.
 
 ## What this project is
 
 `GenSource.Template` is a **Tauri v2 desktop app template**: React +
-TypeScript frontend, Rust backend, packaged for Windows via NSIS. As a
-template, every tracked app file is currently an empty placeholder — the
-value of this repo right now is its **structure and conventions**, not its
-contents. When you fill in a placeholder file, keep the layout described
-below.
+TypeScript frontend, Rust backend, packaged for Windows via NSIS. It ships a
+runnable Nord Polar Night / macOS-style shell (custom titlebar + content) and
+a kitchen-sink of official desktop plugins for suite reuse. Keep the layout
+below when extending it.
 
 ## Tech stack & layout
 
-- **Frontend** — `src/app/` (`App.tsx`, `main.tsx`, `pages/`, `styles/`,
-  `types/`), built with Vite + React + TypeScript.
+- **Frontend** — `src/app/` (`App.tsx`, `main.tsx`, `pages/`, `styles/modules/`,
+  `types/`), Vite + React 19 + TypeScript + Tailwind v4. UI is flat Nord Polar
+  Night with a macOS-like traffic-light titlebar.
 - **Config centralization** — all tooling config lives under `src/configs/`
   instead of the repo root: `vite.config.ts`, `vitest.config.ts`,
   `playwright.config.ts`, `eslint.config.js`, `knip.ts`, `middleware.ts`, and
@@ -28,27 +28,31 @@ below.
   live in `src-tauri/capabilities/{default,desktop}.json`.
 - **Packaging** — Windows-first, via `src-tauri/nsis/installer.nsh` and
   `other/utilities/7zr.exe`.
-- **Tooling** — npm (`.node-version`, `.npmrc`), `commitlint`, `release-it`,
-  `prettier`, `knip` (dead-code detection).
+- **Tooling** — npm (`.node-version`, `.npmrc`), commitlint, release-it,
+  prettier, knip, Vitest, Playwright.
 - **Environments** — `.env`, `.env.dev`, `.env.local`, `.env.prod`,
   `.env.example` (names only in `.env.example`; never real secrets).
+- **TypeScript** — pin the newest 5.x that `typescript-eslint` supports
+  (TypeScript 7 may be latest npm but is currently peer-incompatible).
 
 Full path details for skills live in
 [`skills/create-skill-pro/references/project-context.md`](skills/create-skill-pro/references/project-context.md).
 
 ## The `.cursor/` folder (Cursor-native only)
 
-This project uses **only** Cursor-native agent surfaces under `.cursor/`.
-Do not invent extra top-level agent folders (no personas, memory, workflows,
-custom `.rules.md` / `.command.md` / `.agent.md` trees).
+Use **only** Cursor-native surfaces under `.cursor/`. Do not invent custom
+trees (`personas/`, `memory/`, `workflows/`, top-level `scripts/`, or
+`.rules.md` / `.command.md` / `.agent.md` naming).
 
 | Path | Purpose |
 |---|---|
 | [`rules/`](rules/) | Project rules as `*.mdc` (`alwaysApply` / `globs`) |
 | [`skills/`](skills/) | On-demand Agent Skills (`<name>/SKILL.md`) |
 | [`commands/`](commands/) | Slash commands as `*.md` |
+| [`agents/`](agents/) | Custom subagents as `*.md` (`name` + `description` frontmatter) |
 | [`hooks.json`](hooks.json) + [`hooks/`](hooks/) | Project hooks (Node `.mjs`) |
 | [`mcp.json`](mcp.json) | Project MCP server config |
+| [`cli.json`](cli.json) | Cursor CLI project overrides |
 
 Also at the repo root: [`.cursorignore`](../.cursorignore) (indexing ignore).
 
@@ -60,8 +64,17 @@ flowchart TD
   Q1 -->|Yes| Skill["skills/&lt;name&gt;/SKILL.md"]
   Q1 -->|No| Q2{"Hard constraint or\nalways/file-scoped guidance?"}
   Q2 -->|Yes| Rule["rules/&lt;name&gt;.mdc"]
-  Q2 -->|No| Cmd["commands/&lt;name&gt;.md\n(user slash shortcut)"]
+  Q2 -->|No| Q3{"Delegated specialist\nwith own system prompt?"}
+  Q3 -->|Yes| Agent["agents/&lt;name&gt;.md"]
+  Q3 -->|No| Cmd["commands/&lt;name&gt;.md\n(user slash shortcut)"]
 ```
+
+### Project subagents
+
+- [`agents/rust-tauri-reviewer.md`](agents/rust-tauri-reviewer.md)
+- [`agents/frontend-reviewer.md`](agents/frontend-reviewer.md)
+- [`agents/template-debugger.md`](agents/template-debugger.md)
+- [`agents/placeholder-implementer.md`](agents/placeholder-implementer.md)
 
 ### Creating a new skill
 
@@ -75,3 +88,8 @@ this repo's real layout.
 not forced onto unauthenticated servers. To add Context7 (library docs) or
 other servers, edit `mcp.json` using Cursor's current project MCP schema
 (Settings → MCP), then commit the working config if the team should share it.
+
+### CLI
+
+[`cli.json`](cli.json) holds optional Cursor CLI project overrides merged on
+top of `~/.cursor/cli-config.json` for sessions in this repo.

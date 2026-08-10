@@ -22,9 +22,9 @@ Self-review a drafted skill against this before finalizing. Run
 
 ## Project fit
 
-- [ ] Checked native `.cursor/` surfaces (`rules/`, `commands/`, sibling
-      `skills/`, `hooks.json` / `hooks/`, `mcp.json`) for material worth
-      referencing from the new skill.
+- [ ] Checked native `.cursor/` surfaces (`rules/`, `commands/`, `agents/`,
+      sibling `skills/`, `hooks.json` / `hooks/`, `mcp.json`, `cli.json`) for
+      material worth referencing from the new skill.
 - [ ] File/path references point at real paths in this repo (cross-checked
       against `../references/project-context.md`), not generic advice.
 - [ ] No fabricated project facts — if something is genuinely unknown or the

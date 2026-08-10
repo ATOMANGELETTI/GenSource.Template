@@ -1,3 +1,5 @@
+Follow the `review-rust` checklist and prefer the `rust-tauri-reviewer` subagent at `.cursor/agents/rust-tauri-reviewer.md`.
+
 Review Rust/Tauri changes under `src-tauri/` for this template.
 
 Check for:

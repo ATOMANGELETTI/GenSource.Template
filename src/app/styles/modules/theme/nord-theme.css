@@ -1,0 +1,64 @@
+:root {
+  /* Nord Polar Night palette */
+  --nord0: #2e3440;
+  --nord1: #3b4252;
+  --nord2: #434c5e;
+  --nord3: #4c566a;
+  --nord4: #d8dee9;
+  --nord5: #e5e9f0;
+  --nord6: #eceff4;
+  --nord7: #8fbcbb;
+  --nord8: #88c0d0;
+  --nord9: #81a1c1;
+  --nord10: #5e81ac;
+  --nord11: #bf616a;
+  --nord12: #d08770;
+  --nord13: #ebcb8b;
+  --nord14: #a3be8c;
+  --nord15: #b48ead;
+
+  /* Semantic tokens */
+  --bg: var(--nord0);
+  --surface: var(--nord1);
+  --border: var(--nord3);
+  --text: var(--nord6);
+  --text-muted: var(--nord4);
+  --accent: var(--nord8);
+
+  /* macOS traffic lights */
+  --traffic-close: #ff5f57;
+  --traffic-minimize: #febc2e;
+  --traffic-maximize: #28c840;
+
+  color-scheme: dark;
+}
+
+@theme {
+  --color-nord0: var(--nord0);
+  --color-nord1: var(--nord1);
+  --color-nord2: var(--nord2);
+  --color-nord3: var(--nord3);
+  --color-nord4: var(--nord4);
+  --color-nord5: var(--nord5);
+  --color-nord6: var(--nord6);
+  --color-nord7: var(--nord7);
+  --color-nord8: var(--nord8);
+  --color-nord9: var(--nord9);
+  --color-nord10: var(--nord10);
+  --color-nord11: var(--nord11);
+  --color-nord12: var(--nord12);
+  --color-nord13: var(--nord13);
+  --color-nord14: var(--nord14);
+  --color-nord15: var(--nord15);
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-accent: var(--accent);
+
+  --font-sans:
+    "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui,
+    sans-serif;
+}

@@ -1,3 +1,5 @@
+Follow the `review-frontend` checklist and prefer the `frontend-reviewer` subagent at `.cursor/agents/frontend-reviewer.md`.
+
 Review React/TypeScript frontend changes under `src/app/` for this template.
 
 Check for:

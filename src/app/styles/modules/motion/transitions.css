@@ -1,0 +1,38 @@
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in-up {
+    animation: fade-in-up 0.45s ease-out both;
+  }
+
+  .traffic-light {
+    transition:
+      transform 120ms ease,
+      filter 120ms ease;
+  }
+
+  .traffic-light__glyph {
+    transition: opacity 120ms ease;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-in-up {
+    animation: none;
+  }
+
+  .traffic-light,
+  .traffic-light__glyph {
+    transition: none;
+  }
+}

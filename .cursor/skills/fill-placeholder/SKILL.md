@@ -28,7 +28,7 @@ metadata:
 6. When unsure of intent from an empty file alone, ask before expanding
    scope beyond that file.
 
-## When to use
+## Related
 
-- User points at an empty tracked file and wants real content
-- Scaffolding work that must respect the template layout
+- Subagent: `.cursor/agents/placeholder-implementer.md`
+- Rule: `.cursor/rules/project-conventions.mdc`

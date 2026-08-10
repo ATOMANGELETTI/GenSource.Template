@@ -1,87 +1,76 @@
 # Project context — GenSource.Template
 
-Keep this file updated as the template's placeholder files gain real
-content. It exists so skills created by `create-skill-pro` reference this
-repo's actual paths and conventions instead of generic advice.
+Keep this file updated as the template gains real content. Skills created by
+`create-skill-pro` should reference these paths and conventions.
 
 ## What this repo is
 
 A **Tauri v2** desktop app template: React + TypeScript frontend, Rust
-backend, packaged for Windows via NSIS. Every tracked app file is currently
-an empty (0-byte) placeholder — this is a scaffold meant to be
-cloned/generated from, not a working app yet. Treat file/folder *names* as
-authoritative intent even where content is empty.
+backend, packaged for Windows via NSIS. It is a runnable shell with a
+macOS-inspired custom titlebar and Nord Polar Night flat UI, intended as the
+shared base for a suite of GenSource apps.
 
 ## Frontend — `src/app/`
 
 - `App.tsx`, `main.tsx` — app entry points.
-- `pages/Window.tsx` — page components live under `pages/`.
-- `styles/{app,index}.css` — global styles.
-- `types/{index,tauri}.ts` — shared TS types, including Tauri IPC types.
-- `vite-env.d.ts` — Vite ambient types.
+- `components/layout/Titlebar.tsx`, `components/ui/TrafficLights.tsx` — chrome.
+- `pages/window/window.tsx` — main content (“GenSource Template”).
+- `pages/content-menus/` — titlebar / content / tray context menus.
+- `styles/index.css` — style entry (Tailwind + module imports only).
+- `styles/modules/theme/nord-theme.css` — Nord tokens + `@theme`.
+- `styles/modules/layout/{shell,titlebar,window}.css` — chrome layout.
+- `styles/modules/motion/transitions.css` — intentional motion.
+- `styles/modules/context-menus/` — menu styles.
+- `types/{index,tauri}.ts` — shared TS / IPC types.
+- `lib/window.ts` — thin window API wrappers.
 
-A skill that adds a new page should create it under `src/app/pages/` and
-follow the existing `Window.tsx` naming style (PascalCase component files).
+New pages go under `src/app/pages/`. New feature CSS goes under
+`styles/modules/<area>/` and is imported from `styles/index.css`.
 
 ## Config centralization — `src/configs/`
 
-Unlike most Vite/React templates, **all tooling config is centralized**
-under `src/configs/` rather than the repo root:
+All tooling config lives under `src/configs/` (not the repo root):
 
 - `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`
-- `eslint.config.js`, `knip.ts` (dead-code detection), `middleware.ts`
-- `tsconfig.base.json`, `tsconfig.app.json`, `tsconfig.build.json`,
-  `tsconfig.e2e.json`, `tsconfig.node.json`, `tsconfig.test.json`
+- `eslint.config.js`, `knip.ts`, `middleware.ts`
+- `tsconfig.{base,app,build,e2e,node,test}.json`
 
-The root `tsconfig.json` references these. A skill that changes build/test
-tooling should edit the file under `src/configs/`, not create a new config
-at the repo root.
+Root `tsconfig.json` references these. Do not recreate tooling configs at the
+repo root.
 
 ## Backend — `src-tauri/src/`
 
-- `lib.rs`, `main.rs` — crate entry points.
-- `commands/commands.rs` — `#[tauri::command]` handlers; new commands should
-  be added here and registered in the `invoke_handler` list.
+- `lib.rs`, `main.rs` — crate entry points; plugins registered in `lib.rs`.
+- `commands/commands.rs` — `#[tauri::command]` handlers (`greet`, `get_app_info`).
 - `state/state.rs` — shared Tauri state.
-- `mdoels/models.rs` — data models. **Note**: `mdoels` is a pre-existing
-  typo in this template's tracked path. Preserve it unless explicitly asked
-  to fix it — renaming changes `mod` paths across the crate.
-- `capabilities/{default,desktop}.json` — Tauri v2 permission grants. Any
-  new command needing elevated permissions must be added here.
-- `gen/schemas/desktop-schema.json` — generated permission schema.
-- `.cargo/config.toml`, `build.rs`, `cargo.toml`/`cargo.lock`,
-  `tauri.conf.json`, `tauri.windows.conf.json`.
+- `mdoels/models.rs` — data models. **Preserve** the `mdoels` path typo.
+- `capabilities/{default,desktop}.json` — permission grants.
+- Desktop plugins include: log, fs, dialog, store, opener, notification, os,
+  process, clipboard-manager, shell, http, deep-link, global-shortcut, updater
+  (placeholders), sql, window-state, single-instance, autostart, positioner,
+  persisted-scope, stronghold (lazy), upload, websocket, cli.
+- `localhost` plugin is omitted (conflicts with Vite/Tauri asset serving).
+
+## UI conventions
+
+- Nord Polar Night palette; flat surfaces only (no gradients/glow/glass).
+- Frameless window; traffic lights left; centered title; `data-tauri-drag-region`.
+- Typography: Plus Jakarta Sans.
 
 ## Packaging & tooling
 
-- Windows installer: `src-tauri/nsis/installer.nsh`,
-  `other/utilities/7zr.exe` (7-Zip), `other/configs/*.json`.
-- npm-based (`.node-version`, `.nodeswitcher`, `.npmrc`).
-- `commitlint` (`.commitlintrc`), `release-it` (`.release-it.json`),
-  `prettier` (`.prettierrc`/`.prettierignore`).
-- Multi-env: `.env`, `.env.dev`, `.env.local`, `.env.prod`, `.env.example`
-  — never put real secrets in `.env.example`.
+- Windows installer: `src-tauri/nsis/installer.nsh`, `other/utilities/7zr.exe`.
+- npm (`.node-version`, `.npmrc`), commitlint, release-it, prettier, knip.
+- Envs: `.env`, `.env.dev`, `.env.local`, `.env.prod`, `.env.example` (names only).
 
 ## Cursor-native agent config
 
-`.cursor/` holds **only** Cursor-native surfaces:
-
-- `AGENTS.md` — project agent entrypoint
-- `rules/*.mdc` — always-on / glob-scoped rules
-- `skills/<name>/SKILL.md` — on-demand skills
-- `commands/*.md` — slash commands
-- `hooks.json` + `hooks/*.mjs` — project hooks
-- `mcp.json` — project MCP servers
-
-Repo root also has `.cursorignore`. Do not add custom agent folder taxonomies
-under `.cursor/`.
+`.cursor/` holds only Cursor-native surfaces: `AGENTS.md`, `rules/`, `skills/`,
+`commands/`, `agents/`, `hooks.json` + `hooks/`, `mcp.json`, `cli.json`.
+Root also has `.cursorignore` and a pointer `AGENTS.md`.
 
 ## Conventions a new skill should follow
 
-- Use Node (`.mjs`) for any executable scripts, matching this repo's
-  existing npm toolchain — not Python/Bash, which aren't otherwise used
-  here and are less Windows/PowerShell-friendly.
-- Cross-skill automation goes in `.cursor/hooks/`, not a top-level
-  `.cursor/scripts/` folder.
-- Don't fabricate file contents for the placeholder files above; if a task
-  needs real logic, write it, but don't invent unrelated boilerplate.
+- Use Node `.mjs` for scripts; put automation in `.cursor/hooks/` when shared.
+- Fill placeholders in place; do not invent parallel trees or root tooling configs.
+- Do not put secrets in `.env.example`.

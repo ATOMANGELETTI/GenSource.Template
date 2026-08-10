@@ -1,0 +1,5 @@
+# Windows-first defaults. Keep minimal; override per-machine via a global
+# cargo config or CARGO_* env vars if you need machine-specific flags.
+
+[target.x86_64-pc-windows-msvc]
+rustflags = []
