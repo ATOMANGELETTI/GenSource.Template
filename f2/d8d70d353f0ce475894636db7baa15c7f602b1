@@ -1,0 +1,129 @@
+other/configs/settings.json
+  s_dd00ae57f6f6fc::t_d10da5612ae6e5 1-5
+src-tauri/Cargo.toml
+  s_a01b33719b9020::t_2957c90de96bab 1-15,17-19,26-55
+  s_a01b33719b9020::t_a64951ad0a75ff 16,20-25
+src/app/types/index.ts
+  s_dd00ae57f6f6fc::t_acad71058a7a84 1-8
+  s_dd00ae57f6f6fc::t_5633a55f7f1468 9-11
+src/configs/knip.ts
+  s_dd00ae57f6f6fc::t_f8546503a504af 1
+  s_dd00ae57f6f6fc::t_cab9c33b573913 2-4
+README.md
+  s_dd00ae57f6f6fc::t_1f336f8959a352 1-45
+.vscode/launch.json
+  s_dd00ae57f6f6fc::t_c908775de58c38 1-23
+src/configs/middleware.d.ts
+  s_dd00ae57f6f6fc::t_304882415de480 1-6
+.vscode/extensions.json
+  s_dd00ae57f6f6fc::t_e2284ccb0d7d06 1-10
+.cursor/AGENTS.md
+  s_dd00ae57f6f6fc::t_ff6d532e87c477 9-12,16-18,31-32,35-36
+tests/unit/smoke.test.ts
+  s_dd00ae57f6f6fc::t_d08eae476f229d 1-7
+src/configs/playwright.config.d.ts
+  s_dd00ae57f6f6fc::t_304882415de480 1-3
+.cursor/skills/create-skill-pro/references/project-context.md
+  s_dd00ae57f6f6fc::t_3863279d533759 3-4,9-11,16-28,32,35-36,38-39,43-44,46-52,54,56-58,60,62-64,66,68-70,74-76
+tests/e2e/shell.spec.ts
+  s_dd00ae57f6f6fc::t_1e8a4c2cedcdec 1-8
+src/configs/playwright.config.ts
+  s_dd00ae57f6f6fc::t_8cf25c271fb440 10
+  s_dd00ae57f6f6fc::t_29b2532347556f 7-9
+  s_dd00ae57f6f6fc::t_89fd4037b7652f 11-13
+src/configs/.tsbuildinfo-app
+  s_dd00ae57f6f6fc::t_93491f126e8030 1
+src/app/types/tauri.ts
+  s_dd00ae57f6f6fc::t_649e456f64d6f8 1-4,10
+  s_dd00ae57f6f6fc::t_051c7d2c8466d2 7-9,11
+  s_dd00ae57f6f6fc::t_94af2eeda806f4 5-6
+  s_dd00ae57f6f6fc::t_3bb86f8e7c745d 12
+src/configs/vitest.config.ts
+  s_dd00ae57f6f6fc::t_4f327eb046a4c5 4-23
+  s_dd00ae57f6f6fc::t_180709baf458c1 1-3
+src-tauri/tauri.conf.json
+  s_6f87aa499b3020::t_e0df07e011f73b 48-55
+  s_6f87aa499b3020::t_69d3ebe347865c 45-47
+  s_6f87aa499b3020::t_2705d6e21c3275 56-58
+src-tauri/capabilities/desktop.json
+  s_a01b33719b9020::t_4d78bf3826ccef 5
+  s_a01b33719b9020::t_810fb3d0a2cbd4 2-4
+  s_a01b33719b9020::t_43e8332f90be66 6-8
+.vscode/keybindings.json
+  s_dd00ae57f6f6fc::t_fa11c669a293a4 1
+package.json
+  s_dd00ae57f6f6fc::t_8df7e16925883c 1-42,44-80
+  s_dd00ae57f6f6fc::t_a7f53a1cf5b4e0 43
+src-tauri/src/lib.rs
+  s_6f87aa499b3020::t_5299c0f899c2af 51-55
+  s_6f87aa499b3020::t_0278761bd214c1 48-50
+  s_6f87aa499b3020::t_b441db3337f005 56-58
+src/configs/vitest.config.d.ts
+  s_dd00ae57f6f6fc::t_304882415de480 1-3
+src/configs/tsconfig.node.json
+  s_dd00ae57f6f6fc::t_621dd24397a146 9-20
+  s_dd00ae57f6f6fc::t_32bb1418aaea50 6-8
+  s_dd00ae57f6f6fc::t_86fd6e552a4433 21
+other/configs/appinfo.json
+  s_dd00ae57f6f6fc::t_21bfde91c52e71 1-8
+other/configs/keybindings.json
+  s_dd00ae57f6f6fc::t_da9b33585865b1 1-3
+.vscode/tasks.json
+  s_dd00ae57f6f6fc::t_5861e33ecb8548 1-32
+src/configs/.tsbuildinfo-test
+  s_dd00ae57f6f6fc::t_93491f126e8030 1
+src/configs/vite.config.d.ts
+  s_dd00ae57f6f6fc::t_304882415de480 1-3
+src-tauri/src/commands/commands.rs
+  s_a01b33719b9020::t_6849212e3ba63a 4
+  s_a01b33719b9020::t_1442ec1f02694f 1-3
+  s_a01b33719b9020::t_40c2b2f1caf264 5-7
+package-lock.json
+  s_dd00ae57f6f6fc::t_ff834d0209f2ec 1-8909
+src-tauri/Cargo.lock
+  s_a01b33719b9020::t_daa91d7136fa86 1-8814
+src/configs/.tsbuildinfo-e2e
+  s_dd00ae57f6f6fc::t_5732435cdce274 1
+src/configs/.tsbuildinfo-node
+  s_dd00ae57f6f6fc::t_e25f4bf831e162 1
+src/configs/middleware.d.ts.map
+  s_dd00ae57f6f6fc::t_902830b7e0ac0b 1
+src/configs/playwright.config.d.ts.map
+  s_dd00ae57f6f6fc::t_0f8a3782785673 1
+src/configs/vite.config.d.ts.map
+  s_dd00ae57f6f6fc::t_8afb99bc7b2819 1
+src/configs/vitest.config.d.ts.map
+  s_dd00ae57f6f6fc::t_66d914320efa7b 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "f2d8d70d353f0ce475894636db7baa15c7f602b1",
+  "prompts": {},
+  "sessions": {
+    "s_6f87aa499b3020": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b048c929-208f-400c-9c95-9756b13ac3fa",
+        "model": "cursor-grok-4.5-high"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_a01b33719b9020": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f2374c8c-be5e-483f-b9e8-356b0c6d284e",
+        "model": "claude-sonnet-5-thinking-high"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_dd00ae57f6f6fc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "71984593-b4af-4859-9d8a-7566a85474cf",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
