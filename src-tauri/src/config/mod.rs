@@ -275,6 +275,81 @@ pub fn emit_settings_changed<R: Runtime>(app: &AppHandle<R>, settings: &AppSetti
     }
 }
 
+/// Nord0 — dark theme `--bg` (polar-night / frost / aurora dark).
+const SPLASH_BG_DARK: (u8, u8, u8) = (0x2e, 0x34, 0x40);
+/// Nord6 — light theme `--bg` (snow-storm / frost-light / aurora-light).
+const SPLASH_BG_LIGHT: (u8, u8, u8) = (0xec, 0xef, 0xf4);
+
+/// Whether the OS prefers a dark app chrome (Windows `AppsUseLightTheme`).
+/// Defaults to dark when unknown so early chrome matches Polar Night fallback.
+pub fn is_system_dark() -> bool {
+    #[cfg(windows)]
+    {
+        let output = std::process::Command::new("reg")
+            .args([
+                "query",
+                r"HKCU\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize",
+                "/v",
+                "AppsUseLightTheme",
+            ])
+            .output();
+        match output {
+            Ok(out) if out.status.success() => {
+                let text = String::from_utf8_lossy(&out.stdout);
+                // `0x1` = light apps; `0x0` = dark apps.
+                !text.lines().any(|line| {
+                    line.contains("AppsUseLightTheme") && line.contains("0x1")
+                })
+            }
+            _ => true,
+        }
+    }
+    #[cfg(not(windows))]
+    {
+        true
+    }
+}
+
+/// Resolves `settings.json` theme preference to splash RGB, mirroring
+/// frontend `resolveTheme` + CSS `--bg` (nord0 dark / nord6 light).
+pub fn splash_background_rgb(theme: &str) -> (u8, u8, u8) {
+    let key = theme.trim().to_ascii_lowercase();
+    let light = match key.as_str() {
+        "nord-snow-storm" | "snow-storm" | "nord-frost-light" | "frost-light"
+        | "nord-aurora-light" | "aurora-light" => true,
+        "nord-polar-night" | "polar-night" | "frost-dark" | "nord-frost-dark"
+        | "aurora-dark" | "nord-aurora-dark" => false,
+        // OS-aware prefs (same set as frontend `followsSystemScheme`).
+        "system" | "frost" | "nord-frost" | "aurora" | "nord-aurora" => !is_system_dark(),
+        _ => false,
+    };
+    if light {
+        SPLASH_BG_LIGHT
+    } else {
+        SPLASH_BG_DARK
+    }
+}
+
+/// Apply theme-correct native splash color, then show + focus (splash starts hidden).
+pub fn reveal_splash_window<R: Runtime>(app: &AppHandle<R>, theme: &str) {
+    let Some(splash) = app.get_webview_window("splash") else {
+        warn!("splash window missing; cannot reveal");
+        return;
+    };
+
+    let (r, g, b) = splash_background_rgb(theme);
+    let color = tauri::window::Color(r, g, b, 255);
+    if let Err(err) = splash.set_background_color(Some(color)) {
+        warn!("splash set_background_color failed: {err}");
+    }
+    if let Err(err) = splash.show() {
+        warn!("splash show failed: {err}");
+    }
+    if let Err(err) = splash.set_focus() {
+        warn!("splash set_focus failed: {err}");
+    }
+}
+
 pub fn apply_always_on_top<R: Runtime>(window: &WebviewWindow<R>, settings: &AppSettings) {
     let always_on_top = window.is_always_on_top().unwrap_or(false);
     if settings.always_on_top != always_on_top {
@@ -573,5 +648,48 @@ mod tests {
         let settings: AppSettings = parse_jsonc(raw).expect("jsonc");
         assert_eq!(settings.theme, "nord-frost");
         assert_eq!(settings.font_size, 16.0);
+    }
+
+    #[test]
+    fn splash_background_fixed_themes() {
+        assert_eq!(
+            splash_background_rgb("nord-polar-night"),
+            (0x2e, 0x34, 0x40)
+        );
+        assert_eq!(
+            splash_background_rgb("nord-snow-storm"),
+            (0xec, 0xef, 0xf4)
+        );
+        assert_eq!(
+            splash_background_rgb("frost-light"),
+            (0xec, 0xef, 0xf4)
+        );
+        assert_eq!(
+            splash_background_rgb("nord-frost-dark"),
+            (0x2e, 0x34, 0x40)
+        );
+        assert_eq!(
+            splash_background_rgb("aurora-light"),
+            (0xec, 0xef, 0xf4)
+        );
+    }
+
+    #[test]
+    fn splash_background_unknown_defaults_dark() {
+        assert_eq!(splash_background_rgb("custom"), (0x2e, 0x34, 0x40));
+        assert_eq!(splash_background_rgb(""), (0x2e, 0x34, 0x40));
+    }
+
+    #[test]
+    fn splash_background_os_aware_is_binary_nord() {
+        let system = splash_background_rgb("system");
+        let frost = splash_background_rgb("nord-frost");
+        let aurora = splash_background_rgb("aurora");
+        assert!(
+            system == (0x2e, 0x34, 0x40) || system == (0xec, 0xef, 0xf4),
+            "system={system:?}"
+        );
+        assert_eq!(system, frost);
+        assert_eq!(system, aurora);
     }
 }

@@ -194,6 +194,10 @@ pub fn run() {
                 config::apply_logging_settings(&state.logging, logging);
             }
 
+            // Theme-correct native bg, then show (splash starts hidden to avoid
+            // WebView2's default white surface while Vite/CSS load).
+            config::reveal_splash_window(app.handle(), &settings.theme);
+
             // Main stays hidden until the splash window finishes its hybrid
             // boot handoff (see SplashWindow). Force-hide in case
             // window-state restored visibility from a prior session.

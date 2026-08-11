@@ -19,6 +19,8 @@
         "width": 520,
         "height": 340,
         "center": true,
+        "visible": false,
+        "backgroundColor": "#2e3440",
         "decorations": false,
         "resizable": false,
         "maximizable": false,

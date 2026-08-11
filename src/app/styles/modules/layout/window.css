@@ -1,13 +1,25 @@
 .window-content {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  height: 100%;
   min-height: 100%;
+  overflow: hidden;
   padding: 3rem 1.5rem;
 }
 
+.window-content__particles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
 .window-hero {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
