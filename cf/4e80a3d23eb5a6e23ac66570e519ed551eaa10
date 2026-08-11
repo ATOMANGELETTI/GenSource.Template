@@ -1,0 +1,19 @@
+.gitattributes
+  s_607eaa57904517::t_2578023b21841d 14-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "cf4e80a3d23eb5a6e23ac66570e519ed551eaa10",
+  "prompts": {},
+  "sessions": {
+    "s_607eaa57904517": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3b630524-38be-4506-8dc6-f2926cef79bb",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
