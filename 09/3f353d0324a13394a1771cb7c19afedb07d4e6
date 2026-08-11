@@ -1,0 +1,18 @@
+other/screenshots/app-content-menu.png
+  h_90ad036e211778 1-3
+other/screenshots/app-titlebar-menu.png
+  h_90ad036e211778 1-3
+other/screenshots/screenshot-app.png
+  h_90ad036e211778 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "093f353d0324a13394a1771cb7c19afedb07d4e6",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
