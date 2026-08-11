@@ -26,6 +26,8 @@ other/logging/app/*
 other/logging/build/*
 !other/logging/app/.gitkeep
 !other/logging/build/.gitkeep
+other/utilities/scripts/archive/*
+!other/utilities/scripts/archive/.gitkeep
 
 # Editor / OS
 .DS_Store
