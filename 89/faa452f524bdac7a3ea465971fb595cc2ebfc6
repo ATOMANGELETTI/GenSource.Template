@@ -1,0 +1,42 @@
+src/app/styles/modules/layout/titlebar.css
+  s_5d3ccdb414cf65::t_35c91b35171a0d 57-63
+src/app/components/ui/TrafficLights.tsx
+  s_5106c0b2f1f943::t_6f523d7a055f80 52,58,64
+src/app/styles/modules/motion/transitions.css
+  s_5d3ccdb414cf65::t_fd488e52c4bd02 20-22
+  s_5106c0b2f1f943::t_2c1919ef3b12d4 31
+.cursor/hooks/state/continual-learning.json
+  s_007f42bf03ff47::t_467c945e50132b 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "89faa452f524bdac7a3ea465971fb595cc2ebfc6",
+  "prompts": {},
+  "sessions": {
+    "s_007f42bf03ff47": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6bb212bd-d639-479e-84bc-290a54e5b17e",
+        "model": "unknown"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_5106c0b2f1f943": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6b7cae29-4ad2-4a09-983c-08794d43bd7b",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_5d3ccdb414cf65": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "930fa42e-cdd9-4768-ae77-67f75fceebfe",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
