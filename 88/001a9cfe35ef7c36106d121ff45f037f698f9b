@@ -1,0 +1,21 @@
+other/configs/settings.json
+  s_1941193496ff88::t_9336d729a0967a 9-10,15,18-31,34-37,40,43,46
+.cursor/hooks/state/continual-learning.json
+  s_1941193496ff88::t_6bcc53a1297174 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "88001a9cfe35ef7c36106d121ff45f037f698f9b",
+  "prompts": {},
+  "sessions": {
+    "s_1941193496ff88": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b5da0f22-dfa4-4979-a9e0-5ec70678c3be",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
