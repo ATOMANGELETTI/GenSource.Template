@@ -1,0 +1,55 @@
+package.json
+  s_aa469e932b2861::t_6ad8121dcbe8c5 13
+src-tauri/Cargo.toml
+  s_aa469e932b2861::t_0a845d6077cc36 22
+other/utilities/scripts/log-tauri-build.mjs
+  s_aa469e932b2861::t_d9903f313fa83c 2-94
+  s_aa469e932b2861::t_56b124510336b1 1
+src-tauri/src/mdoels/models.rs
+  s_aa469e932b2861::t_bb4c3e0309dc65 155-187
+src-tauri/src/logging.rs
+  s_aa469e932b2861::t_2f696091c84c8d 1-11,13-22,27-35
+  s_aa469e932b2861::t_5f9d53e0aa2ba4 12,23-26
+src-tauri/src/state/state.rs
+  s_aa469e932b2861::t_8e319add84ef04 4,6,14-15,18-19,24,28-33
+.cursor/hooks/state/continual-learning-index.json
+  s_2da47547262535::t_03048922f2ce76 1,3,5-6,8-9,14-15,17-18,20-21,23-42,44-46,50-51,56-58,62-63,68-69,71-75,83-84,86-96,98-102,104-105,107-118,125-126,128-129,131-132,134-138,140-142,146-150,152-159,162
+other/configs/logging.json
+  s_aa469e932b2861::t_49303428b6ef4e 1-24
+src-tauri/src/config/mod.rs
+  s_aa469e932b2861::t_5863f04e2529db 213-254
+  s_aa469e932b2861::t_ced096b0c67832 495,526-546
+  s_aa469e932b2861::t_51d2cb520de7ae 407,427-431,433,436,445-448,455-459,461-467,470-478
+  s_aa469e932b2861::t_8e434d465a05bd 6,17,19-21,29,34,36,38-41,44,53,55-58,60-80,90-91,93-96,98-104,107,115,120-142,434-435,449,547-548
+.cursor/AGENTS.md
+  s_2da47547262535::t_64934419fb2946 100,107-108,114,118-120
+src-tauri/src/lib.rs
+  s_aa469e932b2861::t_9859224e88738d 11,17-19,24,47-55,60-61,63-79,81-84,118,157-159,163,181,194-195
+  s_aa469e932b2861::t_73606ed539ef66 56-59,80
+.cursor/hooks/state/continual-learning.json
+  s_aa469e932b2861::t_79657985007a85 3-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "8dc3994510fa2c3a2de770ec21118d5c768c1616",
+  "prompts": {},
+  "sessions": {
+    "s_2da47547262535": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5f260033-67cf-491d-b3c9-3143f0d258a5",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_aa469e932b2861": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "74cbf53b-0f68-4d7c-a3b1-5fb4e7dd0935",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
