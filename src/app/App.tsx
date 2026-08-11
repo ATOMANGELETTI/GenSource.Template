@@ -1,16 +1,34 @@
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 
 import Titlebar from "./components/layout/Titlebar";
+import AboutDialog from "./components/dialogs/AboutDialog";
 import ContentAreaMenu from "./pages/content-menus/content-area-menu";
 import TitlebarMenu from "./pages/content-menus/titlebar-menu";
-import TrayMenu from "./pages/content-menus/tray-menu";
 import WindowPage from "./pages/window/window";
-import type { ContextMenuState, ContextMenuTarget } from "./types";
+import { copySelection, pasteAtFocus } from "./lib/clipboard";
+import { useLocalShortcuts } from "./lib/keybindings";
+import {
+  closeWindow,
+  minimizeWindow,
+  toggleMaximize,
+} from "./lib/window";
+import { zoomIn, zoomOut, zoomReset } from "./lib/zoom";
+import {
+  fetchAppInfo,
+  initSettingsFromBackend,
+  subscribeSettingsChanges,
+} from "./lib/settings";
+import { invoke } from "@tauri-apps/api/core";
+import type { AppInfo, ContextMenuState, ContextMenuTarget } from "./types";
 
 const CLOSED_MENU: ContextMenuState = { target: null, x: 0, y: 0 };
 
 export default function App() {
   const [menu, setMenu] = useState<ContextMenuState>(CLOSED_MENU);
+  const [appInfo, setAppInfo] = useState<AppInfo | null>(null);
+  const [aboutOpen, setAboutOpen] = useState(false);
+
+  const title = appInfo?.productName ?? appInfo?.name ?? "GenSource Template";
 
   const closeMenu = useCallback(() => {
     setMenu(CLOSED_MENU);
@@ -28,6 +46,7 @@ export default function App() {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         closeMenu();
+        setAboutOpen(false);
       }
     };
 
@@ -35,9 +54,62 @@ export default function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [closeMenu]);
 
+  useEffect(() => {
+    let cancelled = false;
+    let unlisten: (() => void) | undefined;
+
+    void (async () => {
+      try {
+        await initSettingsFromBackend();
+        const stop = await subscribeSettingsChanges();
+        if (cancelled) {
+          stop();
+        } else {
+          unlisten = stop;
+        }
+      } catch (error) {
+        console.warn("Failed to initialize settings from backend", error);
+      }
+
+      try {
+        const info = await fetchAppInfo();
+        if (!cancelled) {
+          setAppInfo(info);
+        }
+      } catch (error) {
+        console.warn("Failed to load app info", error);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
+  }, []);
+
+  // Every `local`-scope id in other/configs/keybindings.json is mapped here
+  // so pressing the shortcut does exactly what clicking the matching menu
+  // row does. Global-scope ids (window.show/hide, app.quit) are handled
+  // entirely in Rust and never reach the frontend.
+  useLocalShortcuts({
+    "content.reload": () => window.location.reload(),
+    "content.zoomIn": () => void zoomIn(),
+    "content.zoomOut": () => void zoomOut(),
+    "content.zoomReset": () => void zoomReset(),
+    "content.copy": () => void copySelection(),
+    "content.paste": () => void pasteAtFocus(),
+    "content.preferences": () => void invoke("open_configs_folder"),
+    "titlebar.toggleWindow": () => void minimizeWindow(),
+    "titlebar.toggleMaximize": () => void toggleMaximize(),
+    "titlebar.close": () => void closeWindow(),
+  });
+
   return (
     <div className="app-shell" onClick={closeMenu}>
-      <Titlebar onContextMenu={(event) => openMenu("titlebar", event)} />
+      <Titlebar
+        title={title}
+        onContextMenu={(event) => openMenu("titlebar", event)}
+      />
       <main
         className="app-shell__main"
         onContextMenu={(event) => openMenu("content", event)}
@@ -49,10 +121,17 @@ export default function App() {
         <TitlebarMenu x={menu.x} y={menu.y} onClose={closeMenu} />
       )}
       {menu.target === "content" && (
-        <ContentAreaMenu x={menu.x} y={menu.y} onClose={closeMenu} />
+        <ContentAreaMenu
+          x={menu.x}
+          y={menu.y}
+          productName={title}
+          onClose={closeMenu}
+          onAbout={() => setAboutOpen(true)}
+        />
       )}
-      {menu.target === "tray" && (
-        <TrayMenu x={menu.x} y={menu.y} onClose={closeMenu} />
+
+      {aboutOpen && appInfo && (
+        <AboutDialog info={appInfo} onClose={() => setAboutOpen(false)} />
       )}
     </div>
   );

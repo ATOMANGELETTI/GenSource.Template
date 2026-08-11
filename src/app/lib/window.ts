@@ -19,3 +19,8 @@ export async function toggleMaximize(): Promise<void> {
 export async function isWindowMaximized(): Promise<boolean> {
   return getCurrentWindow().isMaximized();
 }
+
+/** Starts an OS-native window drag, used by the titlebar menu's "Move" row. */
+export async function moveWindow(): Promise<void> {
+  await getCurrentWindow().startDragging();
+}

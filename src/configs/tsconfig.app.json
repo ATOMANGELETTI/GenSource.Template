@@ -6,7 +6,8 @@
     "tsBuildInfoFile": "./.tsbuildinfo-app",
     "noEmit": true,
     "jsx": "react-jsx",
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["../app"]
 }

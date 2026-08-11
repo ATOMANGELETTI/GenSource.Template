@@ -3,10 +3,11 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  height: 42px;
-  padding: 0 12px;
+  height: 32px;
+  padding: 0 10px;
   background-color: var(--surface);
   border-bottom: 1px solid var(--border);
+  -webkit-user-select: none;
   user-select: none;
 }
 

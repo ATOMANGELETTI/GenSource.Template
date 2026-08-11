@@ -1,5 +1,42 @@
+// =============================================================================
+// settings.json — user-editable app preferences
+// =============================================================================
+// Location (dev):     <repo>/other/configs/settings.json
+// Location (install): <folder next to the .exe>/other/configs/settings.json
+//
+// How to use:
+//   1. Edit values below and save.
+//   2. Changes are picked up automatically while the app is running
+//      (file watcher). You can also use Ctrl+, to open this folder.
+//   3. Unknown keys are ignored; missing keys fall back to defaults.
+//   4. Comments (// and /* */) are allowed — this is JSONC, not strict JSON.
+//
+// Do NOT store window width/height/position here (geometry is handled by the
+// window-state plugin and writing it caused move/flash issues).
+// =============================================================================
 {
-  "theme": "nord-polar-night",
+  // Theme preference applied to the UI shell.
+  // Allowed values:
+  //   "nord-polar-night"  — dark (default)
+  //   "nord-snow-storm"   — light
+  //   "nord-frost"        — cool accent variant
+  //   "nord-aurora"       — warm accent variant
+  //   "system"            — follow OS light/dark (maps to polar-night / snow-storm)
+  "theme": "aurora",
+
+  // CSS font-family for the app chrome (must be installed on the machine,
+  // or a web-safe / bundled face the frontend already loads).
+  "fontFamily": "Plus Jakarta Sans",
+
+  // Base UI font size in pixels (number, e.g. 12–18).
+  "fontSize": 14,
+
+  // If true, the main window starts hidden (useful with tray / global show).
   "startMinimized": false,
-  "autostart": false
+
+  // If true, register the app to launch when the OS signs in.
+  "autostart": false,
+
+  // If true, keep the main window above other windows.
+  "alwaysOnTop": false
 }

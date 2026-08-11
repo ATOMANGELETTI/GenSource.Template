@@ -18,6 +18,7 @@ tauri = { version = "2", features = ["tray-icon", "image-png"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 log = "0.4.33"
+notify = "7"
 
 # Desktop plugins (kitchen sink; mobile-only plugins intentionally omitted:
 # barcode-scanner, biometric, geolocation, haptics, nfc). `localhost` is
@@ -47,6 +48,7 @@ tauri-plugin-stronghold = "2.3.1"
 tauri-plugin-upload = "2.4.0"
 tauri-plugin-websocket = "2.4.2"
 tauri-plugin-cli = "2.4.1"
+json_comments = "0.2"
 
 [profile.release]
 panic = "abort"

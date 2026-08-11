@@ -1,0 +1,15 @@
+/* The tray-menu window itself has no chrome (transparent, no decorations,
+   no shadow — see tauri.conf.json), so its body just hosts the flat
+   .context-menu filling the window edge-to-edge. */
+.tray-window {
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  background: transparent;
+}
+
+.tray-window .context-menu {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+}

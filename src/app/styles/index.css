@@ -5,7 +5,9 @@
 @import "./modules/layout/titlebar.css";
 @import "./modules/layout/window.css";
 @import "./modules/motion/transitions.css";
+@import "./modules/context-menus/menu-shared.css";
 @import "./modules/context-menus/titlebar-content.css";
 @import "./modules/context-menus/content-content.css";
-@import "./modules/context-menus/tray-context.css";
+@import "./modules/context-menus/tray-window.css";
+@import "./modules/dialogs/about-dialog.css";
 @import "./app.css";

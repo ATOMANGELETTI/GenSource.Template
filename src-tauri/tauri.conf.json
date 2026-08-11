@@ -22,6 +22,24 @@
         "center": true,
         "decorations": false,
         "dragDropEnabled": true
+      },
+      {
+        "label": "tray-menu",
+        "url": "index.html?window=tray-menu",
+        "title": "GenSource Template",
+        "width": 240,
+        "height": 214,
+        "visible": false,
+        "decorations": false,
+        "transparent": true,
+        "shadow": false,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "closable": false,
+        "skipTaskbar": true,
+        "alwaysOnTop": true,
+        "focus": false
       }
     ],
     "security": {
@@ -38,7 +56,10 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "resources": {
+      "../other/": "other/"
+    }
   },
   "plugins": {
     "deep-link": {

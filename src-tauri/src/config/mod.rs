@@ -1,0 +1,435 @@
+//! Load, save, watch, and apply `other/configs/` JSON files next to the app.
+
+use std::fs;
+use std::path::{Path, PathBuf};
+use std::sync::mpsc;
+use std::thread;
+use std::time::{Duration, Instant};
+
+use json_comments::StripComments;
+use log::{info, warn};
+use notify::{EventKind, RecommendedWatcher, RecursiveMode, Watcher};
+use serde::de::DeserializeOwned;
+use tauri::{AppHandle, Emitter, Manager, Runtime, WebviewWindow};
+use tauri_plugin_autostart::ManagerExt as AutostartExt;
+use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
+
+use crate::mdoels::{AppInfo, AppInfoFile, AppSettings, KeybindingScope, KeybindingsFile};
+use crate::state::AppState;
+
+pub const SETTINGS_CHANGED_EVENT: &str = "settings-changed";
+
+const SETTINGS_FILE: &str = "settings.json";
+const KEYBINDINGS_FILE: &str = "keybindings.json";
+const APPINFO_FILE: &str = "appinfo.json";
+
+const DEFAULT_SETTINGS_JSON: &str = include_str!("../../../other/configs/settings.json");
+const DEFAULT_KEYBINDINGS_JSON: &str = include_str!("../../../other/configs/keybindings.json");
+const DEFAULT_APPINFO_JSON: &str = include_str!("../../../other/configs/appinfo.json");
+
+/// Resolve the live `other/configs` directory.
+///
+/// Dev (`tauri::is_dev()`): repo `other/configs` via `CARGO_MANIFEST_DIR`
+/// (bundle resources may also exist under `target/debug/other/` — ignore them).
+/// Packaged: `<exe_dir>/other/configs`, with `resource_dir()/other/configs` fallback.
+pub fn resolve_configs_dir<R: Runtime>(app: &AppHandle<R>) -> PathBuf {
+    let dev_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("..")
+        .join("other")
+        .join("configs");
+
+    if tauri::is_dev() {
+        if let Ok(canonical) = fs::canonicalize(&dev_dir) {
+            return canonical;
+        }
+        return dev_dir;
+    }
+
+    let packaged = std::env::current_exe()
+        .ok()
+        .and_then(|exe| exe.parent().map(|p| p.join("other").join("configs")));
+
+    if let Some(ref path) = packaged {
+        if path.is_dir() {
+            return path.clone();
+        }
+    }
+
+    if let Ok(resource_dir) = app.path().resource_dir() {
+        let candidate = resource_dir.join("other").join("configs");
+        if candidate.is_dir() {
+            return candidate;
+        }
+    }
+
+    if let Some(path) = packaged {
+        return path;
+    }
+
+    if let Ok(canonical) = fs::canonicalize(&dev_dir) {
+        return canonical;
+    }
+
+    dev_dir
+}
+
+/// Ensure the three config files exist. Never overwrites an existing
+/// `appinfo.json` (read-only / user-visible metadata).
+pub fn ensure_config_files(dir: &Path) -> Result<(), String> {
+    fs::create_dir_all(dir).map_err(|e| format!("create configs dir: {e}"))?;
+
+    write_default_if_missing(dir.join(SETTINGS_FILE), DEFAULT_SETTINGS_JSON)?;
+    write_default_if_missing(dir.join(KEYBINDINGS_FILE), DEFAULT_KEYBINDINGS_JSON)?;
+    write_default_if_missing(dir.join(APPINFO_FILE), DEFAULT_APPINFO_JSON)?;
+
+    Ok(())
+}
+
+fn write_default_if_missing(path: PathBuf, contents: &str) -> Result<(), String> {
+    if path.exists() {
+        return Ok(());
+    }
+    fs::write(&path, contents).map_err(|e| format!("write {}: {e}", path.display()))
+}
+
+/// Parse JSON that may include `//` or `/* */` comments (JSONC), as used in
+/// the user-editable files under `other/configs/`.
+fn parse_jsonc<T: DeserializeOwned>(raw: &str) -> Result<T, serde_json::Error> {
+    serde_json::from_reader(StripComments::new(raw.as_bytes()))
+}
+
+pub fn load_settings(dir: &Path) -> AppSettings {
+    let path = dir.join(SETTINGS_FILE);
+    match fs::read_to_string(&path) {
+        Ok(raw) => match parse_jsonc::<AppSettings>(&raw) {
+            Ok(settings) => settings,
+            Err(err) => {
+                warn!("corrupt settings.json ({err}); merging with defaults");
+                merge_settings_partial(&raw).unwrap_or_default()
+            }
+        },
+        Err(err) => {
+            warn!("could not read settings.json ({err}); using defaults");
+            AppSettings::default()
+        }
+    }
+}
+
+fn merge_settings_partial(raw: &str) -> Option<AppSettings> {
+    let value: serde_json::Value = parse_jsonc(raw).ok()?;
+    let defaults = serde_json::to_value(AppSettings::default()).ok()?;
+    let merged = merge_json(defaults, value);
+    serde_json::from_value(merged).ok()
+}
+
+fn merge_json(mut base: serde_json::Value, overlay: serde_json::Value) -> serde_json::Value {
+    match (&mut base, overlay) {
+        (serde_json::Value::Object(base_map), serde_json::Value::Object(overlay_map)) => {
+            for (key, value) in overlay_map {
+                let entry = base_map.entry(key).or_insert(serde_json::Value::Null);
+                *entry = merge_json(entry.take(), value);
+            }
+            base
+        }
+        (_, overlay) => overlay,
+    }
+}
+
+pub fn load_keybindings(dir: &Path) -> KeybindingsFile {
+    let path = dir.join(KEYBINDINGS_FILE);
+    match fs::read_to_string(&path) {
+        Ok(raw) => parse_jsonc(&raw).unwrap_or_else(|err| {
+            warn!("corrupt keybindings.json ({err}); using empty bindings");
+            KeybindingsFile::default()
+        }),
+        Err(err) => {
+            warn!("could not read keybindings.json ({err}); using empty bindings");
+            KeybindingsFile::default()
+        }
+    }
+}
+
+pub fn load_appinfo(dir: &Path) -> Option<AppInfoFile> {
+    let path = dir.join(APPINFO_FILE);
+    let raw = fs::read_to_string(&path).ok()?;
+    parse_jsonc(&raw).ok()
+}
+
+pub fn app_info_from_package<R: Runtime>(app: &AppHandle<R>) -> AppInfo {
+    let package_info = app.package_info();
+    let description = package_info.description.trim();
+    AppInfo {
+        name: package_info.name.clone(),
+        version: package_info.version.to_string(),
+        description: if description.is_empty() {
+            None
+        } else {
+            Some(description.to_string())
+        },
+        product_name: Some(package_info.name.clone()),
+        identifier: None,
+        publisher: None,
+    }
+}
+
+pub fn emit_settings_changed<R: Runtime>(app: &AppHandle<R>, settings: &AppSettings) {
+    if let Err(err) = app.emit(SETTINGS_CHANGED_EVENT, settings) {
+        warn!("failed to emit {SETTINGS_CHANGED_EVENT}: {err}");
+    }
+}
+
+pub fn apply_always_on_top<R: Runtime>(window: &WebviewWindow<R>, settings: &AppSettings) {
+    let always_on_top = window.is_always_on_top().unwrap_or(false);
+    if settings.always_on_top != always_on_top {
+        if let Err(err) = window.set_always_on_top(settings.always_on_top) {
+            warn!("set_always_on_top failed: {err}");
+        }
+    }
+}
+
+pub fn apply_start_minimized<R: Runtime>(window: &WebviewWindow<R>, settings: &AppSettings) {
+    if settings.start_minimized {
+        let _ = window.hide();
+    } else {
+        let _ = window.show();
+    }
+}
+
+pub fn apply_autostart<R: Runtime>(app: &AppHandle<R>, enabled: bool) {
+    let manager = app.autolaunch();
+    let currently_enabled = manager.is_enabled().unwrap_or(false);
+    if enabled == currently_enabled {
+        return;
+    }
+
+    let result = if enabled {
+        manager.enable()
+    } else {
+        manager.disable()
+    };
+    if let Err(err) = result {
+        warn!("autostart sync failed: {err}");
+    }
+}
+
+/// Registers only `scope: "global"` bindings as OS-wide hotkeys. `"local"`
+/// bindings (the majority — Reload, Zoom, Copy/Paste, menu toggles, ...) are
+/// intentionally skipped here; they're read by the frontend via
+/// `get_keybindings` and dispatched from an in-app `keydown` listener that
+/// only fires while the owning window is focused.
+pub fn register_keybindings<R: Runtime>(app: &AppHandle<R>, bindings: &KeybindingsFile) {
+    for binding in &bindings.bindings {
+        if !binding.enabled || binding.scope != KeybindingScope::Global {
+            continue;
+        }
+
+        let id = binding.id.clone();
+        let shortcut = binding.shortcut.clone();
+        let result = app.global_shortcut().on_shortcut(
+            shortcut.as_str(),
+            move |app_handle, _shortcut, event| {
+                if event.state() != ShortcutState::Pressed {
+                    return;
+                }
+                match id.as_str() {
+                    "window.show" => {
+                        if let Some(window) = app_handle.get_webview_window("main") {
+                            let _ = window.show();
+                            let _ = window.set_focus();
+                        }
+                    }
+                    "window.hide" => {
+                        if let Some(window) = app_handle.get_webview_window("main") {
+                            let _ = window.hide();
+                        }
+                    }
+                    "app.quit" => {
+                        app_handle.exit(0);
+                    }
+                    other => {
+                        info!("unhandled keybinding id: {other}");
+                    }
+                }
+            },
+        );
+
+        if let Err(err) = result {
+            warn!("failed to register shortcut '{}': {err}", binding.shortcut);
+        }
+    }
+}
+
+fn appearance_changed(previous: &AppSettings, next: &AppSettings) -> bool {
+    previous.theme != next.theme
+        || previous.font_family != next.font_family
+        || (previous.font_size - next.font_size).abs() > f64::EPSILON
+        || previous.start_minimized != next.start_minimized
+        || previous.always_on_top != next.always_on_top
+}
+
+pub fn reload_and_apply_settings<R: Runtime>(app: &AppHandle<R>) -> Result<AppSettings, String> {
+    let state = app.state::<AppState>();
+    let configs_dir = state
+        .configs_dir
+        .lock()
+        .unwrap_or_else(|p| p.into_inner())
+        .clone()
+        .ok_or_else(|| "configs dir not initialized".to_string())?;
+
+    let previous = state
+        .settings
+        .lock()
+        .unwrap_or_else(|p| p.into_inner())
+        .clone();
+    let settings = load_settings(&configs_dir);
+
+    {
+        let mut guard = state.settings.lock().unwrap_or_else(|p| p.into_inner());
+        *guard = settings.clone();
+    }
+
+    if settings.always_on_top != previous.always_on_top {
+        if let Some(window) = app.get_webview_window("main") {
+            apply_always_on_top(&window, &settings);
+        }
+    }
+
+    if settings.autostart != previous.autostart {
+        apply_autostart(app, settings.autostart);
+    }
+
+    if appearance_changed(&previous, &settings) {
+        emit_settings_changed(app, &settings);
+    }
+
+    Ok(settings)
+}
+
+pub fn start_settings_watcher<R: Runtime>(app: AppHandle<R>, configs_dir: PathBuf) {
+    let settings_path = configs_dir.join(SETTINGS_FILE);
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let mut watcher: RecommendedWatcher = match Watcher::new(
+            tx,
+            notify::Config::default().with_poll_interval(Duration::from_millis(500)),
+        ) {
+            Ok(watcher) => watcher,
+            Err(err) => {
+                warn!("settings watcher failed to start: {err}");
+                return;
+            }
+        };
+
+        if let Err(err) = watcher.watch(&configs_dir, RecursiveMode::NonRecursive) {
+            warn!("settings watcher watch failed: {err}");
+            return;
+        }
+
+        info!("watching settings at {}", settings_path.display());
+
+        let mut last_apply = Instant::now()
+            .checked_sub(Duration::from_secs(1))
+            .unwrap_or_else(Instant::now);
+
+        while let Ok(event) = rx.recv() {
+            let Ok(event) = event else {
+                continue;
+            };
+
+            let touches_settings = event.paths.iter().any(|path| {
+                path.file_name()
+                    .and_then(|name| name.to_str())
+                    .is_some_and(|name| name.eq_ignore_ascii_case(SETTINGS_FILE))
+            });
+
+            if !touches_settings {
+                continue;
+            }
+
+            match event.kind {
+                EventKind::Modify(_) | EventKind::Create(_) | EventKind::Remove(_) => {}
+                _ => continue,
+            }
+
+            if last_apply.elapsed() < Duration::from_millis(250) {
+                continue;
+            }
+            last_apply = Instant::now();
+
+            // Brief delay so editors finish writing the file.
+            thread::sleep(Duration::from_millis(80));
+
+            match reload_and_apply_settings(&app) {
+                Ok(_) => info!("reloaded settings.json from disk"),
+                Err(err) => warn!("settings reload failed: {err}"),
+            }
+        }
+    });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn loads_repo_settings_defaults() {
+        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("other")
+            .join("configs");
+        let settings = load_settings(&dir);
+        assert_eq!(settings.theme, "nord-polar-night");
+        assert_eq!(settings.font_family, "Plus Jakarta Sans");
+        assert_eq!(settings.font_size, 14.0);
+        assert!(!settings.autostart);
+        assert!(!settings.always_on_top);
+    }
+
+    #[test]
+    fn loads_repo_keybindings() {
+        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("other")
+            .join("configs");
+        let keys = load_keybindings(&dir);
+        assert!(keys
+            .bindings
+            .iter()
+            .any(|b| b.id == "window.show" && b.enabled));
+    }
+
+    #[test]
+    fn loads_repo_appinfo() {
+        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("other")
+            .join("configs");
+        let info = load_appinfo(&dir).expect("appinfo.json");
+        assert_eq!(info.identifier, "com.gensource.template");
+        assert_eq!(info.version, "0.1.0");
+    }
+
+    #[test]
+    fn merges_partial_settings() {
+        let raw = r#"{"theme":"custom","fontSize":18}"#;
+        let settings = merge_settings_partial(raw).expect("merge");
+        assert_eq!(settings.theme, "custom");
+        assert_eq!(settings.font_size, 18.0);
+        assert_eq!(settings.font_family, "Plus Jakarta Sans");
+    }
+
+    #[test]
+    fn parses_jsonc_comments() {
+        let raw = r#"
+            // appearance
+            {
+              "theme": "nord-frost", /* override */
+              "fontSize": 16
+            }
+        "#;
+        let settings: AppSettings = parse_jsonc(raw).expect("jsonc");
+        assert_eq!(settings.theme, "nord-frost");
+        assert_eq!(settings.font_size, 16.0);
+    }
+}

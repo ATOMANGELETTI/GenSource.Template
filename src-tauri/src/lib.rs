@@ -1,18 +1,23 @@
 //! GenSource Template Tauri v2 app library. Registers all desktop plugins,
 //! shared state, and IPC commands, then hands off to the Tauri runtime.
 
+// Prebuilt libsodium (via tauri-plugin-stronghold) emits MSVC LNK4099/LNK4098
+// on Windows debug links; allow until upstream ships matching PDBs/CRT.
+#![cfg_attr(all(windows, target_env = "msvc"), allow(linker_messages))]
+
 #[path = "commands/commands.rs"]
 mod commands;
+mod config;
 #[path = "mdoels/models.rs"]
 mod mdoels;
 #[path = "state/state.rs"]
 mod state;
 
 use tauri::image::Image;
-use tauri::menu::{Menu, MenuItem};
-use tauri::tray::TrayIconBuilder;
-use tauri::{Manager, RunEvent};
+use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
+use tauri::{Manager, RunEvent, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_positioner::{Position, WindowExt};
 
 use state::AppState;
 
@@ -59,8 +64,7 @@ pub fn run() {
         // `Database.load("sqlite:gensource.db")`; the path resolves under
         // the app's data directory (see `fs`/`sql` capability scopes).
         .plugin(tauri_plugin_sql::Builder::new().build())
-        // Registered but left disabled: call `enable()` from the frontend to
-        // opt the user into launch-at-login.
+        // Synced from settings.json `autostart` on startup / settings reload.
         .plugin(tauri_plugin_autostart::init(
             MacosLauncher::LaunchAgent,
             None,
@@ -74,6 +78,12 @@ pub fn run() {
         .invoke_handler(tauri::generate_handler![
             commands::greet,
             commands::get_app_info,
+            commands::get_settings,
+            commands::reload_settings,
+            commands::get_keybindings,
+            commands::open_configs_folder,
+            commands::hide_main_window,
+            commands::quit_app,
         ])
         .setup(|app| {
             // Stronghold needs a filesystem path for its key-derivation
@@ -99,29 +109,97 @@ pub fn run() {
                 let _ = app.deep_link().register_all();
             }
 
+            let configs_dir = config::resolve_configs_dir(app.handle());
+            if let Err(err) = config::ensure_config_files(&configs_dir) {
+                log::warn!("ensure config files: {err}");
+            }
+
+            let settings = config::load_settings(&configs_dir);
+            let keybindings = config::load_keybindings(&configs_dir);
+            let product_name = config::load_appinfo(&configs_dir)
+                .map(|info| {
+                    if !info.product_name.trim().is_empty() {
+                        info.product_name
+                    } else {
+                        info.name
+                    }
+                })
+                .unwrap_or_else(|| "GenSource Template".into());
+
+            {
+                let state = app.state::<AppState>();
+                *state
+                    .configs_dir
+                    .lock()
+                    .unwrap_or_else(|p| p.into_inner()) = Some(configs_dir.clone());
+                *state.settings.lock().unwrap_or_else(|p| p.into_inner()) = settings.clone();
+            }
+
+            if let Some(window) = app.get_webview_window("main") {
+                config::apply_always_on_top(&window, &settings);
+                config::apply_start_minimized(&window, &settings);
+            }
+
+            config::apply_autostart(app.handle(), settings.autostart);
+            config::register_keybindings(app.handle(), &keybindings);
+            config::emit_settings_changed(app.handle(), &settings);
+            config::start_settings_watcher(app.handle().clone(), configs_dir);
+
             // System tray uses the bundled PNG (RGBA) so the notification-area
-            // glyph stays sharp with transparency on Windows.
+            // glyph stays sharp with transparency on Windows. The right-click
+            // menu is a real flat-styled window (`tray-menu`, declared in
+            // tauri.conf.json) instead of a native OS menu, so it always
+            // matches the app's own theme. Left click still shows/focuses
+            // `main`, matching common tray UX.
             let tray_icon = Image::from_bytes(include_bytes!("../icons/32x32.png"))?;
-            let show_item = MenuItem::with_id(app, "show", "Show", true, None::<&str>)?;
-            let quit_item = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-            let tray_menu = Menu::with_items(app, &[&show_item, &quit_item])?;
 
             TrayIconBuilder::new()
                 .icon(tray_icon)
-                .tooltip("GenSource Template")
-                .menu(&tray_menu)
-                .show_menu_on_left_click(true)
-                .on_menu_event(|app, event| match event.id.as_ref() {
-                    "quit" => app.exit(0),
-                    "show" => {
-                        if let Some(window) = app.get_webview_window("main") {
-                            let _ = window.show();
-                            let _ = window.set_focus();
+                .tooltip(&product_name)
+                .on_tray_icon_event(|tray, event| {
+                    let app = tray.app_handle();
+                    // Required by tauri-plugin-positioner to know where the
+                    // tray icon is before `Position::TrayCenter` can be used.
+                    tauri_plugin_positioner::on_tray_event(app, &event);
+
+                    match event {
+                        TrayIconEvent::Click {
+                            button: MouseButton::Left,
+                            button_state: MouseButtonState::Up,
+                            ..
+                        } => {
+                            if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
                         }
+                        TrayIconEvent::Click {
+                            button: MouseButton::Right,
+                            button_state: MouseButtonState::Up,
+                            ..
+                        } => {
+                            if let Some(menu) = app.get_webview_window("tray-menu") {
+                                let _ = menu.as_ref().window().move_window(Position::TrayCenter);
+                                let _ = menu.show();
+                                let _ = menu.set_focus();
+                            }
+                        }
+                        _ => {}
                     }
-                    _ => {}
                 })
                 .build(app)?;
+
+            // Dismiss the tray flyout as soon as it loses focus (clicking
+            // elsewhere, or an item invoking a command) instead of closing
+            // it, so the next right-click reopens instantly.
+            if let Some(menu) = app.get_webview_window("tray-menu") {
+                let hideable = menu.clone();
+                menu.on_window_event(move |event| {
+                    if let WindowEvent::Focused(false) = event {
+                        let _ = hideable.hide();
+                    }
+                });
+            }
 
             Ok(())
         });

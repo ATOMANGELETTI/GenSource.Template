@@ -31,3 +31,12 @@
   line-height: 1.5;
   color: var(--text-muted);
 }
+
+.window-hero__build {
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  opacity: 0.7;
+}
