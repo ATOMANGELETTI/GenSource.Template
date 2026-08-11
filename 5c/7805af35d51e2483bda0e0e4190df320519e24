@@ -1,0 +1,37 @@
+other/utilities/scripts/clean-logs-app.bat
+  s_b576b19c3999b9::t_648bb611b2d792 1-24
+.gitignore
+  s_b576b19c3999b9::t_633e60f2b860d5 29-30
+.cursor/AGENTS.md
+  s_b576b19c3999b9::t_29d8f3033bdd4e 130
+other/utilities/scripts/archive-logs.bat
+  s_b576b19c3999b9::t_fcfa8b9175859e 1-47,49-63
+  s_b576b19c3999b9::t_0f97a385712f42 48
+other/utilities/scripts/clean-logs-build.bat
+  s_b576b19c3999b9::t_83273f32120a96 1-24
+other/utilities/scripts/clean-logs-archive.bat
+  s_b576b19c3999b9::t_f170295d1c8a52 1-24
+.cursor/hooks/state/continual-learning.json
+  s_b576b19c3999b9::t_573bba2415b2b8 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "5c7805af35d51e2483bda0e0e4190df320519e24",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_b576b19c3999b9": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "0e69d3cf-9020-4ec6-8c91-df441d6040c0",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
