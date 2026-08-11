@@ -1,0 +1,44 @@
+src/scripts/log-tauri-app.js
+  s_5106c0b2f1f943::t_4cba5062a26eb0 69-74
+  s_5106c0b2f1f943::t_af7da66bfeeaaf 12
+src/scripts/package.js
+  s_5106c0b2f1f943::t_85161a26354c60 37,51
+  s_5106c0b2f1f943::t_cd2ac088e884c0 12
+  s_35d7d2dacc03c7::t_ee2272f345b27a 204
+src/scripts/spawn-bin.js
+  s_5106c0b2f1f943::t_96586cdb85b523 1-47
+src/scripts/dev.js
+  s_5106c0b2f1f943::t_ac1a33528dccb9 3,8
+src/scripts/log-tauri-build.js
+  s_5106c0b2f1f943::t_5e7cb34e0e74f8 9
+  s_5106c0b2f1f943::t_53ff577526e4df 66-71
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "e1b51eeb2cc6e8934e031e54d4d82cc772b353de",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_35d7d2dacc03c7": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e8e203be-127a-4686-bcc3-feb595cc7240",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_5106c0b2f1f943": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "6b7cae29-4ad2-4a09-983c-08794d43bd7b",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
