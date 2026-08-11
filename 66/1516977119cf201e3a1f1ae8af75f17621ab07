@@ -1,0 +1,61 @@
+.cursor/AGENTS.md
+  s_274fe057040b65::t_719f6fdf8538b7 21
+  s_274fe057040b65::t_0d91ca90a9a9af 32
+  s_274fe057040b65::t_cdd56d0cf5c9bb 125
+src/configs/tsconfig.node.json
+  s_274fe057040b65::t_cbf8e0806073c1 19
+.cursor/rules/project-conventions.mdc
+  s_274fe057040b65::t_8e2f934f574ab1 11
+.vscode/settings.json
+  s_274fe057040b65::t_eebb26e51aaf99 7-8
+.cursor/skills/create-skill-pro/references/project-context.md
+  s_274fe057040b65::t_5e5fc8955b86d5 46
+  s_274fe057040b65::t_5d67883afd89b7 74
+src/configs/.tsbuildinfo-test
+  s_274fe057040b65::t_7a5a2b17c45871 1
+tests/unit/clipboard.test.ts
+  s_274fe057040b65::t_c39953670ef77e 9-11,13-21,24-39,41-43
+src/configs/.tsbuildinfo-node
+  s_877cb7265cb618::t_d4a596b463d61e 1
+src/configs/vitest.config.d.ts.map
+  s_dd00ae57f6f6fc::t_dda86cbfa71262 1
+.cursor/hooks/state/continual-learning.json
+  s_274fe057040b65::t_2c6ca37b1ae738 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "661516977119cf201e3a1f1ae8af75f17621ab07",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_274fe057040b65": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "8cf72d83-f3c8-4450-9080-ec6eba06f5f6",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_877cb7265cb618": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4f1ee95f-4dee-49d1-8f3a-09085b807eba",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_dd00ae57f6f6fc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "71984593-b4af-4859-9d8a-7566a85474cf",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
