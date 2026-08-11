@@ -1,0 +1,86 @@
+src-tauri/src/config/mod.rs
+  s_0ae1a1aef4af4b::t_51e975a82556c3 502,561
+README.md
+  s_0ae1a1aef4af4b::t_b76891f013e91c 7
+src/scripts/run.js
+  s_aa016048d38af6::t_a8f20762abe1b8 1-26
+src/app/lib/settings.ts
+  s_0ae1a1aef4af4b::t_01aa10284cbe42 64,68
+  s_0ae1a1aef4af4b::t_794b009a749ca2 20-22
+.cursor/skills/create-skill-pro/references/project-context.md
+  s_0ae1a1aef4af4b::t_01d368a7953eb6 58
+src/app/styles/index.css
+  s_0ae1a1aef4af4b::t_476d75262d1b26 3
+src/scripts/dev.js
+  s_aa016048d38af6::t_c525ef2823f0b6 1-30
+src/scripts/package.js
+  s_aa016048d38af6::t_410879b6073adf 1-239
+src/configs/.tsbuildinfo-test
+  s_0ae1a1aef4af4b::t_55360da53387fd 1
+other/configs/settings.json
+  s_0ae1a1aef4af4b::t_0391f7d0418118 36-37
+  h_90ad036e211778 38
+.cursor/AGENTS.md
+  s_0ae1a1aef4af4b::t_6b0aab6147ca09 102
+src/configs/tsconfig.e2e.json
+  s_aa016048d38af6::t_12b43c09fda093 10
+src/app/styles/modules/theme/fonts.css
+  s_0ae1a1aef4af4b::t_c30577234dd7da 1-55
+src-tauri/nsis/installer.nsh
+  s_aa016048d38af6::t_52c3b7c59639df 1-20
+src/app/lib/e2e-window.ts
+  s_6de3f94e03564e::t_f6ac6b6aae3dbb 1-49
+src-tauri/tauri.windows.conf.json
+  s_aa016048d38af6::t_39d69763537cfb 6
+src-tauri/src/mdoels/models.rs
+  s_0ae1a1aef4af4b::t_02f2eb40607cc8 91
+package.json
+  s_aa016048d38af6::t_7dbed7b34b6d85 8,12,14-15
+src/app/styles/modules/theme/nord-theme.css
+  s_0ae1a1aef4af4b::t_88591f8c6fe943 180
+.cursor/hooks/state/continual-learning.json
+  s_0ae1a1aef4af4b::t_c1f8b215bf54c0 4,6
+src/app/main.tsx
+  s_6de3f94e03564e::t_30c3648cdfcb6e 7,19-20
+src/configs/.tsbuildinfo-e2e
+  s_aa016048d38af6::t_f61d531bc7e807 1
+.cursorignore
+  h_90ad036e211778 14
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "6d59591afbd3783a492ee1bba21c8d308bc06ae0",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_0ae1a1aef4af4b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "1dffea32-8ce1-42cb-b255-aa9cd16126b4",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_6de3f94e03564e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e8bf9586-54bd-4c18-a4eb-a811e48e33c5",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_aa016048d38af6": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "24f453c5-b15b-45f5-9ed4-520b3fd0212b",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
