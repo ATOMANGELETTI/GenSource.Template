@@ -1,0 +1,228 @@
+src/configs/.tsbuildinfo-app
+  s_a22eef452527b1::t_c20cedc7f1275c 1
+src/app/lib/settings.ts
+  s_a22eef452527b1::t_c440520385f0df 5,8-13
+  s_a22eef452527b1::t_e94bebe3174f26 24-26,28,38-52
+  s_555ef293a6d870::t_291e014a36dccc 1-4,6-7,14-23,27,29-37,53-87
+src-tauri/src/main.rs
+  s_2ca8a932f50ad9::t_b0a1bae490e1ed 3-5
+src/app/styles/modules/context-menus/titlebar-content.css
+  s_a22eef452527b1::t_3eb0a62dd2ab66 1-2,5
+.cursor/AGENTS.md
+  s_45ea46e352a30c::t_bc2dada0d33f0c 96-115
+  s_2ca8a932f50ad9::t_81ae779c870a26 48
+src-tauri/src/mdoels/models.rs
+  s_a22eef452527b1::t_d4f7b703e4a2b4 111-132,140-141
+  s_555ef293a6d870::t_4f331f6d90d9cc 7,9,13,15-110,133-139,142-153
+src/configs/.tsbuildinfo-test
+  s_a22eef452527b1::t_c20cedc7f1275c 1
+src/app/styles/modules/context-menus/tray-window.css
+  s_a22eef452527b1::t_95872ed860b42a 1-15
+src/app/styles/modules/layout/titlebar.css
+  s_a22eef452527b1::t_5e7cb2602cf3c6 6-7
+  h_90ad036e211778 10
+src/app/lib/clipboard.ts
+  s_a22eef452527b1::t_1bba9b3cdbd862 1-42
+src-tauri/src/state/state.rs
+  s_555ef293a6d870::t_0970e1a2680d30 12
+  s_555ef293a6d870::t_9bc333bc11f314 22
+  s_555ef293a6d870::t_da3989fb43fa3e 3,6-8,11,13-21,23
+src-tauri/.cargo/config.toml
+  s_2ca8a932f50ad9::t_423141bd409363 3-7,10
+src/app/components/icons/MenuIcons.tsx
+  s_a22eef452527b1::t_34d2c2fb73e89b 1-173
+tests/unit/theme.test.ts
+  s_8c45f77e753558::t_59cbe1e73f0a04 1-31
+src/app/styles/modules/dialogs/about-dialog.css
+  s_a22eef452527b1::t_b4ea543e61bf2a 1-3,5-19,22-37,40-43,47-50,53-63,66-78,81-85
+other/configs/settings.json
+  s_555ef293a6d870::t_190376009d2095 32
+  s_555ef293a6d870::t_87040068a7cf21 29,38,41
+  s_1941193496ff88::t_68c73a6eea0e19 1-16,18-24,26-28,30-31,33-34,36-37,39-40
+  h_90ad036e211778 25
+src-tauri/capabilities/default.json
+  s_a22eef452527b1::t_c7d7e236692afc 5,23
+src/app/styles/modules/theme/nord-theme.css
+  s_a22eef452527b1::t_43d818f4d93f15 20-26,33-37,39-106,135-139
+src/app/types/index.ts
+  s_555ef293a6d870::t_9081fdc54becca 1-5,8
+  s_a22eef452527b1::t_2d1e58a2e52cbe 6-7,15-18
+src/app/lib/theme.ts
+  s_a22eef452527b1::t_09473a732187db 14
+  s_a22eef452527b1::t_23ccc838c93b97 1-13,15-49
+src-tauri/Cargo.toml
+  s_555ef293a6d870::t_210f10d5715b39 21
+  s_1941193496ff88::t_b9a8d733d83a71 51
+src/app/styles/modules/context-menus/menu-shared.css
+  s_a22eef452527b1::t_6c8b68aadfca2f 1-132
+src-tauri/src/commands/commands.rs
+  s_555ef293a6d870::t_3f5b9ede17e63b 51-52
+  s_a22eef452527b1::t_6e9118df3c5bd7 57-96
+  s_a22eef452527b1::t_fb5709eb988b69 4,7
+  s_555ef293a6d870::t_538e49bc34911a 6,14-17,22-23,25-35,37-50,53-56
+src/app/lib/zoom.ts
+  s_a22eef452527b1::t_a4254a5f023f3a 1-29
+src/app/lib/window.ts
+  s_a22eef452527b1::t_e6e377eebc814e 22-26
+src/app/App.tsx
+  s_555ef293a6d870::t_6ecbd60a248948 10,17-20,57-63,70-76,78-89,109-112
+  s_a22eef452527b1::t_a4e1a3799c96b5 4,8-9,11-16,21-22,28-31,49,77,90-106,124-130,132-134
+  s_555ef293a6d870::t_bd618b4631fd73 64-69
+src/app/styles/index.css
+  s_a22eef452527b1::t_6924254ac33c33 8,11-12
+src-tauri/src/lib.rs
+  s_555ef293a6d870::t_491a16bc1c4d97 10,67,81-82,112-138,140-147,158,186,203
+  s_a22eef452527b1::t_a8b5686cfb3f69 83-86
+  s_555ef293a6d870::t_dc86ec3771eb85 139
+  s_a22eef452527b1::t_16632126a55195 17-18,20
+  s_a22eef452527b1::t_94846f562fdee4 196-197,199
+  s_a22eef452527b1::t_3e0ff76737e755 149-153,159-174,176-185,187,192-195,198,200-202
+  s_2ca8a932f50ad9::t_c0637af89c7a18 4-7
+src-tauri/tauri.conf.json
+  s_a22eef452527b1::t_acf5f3f2c46650 25-42
+  s_555ef293a6d870::t_653664dc97db40 59-62
+src/configs/.tsbuildinfo-node
+  s_a4011b1d98fa92::t_773467eebeb771 1
+other/configs/keybindings.json
+  s_555ef293a6d870::t_cb2a1de7d4cf0e 28,30,32-33,36-37,46-47,133-134
+  s_a22eef452527b1::t_a0c5e0087c8bcf 34-35,39-44,48-50,53,55-90,92-97,99-103,106,108-124,127,129-132
+  s_1941193496ff88::t_2613a034f8b744 1-26,29,31,38,45,51-52,54,91,98,104-105,107,125-126,128
+.cursor/hooks/state/continual-learning-index.json
+  s_45ea46e352a30c::t_d322108f320f76 1-129
+src/app/pages/tray-menu/TrayMenuWindow.tsx
+  s_a22eef452527b1::t_b8541748099b43 1-2,8-39,50-53,55,57-59,61-124
+  s_a22eef452527b1::t_836a834ec25102 46
+  s_a22eef452527b1::t_6f47f4571535e7 54,56,60
+  s_a22eef452527b1::t_33c4f02a46768f 3-7
+  s_a22eef452527b1::t_e0e71b82ca9b87 40-45,47-49
+src-tauri/src/config/mod.rs
+  s_1941193496ff88::t_1a1b09de4dacbb 141,155
+  s_555ef293a6d870::t_ba959ff38d060e 182-186
+  s_1941193496ff88::t_73476d9c5b9866 95-100,104,119
+  s_a22eef452527b1::t_d44a51d3068a6f 17
+  s_555ef293a6d870::t_e83ebad2907e59 262-269,279-283,285,292,294,296-304
+  s_555ef293a6d870::t_530ebc6886834b 13
+  s_555ef293a6d870::t_457ac67b161ed4 385-386,415,418
+  s_555ef293a6d870::t_0a612752796b99 1-8,10-11,14-16,18-31,34-35,48-66,71-94,101-103,105-118,120-140,142-154,156-180,187-199,205-214,220-221,223-238,244-261,270-278,284,286-290,295,305-370,435
+  s_555ef293a6d870::t_793805ed648d83 200-204
+  s_555ef293a6d870::t_a0460866f1241d 32-33,36-47,67-70
+  s_555ef293a6d870::t_bc046e405c26b4 291,293
+  s_555ef293a6d870::t_49e3ce7a9f7ac3 181
+  s_1941193496ff88::t_f6c8d5d7ef3816 9,12
+  s_1941193496ff88::t_f17cc7bd855aba 421-434
+  s_a22eef452527b1::t_b3ba55e0894217 215-219,222,239-243
+  s_555ef293a6d870::t_e59742bca49ce0 371-384,387-414,416-417,419-420
+src/app/pages/content-menus/titlebar-menu.tsx
+  s_a22eef452527b1::t_58d9364967ed59 1-18,26-37,40,49-50,52-53,59,61-62,64-73,75-87,92-107,109-111
+src/app/styles/modules/layout/window.css
+  s_a22eef452527b1::t_83e571de54fce2 34-42
+src-tauri/nsis/installer.nsh
+  s_555ef293a6d870::t_674bfcf894ab59 11-14
+src/configs/tsconfig.app.json
+  s_a4011b1d98fa92::t_569e9b4425031f 9-10
+src/app/styles/modules/context-menus/content-content.css
+  s_a22eef452527b1::t_422e41dc05fc0f 1-2,5
+src/app/types/tauri.ts
+  s_555ef293a6d870::t_5020cd4dcbeb1a 5-18
+  s_a22eef452527b1::t_eba1c0fd2dd538 19-25
+src/app/pages/content-menus/content-area-menu.tsx
+  s_a22eef452527b1::t_482c4bd12e2368 1-13,15,18,20,26,28,30-36,39,48-91,93-95,101,103-105,107,109,112-124,126,128-129
+src/app/lib/keybindings.ts
+  s_a22eef452527b1::t_efdfda70011006 88-91
+  s_a22eef452527b1::t_c2f01770d5cf32 71
+  s_a22eef452527b1::t_18652cfe8b20b6 1-70,72-87,92-134
+src/app/components/dialogs/AboutDialog.tsx
+  s_a22eef452527b1::t_757804cbc114df 1,3-4,8-10,12-18,20-39
+src/app/main.tsx
+  s_a22eef452527b1::t_1795db65599a28 1,8,17-18,20
+  s_a22eef452527b1::t_3981926206dbbb 19,22
+.cursor/hooks/state/_transcript_user_msgs.txt
+  s_d3fdb8676111f8::t_4d3000f4fc029e 1-755
+src-tauri/Cargo.lock
+  s_1941193496ff88::t_72d4cac883b13b 1897-1905,2138,2140,2840-2859,2870-2878,3147-3152,3187-3206,3462,3570-3588,3603-3611
+src/configs/vite.config.d.ts.map
+  s_a4011b1d98fa92::t_05340ac1ccf932 1
+.cursor/hooks/state/continual-learning.json
+  s_1941193496ff88::t_eac6c15e982173 3-6
+src/configs/tsconfig.base.json
+  s_a4011b1d98fa92::t_c0c466764887da 15
+src/app/pages/window/Window.tsx
+  h_90ad036e211778 1-11,13-35,43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "50a3ef9435d68a7cc11151fc96b2f41583dd942a",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_1941193496ff88": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b5da0f22-dfa4-4979-a9e0-5ec70678c3be",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_2ca8a932f50ad9": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5f5f1d64-ed33-44db-ac85-b9ae11ac1839",
+        "model": "composer-2.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_45ea46e352a30c": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "20d5ed4a-65d8-4524-a844-338a973d91d0",
+        "model": "cursor-grok-4.5-high-fast"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_555ef293a6d870": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "8478d2f1-b830-430d-aa64-651c45e47254",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_8c45f77e753558": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "2ab87d8a-a457-4602-8efe-9c3bc24d1962",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_a22eef452527b1": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "77653e9b-e53e-4765-a087-4b799c9e1297",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_a4011b1d98fa92": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "4b023fc8-40fe-4382-99b3-64516f5662e8",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_d3fdb8676111f8": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b1835f36-a895-4dba-8d7f-ff756267ed59",
+        "model": "cursor-grok-4.5-high"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
