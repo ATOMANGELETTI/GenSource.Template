@@ -1,0 +1,27 @@
+other/documents/features.md
+  s_607eaa57904517::t_706749f4082646 1-59
+other/documents/packaging.md
+  s_607eaa57904517::t_aa1ce66f0bea3c 1-38
+other/documents/development.md
+  s_607eaa57904517::t_b3eae1119aa0f8 1-54
+README.md
+  s_607eaa57904517::t_a52c44b337d3ed 1-2,5-10,12,14,16,18,20-25,27-29,36,45-47,49-50,52,56,58-63
+.cursor/hooks/state/continual-learning.json
+  s_607eaa57904517::t_3753c5c80eebfe 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "5127e8e4b20608206204e1859c79ffb9f864450a",
+  "prompts": {},
+  "sessions": {
+    "s_607eaa57904517": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "3b630524-38be-4506-8dc6-f2926cef79bb",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
