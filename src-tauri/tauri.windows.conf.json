@@ -3,7 +3,7 @@
   "bundle": {
     "windows": {
       "nsis": {
-        "installMode": "currentUser",
+        "installMode": "both",
         "installerHooks": "./nsis/installer.nsh",
         "displayLanguageSelector": false,
         "languages": ["English"]

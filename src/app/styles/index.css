@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+@import "./modules/theme/fonts.css";
 @import "./modules/theme/nord-theme.css";
 @import "./modules/layout/shell.css";
 @import "./modules/layout/titlebar.css";

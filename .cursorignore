@@ -11,4 +11,4 @@ src-tauri/gen/
 .env.prod
 
 # Large local tooling binaries
-other/utilities/
+other/utilities/7z.exe

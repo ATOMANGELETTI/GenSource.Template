@@ -99,7 +99,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Keep agent context Cursor-native under `.cursor/` only; do not reintroduce `.agents/` or invent non-native trees such as `personas/`, `memory/`, or `workflows/`.
 - Prefer a flat Nord UI across themes: no gradients, glow, glass, or multi-layer shadows; macOS-like traffic-light titlebar on the left with centered title; keep the titlebar relatively short.
 - Keep CSS modular under `src/app/styles/modules/`; treat `index.css` as an import hub only.
-- Prefer Plus Jakarta Sans via `@fontsource-variable/plus-jakarta-sans` for the app UI.
+- Prefer Terminus (bundled Nerd Font under `public/fonts/nerdfonts/`) as the default UI font; switch via `settings.json` `fontFamily` (`Terminus`, `Ubuntu`, `Fira Code`, or `Plus Jakarta Sans`).
 - Prefer latest stable package versions, but keep TypeScript on the newest 5.x that `typescript-eslint` supports.
 - Do not place the square app icon in the main content UI; reserve icon assets for tray, taskbar, and window only (`public/icons/` sources, bundled into `src-tauri/icons/).
 - Do not persist window width or position in `other/configs/settings.json` (geometry writes caused move/flash issues).

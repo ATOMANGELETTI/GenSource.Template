@@ -88,7 +88,7 @@ fn default_theme() -> String {
 }
 
 fn default_font_family() -> String {
-    "Plus Jakarta Sans".into()
+    "Terminus".into()
 }
 
 fn default_font_size() -> f64 {

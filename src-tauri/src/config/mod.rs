@@ -499,7 +499,7 @@ mod tests {
             .join("configs");
         let settings = load_settings(&dir);
         assert_eq!(settings.theme, "nord-frost");
-        assert_eq!(settings.font_family, "Plus Jakarta Sans");
+        assert_eq!(settings.font_family, "Terminus");
         assert_eq!(settings.font_size, 14.0);
         assert!(!settings.autostart);
         assert!(!settings.always_on_top);
@@ -558,7 +558,7 @@ mod tests {
         let settings = merge_settings_partial(raw).expect("merge");
         assert_eq!(settings.theme, "custom");
         assert_eq!(settings.font_size, 18.0);
-        assert_eq!(settings.font_family, "Plus Jakarta Sans");
+        assert_eq!(settings.font_family, "Terminus");
     }
 
     #[test]

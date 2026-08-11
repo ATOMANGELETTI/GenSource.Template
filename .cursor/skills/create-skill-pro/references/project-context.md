@@ -55,7 +55,7 @@ repo root.
 
 - Nord Polar Night palette; flat surfaces only (no gradients/glow/glass).
 - Frameless window; traffic lights left; centered title; `data-tauri-drag-region`.
-- Typography: Plus Jakarta Sans.
+- Typography: Terminus Nerd Font default (`settings.json` `fontFamily`).
 
 ## Packaging & tooling
 

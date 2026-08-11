@@ -4,7 +4,7 @@ Tauri v2 + React + TypeScript desktop app template for the GenSource suite.
 
 ## Stack
 
-- **Frontend:** React 19, Vite, TypeScript, Tailwind CSS v4, Plus Jakarta Sans
+- **Frontend:** React 19, Vite, TypeScript, Tailwind CSS v4, Terminus Nerd Font (switchable)
 - **UI:** Nord Polar Night, macOS-style custom titlebar (traffic lights), flat design
 - **Backend:** Tauri 2 with a kitchen-sink of official desktop plugins
 - **Tooling:** Vitest, Playwright, ESLint, Prettier, Knip, commitlint, release-it

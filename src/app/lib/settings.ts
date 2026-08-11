@@ -17,11 +17,11 @@ let latestSettings: AppSettings | undefined;
 let systemThemeWatcherStarted = false;
 
 const FONT_FAMILY_MAP: Record<string, string> = {
+  Terminus: "Terminus, ui-monospace, monospace",
+  Ubuntu: "Ubuntu, ui-sans-serif, system-ui, sans-serif",
+  "Fira Code": '"Fira Code", ui-monospace, monospace',
   "Plus Jakarta Sans":
     '"Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif',
-  "Fira Code": '"Fira Code", "Fira Mono", ui-monospace, monospace',
-  Ubuntu: 'Ubuntu, "Ubuntu Sans", ui-sans-serif, system-ui, sans-serif',
-  Terminus: 'Terminus, "Terminus (TTF)", ui-monospace, monospace',
 };
 
 export function applySettingsToDom(settings: AppSettings): void {
@@ -61,11 +61,11 @@ function ensureSystemThemeWatcher(): void {
 function resolveFontFamily(name: string): string {
   const trimmed = name.trim();
   if (!trimmed) {
-    return FONT_FAMILY_MAP["Plus Jakarta Sans"];
+    return FONT_FAMILY_MAP.Terminus;
   }
   return (
     FONT_FAMILY_MAP[trimmed] ??
-    `"${trimmed}", "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif`
+    `"${trimmed}", Terminus, ui-monospace, monospace`
   );
 }
 

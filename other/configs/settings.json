@@ -33,9 +33,9 @@
 
   // Font family for the app chrome.
   // Known mapped faces (recommended):
-  //   "Plus Jakarta Sans" (default), "Fira Code", "Ubuntu", "Terminus"
-  // Any other name is used as a CSS font-family with Plus Jakarta Sans fallback.
-  "fontFamily": "Plus Jakarta Sans",
+  //   "Terminus" (default), "Ubuntu", "Fira Code", "Plus Jakarta Sans"
+  // Any other name is used as a CSS font-family with Terminus fallback.
+  "fontFamily": "Terminus",
 
   // Base UI font size in CSS pixels (positive number; default 14).
   "fontSize": 14,

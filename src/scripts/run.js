@@ -5,16 +5,12 @@ import { fileURLToPath } from "node:url";
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const args = process.argv.slice(2);
 
-const child = spawn(
-  "vite",
-  ["--config", "src/configs/vite.config.ts", ...args],
-  {
-    cwd: root,
-    stdio: "inherit",
-    shell: true,
-    env: process.env,
-  },
-);
+const child = spawn("tauri", ["dev", ...args], {
+  cwd: root,
+  stdio: "inherit",
+  shell: true,
+  env: process.env,
+});
 
 child.on("exit", (code, signal) => {
   if (signal) {
@@ -25,6 +21,6 @@ child.on("exit", (code, signal) => {
 });
 
 child.on("error", (err) => {
-  console.error(`Failed to start vite: ${err.message}`);
+  console.error(`Failed to start tauri dev: ${err.message}`);
   process.exit(1);
 });

@@ -177,7 +177,5 @@
   --color-success: var(--success);
   --color-info: var(--info);
 
-  --font-sans:
-    "Plus Jakarta Sans Variable", "Plus Jakarta Sans", ui-sans-serif, system-ui,
-    sans-serif;
+  --font-sans: Terminus, ui-monospace, monospace;
 }
