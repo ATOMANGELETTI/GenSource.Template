@@ -1,4 +1,4 @@
-# AGENTS.md — GenSource.Template
+﻿# AGENTS.md — GenSource.Template
 
 Root instructions for any AI coding agent working in this repository.
 Cursor loads this file (and project rules/skills/commands/agents) at session start.
@@ -101,7 +101,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Keep CSS modular under `src/app/styles/modules/`; treat `index.css` as an import hub only.
 - Prefer Plus Jakarta Sans via `@fontsource-variable/plus-jakarta-sans` for the app UI.
 - Prefer latest stable package versions, but keep TypeScript on the newest 5.x that `typescript-eslint` supports.
-- Do not place the square app icon in the main content UI; reserve `public/icons/` assets for tray, taskbar, and window icons.
+- Do not place the square app icon in the main content UI; reserve icon assets for tray, taskbar, and window only (`public/icons/` sources, bundled into `src-tauri/icons/).
 - Do not persist window width or position in `other/configs/settings.json` (geometry writes caused move/flash issues).
 - When implementing an attached plan, do not edit the plan file; reuse existing todos and mark them in progress rather than recreating them.
 - Titlebar, content, and tray context menus should share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus).
@@ -112,9 +112,10 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Canonical agent instructions live in `.cursor/AGENTS.md`; root `AGENTS.md` only points there.
 - Runtime app config lives in `other/configs/` (`appinfo.json`, `settings.json`, `keybindings.json`) and ships beside the installed `.exe` under `other/`.
 - `settings.json` and `keybindings.json` are user-editable JSONC; prefer `appinfo.json` visible but read-only when the platform allows.
-- Application icons are under `public/icons/` (`icon.svg`, `icon.png`, `icon.ico`); use the format appropriate to tray, taskbar, or UI.
+- Icon sources live in `public/icons/` (`icon.svg`, `icon.png`, `icon.ico`); tray/taskbar/window icons are the bundled set under `src-tauri/icons/` — regenerate with `npm run tauri -- icon ./public/icons/icon.png` after changing sources (updating `public/icons/` alone does not refresh tray/taskbar).
 - Preserve the `src-tauri/src/mdoels/` directory name unless explicitly asked to rename it.
 - Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, Playwright, or knip configs at the repo root.
 - Themes are independent Nord palettes (polar-night, snow-storm, frost, aurora) with fixed `*-dark`/`*-light` variants; `system`, `frost`, and `aurora` follow OS light/dark via `settings.json` `theme`.
 - Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`.
 - Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/`; log files named `[TIME]_[DATE]_[APPVERSION].log`.
+- Windows release packaging targets `release/` via `npm run package` / `npm run package:clean`; ship 32- and 64-bit NSIS installers (custom hooks in `src-tauri/nsis/installer.nsh`, per-user or system-wide) plus matching portable zip builds.
