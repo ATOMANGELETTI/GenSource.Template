@@ -12,9 +12,20 @@ import {
   HideIcon,
   PreferencesIcon,
   QuitIcon,
+  ShowIcon,
 } from "../../components/icons/MenuIcons";
-import { fetchAppInfo } from "../../lib/settings";
+import {
+  fetchAppInfo,
+  initSettingsFromBackend,
+  subscribeSettingsChanges,
+} from "../../lib/settings";
 import { useKeybindingLabels } from "../../lib/keybindings";
+import {
+  hideMainWindow,
+  isMainWindowVisible,
+  showMainWindow,
+} from "../../lib/window";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import type { AppInfo } from "../../types";
 
 /**
@@ -26,15 +37,95 @@ import type { AppInfo } from "../../types";
 export default function TrayMenuWindow() {
   const { label } = useKeybindingLabels();
   const [info, setInfo] = useState<AppInfo | null>(null);
+  const [mainVisible, setMainVisible] = useState(true);
 
+  // Same settings/theme pipeline as App.tsx — this webview has its own DOM,
+  // so data-theme must be set here or the flyout stays on :root Polar Night.
   useEffect(() => {
-    void fetchAppInfo().then(setInfo);
+    let cancelled = false;
+    let unlisten: (() => void) | undefined;
+
+    void (async () => {
+      try {
+        await initSettingsFromBackend();
+        const stop = await subscribeSettingsChanges();
+        if (cancelled) {
+          stop();
+        } else {
+          unlisten = stop;
+        }
+      } catch (error) {
+        console.warn("Failed to initialize tray settings from backend", error);
+      }
+
+      try {
+        const appInfo = await fetchAppInfo();
+        if (!cancelled) {
+          setInfo(appInfo);
+        }
+      } catch (error) {
+        console.warn("Failed to load tray app info", error);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
+  }, []);
+
+  // Refresh Hide/Show whenever this flyout is focused (right-click opens it).
+  useEffect(() => {
+    let cancelled = false;
+    let unlisten: (() => void) | undefined;
+
+    const refresh = async () => {
+      try {
+        const visible = await isMainWindowVisible();
+        if (!cancelled) {
+          setMainVisible(visible);
+        }
+      } catch (error) {
+        console.warn("Failed to read main window visibility", error);
+      }
+    };
+
+    void refresh();
+
+    void getCurrentWindow()
+      .onFocusChanged(({ payload: focused }) => {
+        if (focused) {
+          void refresh();
+        }
+      })
+      .then((stop) => {
+        if (cancelled) {
+          stop();
+        } else {
+          unlisten = stop;
+        }
+      });
+
+    return () => {
+      cancelled = true;
+      unlisten?.();
+    };
   }, []);
 
   const productName = info?.productName ?? info?.name ?? "GenSource Template";
 
   const run = (action: () => void | Promise<void>) => () => {
     void action();
+  };
+
+  const toggleMainVisibility = async () => {
+    if (mainVisible) {
+      await hideMainWindow();
+      setMainVisible(false);
+    } else {
+      await showMainWindow();
+      setMainVisible(true);
+    }
   };
 
   const notify = async (body: string) => {
@@ -78,11 +169,19 @@ export default function TrayMenuWindow() {
           type="button"
           className="context-menu__item"
           role="menuitem"
-          onClick={run(() => invoke("hide_main_window"))}
+          onClick={run(toggleMainVisibility)}
         >
-          <HideIcon className="context-menu__icon" />
-          <span className="context-menu__label">Hide</span>
-          <span className="context-menu__shortcut">{label("window.hide")}</span>
+          {mainVisible ? (
+            <HideIcon className="context-menu__icon" />
+          ) : (
+            <ShowIcon className="context-menu__icon" />
+          )}
+          <span className="context-menu__label">
+            {mainVisible ? "Hide" : "Show"}
+          </span>
+          <span className="context-menu__shortcut">
+            {label(mainVisible ? "window.hide" : "window.show")}
+          </span>
         </button>
         <button
           type="button"

@@ -16,6 +16,7 @@
     "core:window:allow-set-title",
     "core:window:allow-set-focus",
     "core:window:allow-is-maximized",
+    "core:window:allow-is-visible",
     "core:app:default",
     "core:event:default",
     "core:menu:default",

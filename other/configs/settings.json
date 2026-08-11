@@ -29,7 +29,7 @@
   //   "system"                               — polar-night ↔ snow-storm
   //   "nord-frost"       | "frost"           — frost dark ↔ frost light
   //   "nord-aurora"      | "aurora"          — aurora dark ↔ aurora light
-  "theme": "nord-polar-night",
+  "theme": "nord-frost",
 
   // Font family for the app chrome.
   // Known mapped faces (recommended):

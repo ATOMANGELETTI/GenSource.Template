@@ -153,6 +153,15 @@ export function HideIcon(props: IconProps) {
   );
 }
 
+export function ShowIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M2.5 8.5S4.8 4.5 8 4.5s5.5 4 5.5 4-2.3 4-5.5 4-5.5-4-5.5-4z" />
+      <circle cx="8" cy="8.5" r="1.6" />
+    </svg>
+  );
+}
+
 export function CheckUpdatesIcon(props: IconProps) {
   return (
     <svg {...base} {...props}>
