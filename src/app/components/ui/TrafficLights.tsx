@@ -49,31 +49,19 @@ export default function TrafficLights({ className }: TrafficLightsProps) {
         className="traffic-light traffic-light--close"
         aria-label="Close"
         onClick={() => void closeWindow()}
-      >
-        <span className="traffic-light__glyph" aria-hidden="true">
-          ×
-        </span>
-      </button>
+      />
       <button
         type="button"
         className="traffic-light traffic-light--minimize"
         aria-label="Minimize"
         onClick={() => void minimizeWindow()}
-      >
-        <span className="traffic-light__glyph" aria-hidden="true">
-          −
-        </span>
-      </button>
+      />
       <button
         type="button"
         className="traffic-light traffic-light--maximize"
         aria-label={maximized ? "Restore" : "Maximize"}
         onClick={() => void toggleMaximize()}
-      >
-        <span className="traffic-light__glyph" aria-hidden="true">
-          {maximized ? "⤡" : "⤢"}
-        </span>
-      </button>
+      />
     </div>
   );
 }

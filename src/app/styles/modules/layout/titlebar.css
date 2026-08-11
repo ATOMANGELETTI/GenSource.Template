@@ -54,8 +54,13 @@
   border-radius: 50%;
   cursor: default;
   transition:
-    transform 120ms ease,
-    filter 120ms ease;
+    border-radius 160ms ease,
+    transform 160ms ease,
+    filter 160ms ease;
+}
+
+.traffic-light:hover {
+  border-radius: 3px;
 }
 
 .traffic-light:focus-visible {
@@ -77,17 +82,4 @@
 
 .traffic-light--maximize {
   background-color: var(--traffic-maximize);
-}
-
-.traffic-light__glyph {
-  font-size: 9px;
-  font-weight: 700;
-  line-height: 1;
-  color: rgba(0, 0, 0, 0.55);
-  opacity: 0;
-  transition: opacity 120ms ease;
-}
-
-.traffic-lights:hover .traffic-light__glyph {
-  opacity: 1;
 }

@@ -17,12 +17,9 @@
 
   .traffic-light {
     transition:
-      transform 120ms ease,
-      filter 120ms ease;
-  }
-
-  .traffic-light__glyph {
-    transition: opacity 120ms ease;
+      border-radius 160ms ease,
+      transform 160ms ease,
+      filter 160ms ease;
   }
 }
 
@@ -31,8 +28,7 @@
     animation: none;
   }
 
-  .traffic-light,
-  .traffic-light__glyph {
+  .traffic-light {
     transition: none;
   }
 }
