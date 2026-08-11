@@ -5,6 +5,8 @@ import "@fontsource-variable/plus-jakarta-sans";
 
 import App from "./App";
 import { resolveWindowLabel } from "./lib/e2e-window";
+// Keep @tauri-apps/plugin-store in the app entry graph (via app-store helper).
+import "./lib/app-store";
 import SplashWindow from "./pages/splash/SplashWindow";
 import TrayMenuWindow from "./pages/tray-menu/TrayMenuWindow";
 import "./styles/index.css";

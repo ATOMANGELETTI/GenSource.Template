@@ -15,6 +15,7 @@ export default defineConfig({
   },
   test: {
     environment: 'jsdom',
+    setupFiles: ['tests/unit/setup.ts'],
     include: ['tests/unit/**/*.{test,spec}.{ts,tsx}'],
     passWithNoTests: true,
     pool: 'threads',

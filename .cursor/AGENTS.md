@@ -112,6 +112,8 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - When implementing an attached plan, do not edit the plan file; reuse existing todos and mark them in progress rather than recreating them.
 - Titlebar, content, and tray context menus should share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus).
 - Keep usage comments in `other/configs/settings.json` and `keybindings.json` (JSONC).
+- Packaged splash and early chrome must follow `settings.json` theme (not a hard-coded dark/Polar Night default).
+- Keep knip (`src/configs/knip.ts`) entry coverage for intentionally shipped modules (`src/app/lib/app-store.ts`, `tauri-plugin-bindings.ts`) so kitchen-sink `@tauri-apps/*` deps are not flagged unused.
 
 ## Learned Workspace Facts
 
@@ -123,6 +125,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Preserve the `src-tauri/src/mdoels/` directory name unless explicitly asked to rename it.
 - Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, Playwright, or knip configs at the repo root.
 - Themes are independent Nord palettes (polar-night, snow-storm, frost, aurora) with fixed `*-dark`/`*-light` variants; `system`, `frost`, and `aurora` follow OS light/dark via `settings.json` `theme`.
-- Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`.
-- Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/`; log files named `[TIME]_[DATE]_[APPVERSION].log`.
-- Windows release packaging targets `release/` via `npm run package` / `npm run package:clean`; ship 32- and 64-bit NSIS installers (custom hooks in `src-tauri/nsis/installer.nsh`, per-user or system-wide) plus matching portable zip builds.
+- Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`; exclude the ephemeral `tray-menu` window from `tauri-plugin-window-state` so it does not restore/auto-open on launch.
+- Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/` (tee from packaging/build wrappers); log files named `[TIME]_[DATE]_[APPVERSION].log`.
+- npm runners live in `src/scripts/` (`dev.js` → Vite `dev`, `log-tauri-app.js` → `tauri:dev` with tee to `other/logging/app/`, `log-tauri-build.js` → `tauri:build` with tee to `other/logging/build/`, `package.js` → `package` / `package:clean`); Windows release packaging targets `release/` with 32- and 64-bit NSIS installers (custom hooks in `src-tauri/nsis/installer.nsh`, per-user or system-wide) plus matching portable zip builds.
+- Tests live under `tests/` (`unit/`, `e2e/` including Playwright visuals); reports/outputs go in `tests/artifacts/`; surface inventory is `tests/surfaces.json` (used by tester-pro).

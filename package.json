@@ -9,8 +9,8 @@
     "build": "tsc -b && vite build --config src/configs/vite.config.ts",
     "preview": "vite preview --config src/configs/vite.config.ts",
     "tauri": "tauri",
-    "tauri:dev": "node src/scripts/run.js",
-    "tauri:build": "node other/utilities/scripts/log-tauri-build.mjs",
+    "tauri:dev": "node src/scripts/log-tauri-app.js",
+    "tauri:build": "node src/scripts/log-tauri-build.js",
     "package": "node src/scripts/package.js",
     "package:clean": "node src/scripts/package.js --clean",
     "test": "vitest run --config src/configs/vitest.config.ts",
@@ -21,7 +21,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "knip": "knip --config src/configs/knip.ts",
-    "typecheck": "tsc -b --pretty"
+    "typecheck": "tsc -b --pretty",
+    "commitlint": "commitlint --edit",
+    "release": "release-it"
   },
   "dependencies": {
     "@fontsource-variable/plus-jakarta-sans": "^5.3.0",

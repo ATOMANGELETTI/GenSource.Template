@@ -86,7 +86,13 @@ pub fn run() {
                 .build(),
         )
         .plugin(tauri_plugin_store::Builder::default().build())
-        .plugin(tauri_plugin_window_state::Builder::default().build())
+        // Ephemeral windows must not be restored: tray-menu is a flyout that
+        // should only appear on right-click; splash is a one-shot boot screen.
+        .plugin(
+            tauri_plugin_window_state::Builder::default()
+                .with_denylist(&["tray-menu", "splash"])
+                .build(),
+        )
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
@@ -195,6 +201,11 @@ pub fn run() {
             if let Some(window) = app.get_webview_window("main") {
                 config::apply_always_on_top(&window, &settings);
                 let _ = window.hide();
+            }
+            // Tray flyout must stay hidden until an explicit right-click
+            // (denylist above prevents restore; this covers any edge case).
+            if let Some(menu) = app.get_webview_window("tray-menu") {
+                let _ = menu.hide();
             }
 
             config::apply_autostart(app.handle(), settings.autostart);

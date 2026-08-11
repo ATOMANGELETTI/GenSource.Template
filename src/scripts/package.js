@@ -205,7 +205,11 @@ function main() {
 
   for (const target of TARGETS) {
     console.log(`\nBuilding ${target.triple} …`);
-    run("tauri", ["build", "--target", target.triple]);
+    run("node", [
+      "src/scripts/log-tauri-build.js",
+      "--target",
+      target.triple,
+    ]);
 
     const nsisDir = path.join(
       root,
