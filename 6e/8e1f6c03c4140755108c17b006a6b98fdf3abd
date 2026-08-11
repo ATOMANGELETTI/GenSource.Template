@@ -1,0 +1,36 @@
+src/app/lib/settings.ts
+  s_8c45f77e753558::t_b50e8bfabcf225 5-9
+  s_8c45f77e753558::t_42ad94fa9c849f 45,53-55,57
+other/configs/settings.json
+  s_8c45f77e753558::t_fad05a3b9516fa 20-25
+  h_90ad036e211778 26
+tests/unit/theme.test.ts
+  s_8c45f77e753558::t_85dad84ddbb67e 3,27-28,31,49-98
+src/app/styles/modules/theme/nord-theme.css
+  s_8c45f77e753558::t_a38e1cd6652cd6 43-45,82,99-111,113-114,116,133-145,147-148
+src/app/lib/theme.ts
+  s_8c45f77e753558::t_96d32d16f537d4 5-7,11-12,17-24,27-34,39-44,46,48-54,63-65,67-69,71,83
+.cursor/hooks/state/continual-learning.json
+  s_8c45f77e753558::t_20d4ec7dc87560 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "6e8e1f6c03c4140755108c17b006a6b98fdf3abd",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_8c45f77e753558": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "2ab87d8a-a457-4602-8efe-9c3bc24d1962",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
