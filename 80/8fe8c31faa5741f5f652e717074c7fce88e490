@@ -1,0 +1,53 @@
+src/configs/.tsbuildinfo-test
+  s_512f1a3ad40663::t_41373b210483cf 1
+index.html
+  s_512f1a3ad40663::t_cf71156776487b 7-23
+src-tauri/src/lib.rs
+  s_512f1a3ad40663::t_2367c68ea38280 197-200
+src/app/components/ambient/AmbientField.tsx
+  s_512f1a3ad40663::t_2556ee1cc71df4 197-198
+  s_512f1a3ad40663::t_a1c0d5aecfd229 36-53
+  s_512f1a3ad40663::t_beb2d76a4b58e2 30
+  s_512f1a3ad40663::t_28c0099739f3ba 1-29,31-35,54-85,87-89,91,95-99,101,105-109,111,115-121,125-181,185-186,188-196,199-266,289-293,296-340
+  s_512f1a3ad40663::t_fcb10e152c6189 122-124,267-288,294-295
+  s_512f1a3ad40663::t_3f58ff4f67ed52 184,187
+  s_512f1a3ad40663::t_301a15ea1a3ea4 86,90,92-94,100,102-104,110,112-114
+  s_512f1a3ad40663::t_25d9bace4d990d 182-183
+src/configs/.tsbuildinfo-app
+  s_512f1a3ad40663::t_41373b210483cf 1
+src-tauri/tauri.conf.json
+  s_512f1a3ad40663::t_fd4bcabfddd320 22-23
+src/app/styles/modules/layout/window.css
+  s_512f1a3ad40663::t_9510659ffce8a2 2,9,13-19,21-22
+  s_512f1a3ad40663::t_1678e54aead9c7 7
+src/app/components/splash/ParticleField.tsx
+  s_512f1a3ad40663::t_5ab8b100085968 245,254-258,318,333,338,345
+  s_512f1a3ad40663::t_3e256665a8a109 60,81,92
+  s_512f1a3ad40663::t_8360347241dbce 109-110,129
+  s_512f1a3ad40663::t_4c9ac70bafc45c 3-4,16-22,31-37,50-59,61-80,82-91,93-97,99-101,132,139-140,149,151-152,172-191,195-201,206-243,265-266,274,276-277,290-292,295
+  s_512f1a3ad40663::t_643c10adfee37d 141
+src-tauri/src/config/mod.rs
+  s_512f1a3ad40663::t_dc5bc0930a1291 320-323
+  s_512f1a3ad40663::t_ba4d3ee1706c6f 652-694
+  s_512f1a3ad40663::t_25f014bd2a17c8 278-319,324-352
+.cursor/hooks/state/continual-learning.json
+  s_512f1a3ad40663::t_55f76afadff88a 3-6
+src/app/pages/window/Window.tsx
+  s_512f1a3ad40663::t_84808006877242 4-5,16,40-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "808fe8c31faa5741f5f652e717074c7fce88e490",
+  "prompts": {},
+  "sessions": {
+    "s_512f1a3ad40663": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "7ab9c89a-32a1-4edc-998e-2fbf80ad0ff8",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
