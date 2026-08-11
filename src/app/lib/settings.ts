@@ -2,7 +2,11 @@ import { invoke } from "@tauri-apps/api/core";
 import { listen, type UnlistenFn } from "@tauri-apps/api/event";
 
 import type { AppInfo, AppSettings } from "../types";
-import { resolveTheme, watchSystemThemeChange } from "./theme";
+import {
+  followsSystemScheme,
+  resolveTheme,
+  watchSystemThemeChange,
+} from "./theme";
 
 const SETTINGS_CHANGED_EVENT = "settings-changed";
 
@@ -38,7 +42,7 @@ export function applySettingsToDom(settings: AppSettings): void {
 }
 
 // Registered once per window; reacts to OS light/dark flips by re-resolving
-// the theme, but only takes effect while the user's preference is "system".
+// OS-aware preferences (system, frost, aurora).
 function ensureSystemThemeWatcher(): void {
   if (systemThemeWatcherStarted) {
     return;
@@ -46,9 +50,11 @@ function ensureSystemThemeWatcher(): void {
   systemThemeWatcherStarted = true;
 
   watchSystemThemeChange(() => {
-    if (latestSettings?.theme === "system") {
-      document.documentElement.dataset.theme = resolveTheme("system");
+    const preference = latestSettings?.theme;
+    if (!preference || !followsSystemScheme(preference)) {
+      return;
     }
+    document.documentElement.dataset.theme = resolveTheme(preference);
   });
 }
 
