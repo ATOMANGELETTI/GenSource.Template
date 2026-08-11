@@ -5,6 +5,7 @@ import { createRoot } from "react-dom/client";
 import "@fontsource-variable/plus-jakarta-sans";
 
 import App from "./App";
+import SplashWindow from "./pages/splash/SplashWindow";
 import TrayMenuWindow from "./pages/tray-menu/TrayMenuWindow";
 import "./styles/index.css";
 
@@ -14,10 +15,16 @@ if (!rootElement) {
   throw new Error("Root element #root not found");
 }
 
-// The `tray-menu` window (declared in tauri.conf.json) shares this same
-// frontend bundle; render its standalone flyout instead of the main shell.
-const isTrayMenuWindow = getCurrentWindow().label === "tray-menu";
+// Secondary windows (splash, tray-menu) share this bundle; pick the tree by
+// Tauri window label (see tauri.conf.json).
+const windowLabel = getCurrentWindow().label;
+const rootTree =
+  windowLabel === "splash" ? (
+    <SplashWindow />
+  ) : windowLabel === "tray-menu" ? (
+    <TrayMenuWindow />
+  ) : (
+    <App />
+  );
 
-createRoot(rootElement).render(
-  <StrictMode>{isTrayMenuWindow ? <TrayMenuWindow /> : <App />}</StrictMode>,
-);
+createRoot(rootElement).render(<StrictMode>{rootTree}</StrictMode>);

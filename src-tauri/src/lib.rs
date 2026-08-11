@@ -181,9 +181,13 @@ pub fn run() {
                 config::apply_logging_settings(&state.logging, logging);
             }
 
+            // Main stays hidden until the splash window finishes its hybrid
+            // boot handoff (see SplashWindow). Force-hide in case
+            // window-state restored visibility from a prior session.
+            // startMinimized is honored by the splash when revealing main.
             if let Some(window) = app.get_webview_window("main") {
                 config::apply_always_on_top(&window, &settings);
-                config::apply_start_minimized(&window, &settings);
+                let _ = window.hide();
             }
 
             config::apply_autostart(app.handle(), settings.autostart);

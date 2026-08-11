@@ -13,6 +13,20 @@
     "withGlobalTauri": false,
     "windows": [
       {
+        "label": "splash",
+        "url": "index.html?window=splash",
+        "title": "GenSource Template",
+        "width": 520,
+        "height": 340,
+        "center": true,
+        "decorations": false,
+        "resizable": false,
+        "maximizable": false,
+        "minimizable": false,
+        "fullscreen": false,
+        "focus": true
+      },
+      {
         "label": "main",
         "title": "GenSource Template",
         "width": 1100,
@@ -20,6 +34,7 @@
         "minWidth": 800,
         "minHeight": 500,
         "center": true,
+        "visible": false,
         "decorations": false,
         "dragDropEnabled": true
       },

@@ -4,6 +4,7 @@
 @import "./modules/layout/shell.css";
 @import "./modules/layout/titlebar.css";
 @import "./modules/layout/window.css";
+@import "./modules/layout/splash.css";
 @import "./modules/motion/transitions.css";
 @import "./modules/context-menus/menu-shared.css";
 @import "./modules/context-menus/titlebar-content.css";

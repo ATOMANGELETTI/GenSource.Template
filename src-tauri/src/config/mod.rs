@@ -284,6 +284,12 @@ pub fn apply_always_on_top<R: Runtime>(window: &WebviewWindow<R>, settings: &App
     }
 }
 
+/// Applies `startMinimized` by hiding or showing the window.
+///
+/// Boot visibility is owned by the splash window (main starts hidden; splash
+/// shows main when ready unless `startMinimized`). Kept for callers that need
+/// to re-sync after a settings change.
+#[allow(dead_code)]
 pub fn apply_start_minimized<R: Runtime>(window: &WebviewWindow<R>, settings: &AppSettings) {
     if settings.start_minimized {
         let _ = window.hide();

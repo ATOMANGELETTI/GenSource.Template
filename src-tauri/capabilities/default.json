@@ -2,7 +2,7 @@
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
   "description": "Base capability for the GenSource Template main window: window controls plus cross-platform plugin permissions.",
-  "windows": ["main", "tray-menu"],
+  "windows": ["main", "tray-menu", "splash"],
   "permissions": [
     "core:default",
     "core:window:allow-start-dragging",
