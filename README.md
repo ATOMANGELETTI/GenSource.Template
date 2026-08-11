@@ -2,11 +2,11 @@
 
 Tauri v2 + React + TypeScript desktop app template for the GenSource suite.
 
-![GenSource Template on Windows](https://github.com/ATOMANGELETTI/GenSource.Template/blob/main/other/screenshots/screenshot-app.png)
+![GenSource Template on Windows](https://github.com/ATOMANGELETTI/GenSource.Template/tree/main/other/screenshots/screenshot-app.png)
 
-![Custom titlebar context menu](https://github.com/ATOMANGELETTI/GenSource.Template/blob/main/other/screenshots/app-titlebar-menu.png)
+![Custom titlebar context menu](https://github.com/ATOMANGELETTI/GenSource.Template/tree/main/other/screenshots/app-titlebar-menu.png)
 
-![Content area context menu](https://github.com/ATOMANGELETTI/GenSource.Template/blob/main/other/screenshots/app-content-menu.png)
+![Content area context menu](https://github.com/ATOMANGELETTI/GenSource.Template/tree/main/other/screenshots/app-content-menu.png)
 
 ## Stack
 
