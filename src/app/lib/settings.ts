@@ -58,7 +58,8 @@ function ensureSystemThemeWatcher(): void {
   });
 }
 
-function resolveFontFamily(name: string): string {
+/** Resolve a settings `fontFamily` key (or custom name) to a CSS font stack. */
+export function resolveFontFamily(name: string): string {
   const trimmed = name.trim();
   if (!trimmed) {
     return FONT_FAMILY_MAP.Terminus;
@@ -68,6 +69,8 @@ function resolveFontFamily(name: string): string {
     `"${trimmed}", Terminus, ui-monospace, monospace`
   );
 }
+
+export { FONT_FAMILY_MAP };
 
 export async function fetchSettings(): Promise<AppSettings> {
   return invoke<AppSettings>("get_settings");

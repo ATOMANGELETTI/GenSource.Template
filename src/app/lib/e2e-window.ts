@@ -1,8 +1,28 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
+import type { AppInfo, AppSettings } from "../types";
+
 export type AppWindowLabel = "main" | "splash" | "tray-menu";
 
 const KNOWN_LABELS = new Set<string>(["main", "splash", "tray-menu"]);
+
+/** Fixture identity when Vite e2e has no Tauri backend. */
+export const E2E_APP_INFO: AppInfo = {
+  name: "gensource-template",
+  productName: "GenSource Template",
+  version: "0.1.0",
+  description: "GenSource Tauri v2 desktop app template",
+  publisher: "GenSource",
+};
+
+export const E2E_DEFAULT_SETTINGS: AppSettings = {
+  theme: "nord-polar-night",
+  fontFamily: "Terminus",
+  fontSize: 14,
+  startMinimized: false,
+  autostart: false,
+  alwaysOnTop: false,
+};
 
 /**
  * Playwright / Vite harness: `?window=splash|tray-menu|main` selects the

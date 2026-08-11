@@ -50,6 +50,9 @@ pub fn run() {
 
     let logging_settings = Arc::new(RwLock::new(config::load_logging(&early_configs)));
     let log_filter_state = Arc::clone(&logging_settings);
+    // Seed settings before windows/commands run so packaged splash cannot
+    // race `.setup` and lock onto AppSettings::default() (polar-night).
+    let early_settings = config::load_settings(&early_configs);
 
     let package_version = env!("CARGO_PKG_VERSION");
     let log_version = config::resolve_log_version(&early_configs, package_version);
@@ -115,7 +118,11 @@ pub fn run() {
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_websocket::init())
         .plugin(tauri_plugin_cli::init())
-        .manage(AppState::new(Arc::clone(&logging_settings)))
+        .manage(AppState::new(
+            Arc::clone(&logging_settings),
+            early_settings,
+            Some(early_configs.clone()),
+        ))
         .invoke_handler(tauri::generate_handler![
             commands::greet,
             commands::get_app_info,

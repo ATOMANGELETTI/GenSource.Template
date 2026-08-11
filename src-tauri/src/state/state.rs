@@ -16,11 +16,17 @@ pub struct AppState {
 }
 
 impl AppState {
-    pub fn new(logging: Arc<RwLock<LoggingSettings>>) -> Self {
+    /// Create state seeded from disk so early `get_settings` / `get_app_info`
+    /// (e.g. splash before `.setup` finishes) do not see blank defaults.
+    pub fn new(
+        logging: Arc<RwLock<LoggingSettings>>,
+        settings: AppSettings,
+        configs_dir: Option<PathBuf>,
+    ) -> Self {
         Self {
             greet_count: Mutex::new(0),
-            configs_dir: Mutex::new(None),
-            settings: Mutex::new(AppSettings::default()),
+            configs_dir: Mutex::new(configs_dir),
+            settings: Mutex::new(settings),
             logging,
         }
     }
@@ -28,6 +34,10 @@ impl AppState {
 
 impl Default for AppState {
     fn default() -> Self {
-        Self::new(Arc::new(RwLock::new(LoggingSettings::default())))
+        Self::new(
+            Arc::new(RwLock::new(LoggingSettings::default())),
+            AppSettings::default(),
+            None,
+        )
     }
 }

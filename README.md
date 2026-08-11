@@ -31,7 +31,8 @@ npm run dev
 | `npm run build` | Typecheck + Vite production build |
 | `npm run tauri:build` | Windows NSIS bundle |
 | `npm test` | Vitest unit tests |
-| `npm run test:e2e` | Playwright |
+| `npm run test:e2e` | Playwright visual + e2e (port 1421) |
+| `npm run test:e2e:update` | Regenerate Playwright screenshot baselines |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | `tsc -b` |
 

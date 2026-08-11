@@ -22,10 +22,21 @@ shared base for a suite of GenSource apps.
 - `styles/modules/motion/transitions.css` — intentional motion.
 - `styles/modules/context-menus/` — menu styles.
 - `types/{index,tauri}.ts` — shared TS / IPC types.
-- `lib/window.ts` — thin window API wrappers.
+- `lib/window.ts` — thin window API wrappers (browser-safe for Vite e2e).
+- `lib/e2e-window.ts` — `?window=` / `?e2e=1` helpers for Playwright.
 
 New pages go under `src/app/pages/`. New feature CSS goes under
 `styles/modules/<area>/` and is imported from `styles/index.css`.
+
+## Testing — `tests/`
+
+- `tests/unit/` — Vitest (`npm test`).
+- `tests/e2e/` — Playwright visual + interaction specs (`npm run test:e2e`,
+  dedicated Vite port **1421**).
+- `tests/e2e/baselines/` — committed screenshot baselines.
+- `tests/artifacts/` — gitignored reports/traces (Playwright output).
+- `tests/surfaces.json` — required surface registry for `/tester-pro`.
+- Update baselines intentionally: `npm run test:e2e:update`.
 
 ## Config centralization — `src/configs/`
 

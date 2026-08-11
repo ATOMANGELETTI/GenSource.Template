@@ -15,10 +15,16 @@ import {
   ShowIcon,
 } from "../../components/icons/MenuIcons";
 import {
+  applySettingsToDom,
   fetchAppInfo,
   initSettingsFromBackend,
   subscribeSettingsChanges,
 } from "../../lib/settings";
+import {
+  E2E_APP_INFO,
+  E2E_DEFAULT_SETTINGS,
+  isE2eMode,
+} from "../../lib/e2e-window";
 import { useKeybindingLabels } from "../../lib/keybindings";
 import {
   hideMainWindow,
@@ -46,14 +52,22 @@ export default function TrayMenuWindow() {
     let unlisten: (() => void) | undefined;
 
     void (async () => {
+      if (isE2eMode()) {
+        applySettingsToDom(E2E_DEFAULT_SETTINGS);
+        setInfo(E2E_APP_INFO);
+        return;
+      }
+
       try {
-        await initSettingsFromBackend();
+        // Subscribe before fetch so a setup-time `settings-changed` emit is
+        // not missed if this window boots before `.setup` finishes.
         const stop = await subscribeSettingsChanges();
         if (cancelled) {
           stop();
         } else {
           unlisten = stop;
         }
+        await initSettingsFromBackend();
       } catch (error) {
         console.warn("Failed to initialize tray settings from backend", error);
       }
@@ -92,19 +106,23 @@ export default function TrayMenuWindow() {
 
     void refresh();
 
-    void getCurrentWindow()
-      .onFocusChanged(({ payload: focused }) => {
-        if (focused) {
-          void refresh();
-        }
-      })
-      .then((stop) => {
-        if (cancelled) {
-          stop();
-        } else {
-          unlisten = stop;
-        }
-      });
+    try {
+      void getCurrentWindow()
+        .onFocusChanged(({ payload: focused }) => {
+          if (focused) {
+            void refresh();
+          }
+        })
+        .then((stop) => {
+          if (cancelled) {
+            stop();
+          } else {
+            unlisten = stop;
+          }
+        });
+    } catch (error) {
+      console.warn("Tray focus listener unavailable", error);
+    }
 
     return () => {
       cancelled = true;

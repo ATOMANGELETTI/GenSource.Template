@@ -13,7 +13,9 @@ import {
   toggleMaximize,
 } from "./lib/window";
 import { zoomIn, zoomOut, zoomReset } from "./lib/zoom";
+import { isE2eMode, E2E_APP_INFO, E2E_DEFAULT_SETTINGS } from "./lib/e2e-window";
 import {
+  applySettingsToDom,
   fetchAppInfo,
   initSettingsFromBackend,
   subscribeSettingsChanges,
@@ -59,14 +61,22 @@ export default function App() {
     let unlisten: (() => void) | undefined;
 
     void (async () => {
+      if (isE2eMode()) {
+        applySettingsToDom(E2E_DEFAULT_SETTINGS);
+        setAppInfo(E2E_APP_INFO);
+        return;
+      }
+
       try {
-        await initSettingsFromBackend();
+        // Subscribe before fetch so a setup-time `settings-changed` emit is
+        // not missed if this window boots before `.setup` finishes.
         const stop = await subscribeSettingsChanges();
         if (cancelled) {
           stop();
         } else {
           unlisten = stop;
         }
+        await initSettingsFromBackend();
       } catch (error) {
         console.warn("Failed to initialize settings from backend", error);
       }

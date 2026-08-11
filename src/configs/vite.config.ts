@@ -30,7 +30,11 @@ export default defineConfig({
     watch: {
       // Windows can EBUSY-lock TTFs once another process touches them; fonts
       // don't need HMR, so skip watching public/fonts.
-      ignored: ['**/src-tauri/**', '**/public/fonts/**'],
+      ignored: [
+        '**/src-tauri/**',
+        '**/public/fonts/**',
+        '**/tests/artifacts/**',
+      ],
     },
   },
 });

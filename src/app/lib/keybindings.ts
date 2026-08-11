@@ -2,8 +2,12 @@ import { invoke } from "@tauri-apps/api/core";
 import { useEffect, useRef, useState } from "react";
 
 import type { Keybinding } from "../types";
+import { isE2eMode } from "./e2e-window";
 
 export async function fetchKeybindings(): Promise<Keybinding[]> {
+  if (isE2eMode()) {
+    return [];
+  }
   return invoke<Keybinding[]>("get_keybindings");
 }
 
@@ -16,11 +20,15 @@ export function useKeybindingLabels() {
 
   useEffect(() => {
     let cancelled = false;
-    void fetchKeybindings().then((loaded) => {
-      if (!cancelled) {
-        setBindings(loaded);
-      }
-    });
+    void fetchKeybindings()
+      .then((loaded) => {
+        if (!cancelled) {
+          setBindings(loaded);
+        }
+      })
+      .catch((error: unknown) => {
+        console.warn("Failed to load keybindings", error);
+      });
     return () => {
       cancelled = true;
     };
@@ -94,11 +102,15 @@ export function useLocalShortcuts(handlers: ShortcutHandlers): void {
     let cancelled = false;
     let bindings: Keybinding[] = [];
 
-    void fetchKeybindings().then((loaded) => {
-      if (!cancelled) {
-        bindings = loaded;
-      }
-    });
+    void fetchKeybindings()
+      .then((loaded) => {
+        if (!cancelled) {
+          bindings = loaded;
+        }
+      })
+      .catch((error: unknown) => {
+        console.warn("Failed to load keybindings for shortcuts", error);
+      });
 
     const onKeyDown = (event: KeyboardEvent) => {
       for (const binding of bindings) {

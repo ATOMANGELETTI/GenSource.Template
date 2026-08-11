@@ -16,6 +16,7 @@
     "test": "vitest run --config src/configs/vitest.config.ts",
     "test:watch": "vitest --config src/configs/vitest.config.ts",
     "test:e2e": "playwright test --config src/configs/playwright.config.ts",
+    "test:e2e:update": "playwright test --config src/configs/playwright.config.ts --update-snapshots",
     "lint": "eslint -c src/configs/eslint.config.js .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

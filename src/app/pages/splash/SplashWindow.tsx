@@ -8,6 +8,7 @@ import {
   SPLASH_MIN_DURATION_MS,
   type SplashMilestone,
 } from "../../lib/splash-progress";
+import { isE2eMode } from "../../lib/e2e-window";
 import {
   fetchAppInfo,
   initSettingsFromBackend,
@@ -15,16 +16,20 @@ import {
 } from "../../lib/settings";
 import { showMainWindow } from "../../lib/window";
 
+/** Pinned progress for Playwright screenshots (`?e2e=1`). */
+const E2E_FROZEN_PROGRESS = 0.6;
+
 /**
  * Dedicated `splash` Tauri window: Nord-themed boot screen with a particle
  * field and hybrid loading bar. Shows `main` (unless startMinimized), then
  * closes itself.
  */
 export default function SplashWindow() {
+  const e2e = isE2eMode();
   const [title, setTitle] = useState("GenSource Template");
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(e2e ? E2E_FROZEN_PROGRESS : 0);
   const [exiting, setExiting] = useState(false);
-  const [particlesActive, setParticlesActive] = useState(true);
+  const [particlesActive, setParticlesActive] = useState(!e2e);
 
   const milestonesRef = useRef(new Set<SplashMilestone>());
   const startRef = useRef(performance.now());
@@ -41,12 +46,16 @@ export default function SplashWindow() {
     };
 
     void (async () => {
+      // Skip Tauri IPC in Playwright — invoke can hang without a WebView.
+      if (e2e) {
+        mark("settings");
+        mark("appinfo");
+        return;
+      }
+
       try {
-        const settings = await initSettingsFromBackend();
-        if (!cancelled) {
-          startMinimizedRef.current = Boolean(settings.startMinimized);
-          mark("settings");
-        }
+        // Subscribe before fetch so a setup-time `settings-changed` emit is
+        // not missed (packaged splash can race `.setup` otherwise).
         const stop = await subscribeSettingsChanges((next) => {
           startMinimizedRef.current = Boolean(next.startMinimized);
         });
@@ -54,6 +63,11 @@ export default function SplashWindow() {
           stop();
         } else {
           unlisten = stop;
+        }
+        const settings = await initSettingsFromBackend();
+        if (!cancelled) {
+          startMinimizedRef.current = Boolean(settings.startMinimized);
+          mark("settings");
         }
       } catch (error) {
         console.warn("Splash: settings init failed", error);
@@ -76,6 +90,16 @@ export default function SplashWindow() {
         }
       }
     })();
+
+    // Visual e2e: keep a frozen frame (no handoff / close / particles).
+    if (e2e) {
+      setParticlesActive(false);
+      setProgress(E2E_FROZEN_PROGRESS);
+      return () => {
+        cancelled = true;
+        unlisten?.();
+      };
+    }
 
     const handoff = async () => {
       if (handedOffRef.current || cancelled) {
@@ -142,7 +166,7 @@ export default function SplashWindow() {
       cancelAnimationFrame(frameId);
       unlisten?.();
     };
-  }, []);
+  }, [e2e]);
 
   const onDrag = (event: MouseEvent<HTMLDivElement>) => {
     // Avoid starting a drag from the loading bar track itself.

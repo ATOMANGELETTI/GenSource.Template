@@ -76,6 +76,12 @@ flowchart TD
 - [`agents/template-debugger.md`](agents/template-debugger.md)
 - [`agents/placeholder-implementer.md`](agents/placeholder-implementer.md)
 
+### Project skills (testing)
+
+- [`skills/tester-pro/SKILL.md`](skills/tester-pro/SKILL.md) — run suites first,
+  then fill gaps from [`tests/surfaces.json`](../tests/surfaces.json)
+  (`/tester-pro` slash command).
+
 ### Creating a new skill
 
 Use [`create-skill-pro`](skills/create-skill-pro/SKILL.md). It scaffolds a
@@ -112,6 +118,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Canonical agent instructions live in `.cursor/AGENTS.md`; root `AGENTS.md` only points there.
 - Runtime app config lives in `other/configs/` (`appinfo.json`, `settings.json`, `keybindings.json`) and ships beside the installed `.exe` under `other/`.
 - `settings.json` and `keybindings.json` are user-editable JSONC; prefer `appinfo.json` visible but read-only when the platform allows.
+- Opaque app-managed persistence uses `@tauri-apps/plugin-store` via `src/app/lib/app-store.ts` (AppData `app-state.json`); do not route `other/configs/` through the store.
 - Icon sources live in `public/icons/` (`icon.svg`, `icon.png`, `icon.ico`); tray/taskbar/window icons are the bundled set under `src-tauri/icons/` — regenerate with `npm run tauri -- icon ./public/icons/icon.png` after changing sources (updating `public/icons/` alone does not refresh tray/taskbar).
 - Preserve the `src-tauri/src/mdoels/` directory name unless explicitly asked to rename it.
 - Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, Playwright, or knip configs at the repo root.

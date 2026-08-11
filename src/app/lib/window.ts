@@ -1,12 +1,23 @@
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
-import { getCurrentWindow } from "@tauri-apps/api/window";
+import { getCurrentWindow, type Window } from "@tauri-apps/api/window";
 
-export function getWindow() {
-  return getCurrentWindow();
+/**
+ * Current Tauri window, or `null` when running outside a WebView (Vite e2e).
+ */
+export function getWindow(): Window | null {
+  try {
+    return getCurrentWindow();
+  } catch {
+    return null;
+  }
 }
 
 async function getMainWindow(): Promise<WebviewWindow | null> {
-  return WebviewWindow.getByLabel("main");
+  try {
+    return await WebviewWindow.getByLabel("main");
+  } catch {
+    return null;
+  }
 }
 
 /** Whether the `main` window is currently visible (used by the tray flyout). */
@@ -15,7 +26,11 @@ export async function isMainWindowVisible(): Promise<boolean> {
   if (!main) {
     return false;
   }
-  return main.isVisible();
+  try {
+    return await main.isVisible();
+  } catch {
+    return false;
+  }
 }
 
 export async function showMainWindow(): Promise<void> {
@@ -36,22 +51,46 @@ export async function hideMainWindow(): Promise<void> {
 }
 
 export async function closeWindow(): Promise<void> {
-  await getCurrentWindow().close();
+  const win = getWindow();
+  if (!win) {
+    return;
+  }
+  await win.close();
 }
 
 export async function minimizeWindow(): Promise<void> {
-  await getCurrentWindow().minimize();
+  const win = getWindow();
+  if (!win) {
+    return;
+  }
+  await win.minimize();
 }
 
 export async function toggleMaximize(): Promise<void> {
-  await getCurrentWindow().toggleMaximize();
+  const win = getWindow();
+  if (!win) {
+    return;
+  }
+  await win.toggleMaximize();
 }
 
 export async function isWindowMaximized(): Promise<boolean> {
-  return getCurrentWindow().isMaximized();
+  const win = getWindow();
+  if (!win) {
+    return false;
+  }
+  try {
+    return await win.isMaximized();
+  } catch {
+    return false;
+  }
 }
 
 /** Starts an OS-native window drag, used by the titlebar menu's "Move" row. */
 export async function moveWindow(): Promise<void> {
-  await getCurrentWindow().startDragging();
+  const win = getWindow();
+  if (!win) {
+    return;
+  }
+  await win.startDragging();
 }

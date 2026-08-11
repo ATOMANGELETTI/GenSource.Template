@@ -17,11 +17,15 @@ export default function TrafficLights({ className }: TrafficLightsProps) {
 
   useEffect(() => {
     const win = getWindow();
+    if (!win) {
+      return;
+    }
+
     let unlisten: (() => void) | undefined;
 
-    isWindowMaximized().then(setMaximized);
+    void isWindowMaximized().then(setMaximized);
 
-    win
+    void win
       .onResized(async () => {
         setMaximized(await isWindowMaximized());
       })
