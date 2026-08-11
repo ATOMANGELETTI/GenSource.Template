@@ -1,6 +1,27 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { resolveTheme } from "@/lib/theme";
+
+function mockPrefersColorScheme(dark: boolean): void {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    configurable: true,
+    value: vi.fn().mockImplementation((query: string) => ({
+      matches: dark && query.includes("prefers-color-scheme: dark"),
+      media: query,
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  });
+}
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("resolveTheme", () => {
   it("keeps concrete nord-* theme ids", () => {
@@ -22,10 +43,13 @@ describe("resolveTheme", () => {
     expect(resolveTheme("")).toBe("nord-polar-night");
   });
 
-  it('maps "system" to polar-night or snow-storm from OS preference', () => {
-    const dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    expect(resolveTheme("system")).toBe(
-      dark ? "nord-polar-night" : "nord-snow-storm",
-    );
+  it('maps "system" to polar-night when OS prefers dark', () => {
+    mockPrefersColorScheme(true);
+    expect(resolveTheme("system")).toBe("nord-polar-night");
+  });
+
+  it('maps "system" to snow-storm when OS prefers light', () => {
+    mockPrefersColorScheme(false);
+    expect(resolveTheme("system")).toBe("nord-snow-storm");
   });
 });

@@ -16,13 +16,13 @@
 // =============================================================================
 {
   // Theme preference applied to the UI shell.
-  // Allowed values:
-  //   "nord-polar-night"  — dark (default)
-  //   "nord-snow-storm"   — light
-  //   "nord-frost"        — cool accent variant
-  //   "nord-aurora"       — warm accent variant
-  //   "system"            — follow OS light/dark (maps to polar-night / snow-storm)
-  "theme": "aurora",
+  // Allowed values (full id or short alias):
+  //   "nord-polar-night" | "polar-night"  — dark Polar Night base
+  //   "nord-snow-storm"  | "snow-storm"   — light Snow Storm base
+  //   "nord-frost"       | "frost"        — cool Frost-forward dark
+  //   "nord-aurora"      | "aurora"       — warm Aurora-forward dark
+  //   "system"                            — OS light/dark → snow-storm / polar-night
+  "theme": "nord-aurora",
 
   // CSS font-family for the app chrome (must be installed on the machine,
   // or a web-safe / bundled face the frontend already loads).
