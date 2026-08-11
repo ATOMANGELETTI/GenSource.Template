@@ -16,6 +16,5 @@
     "./vitest.config.ts",
     "./playwright.config.ts",
     "./middleware.ts"
-  ],
-  "exclude": ["./knip.ts"]
+  ]
 }

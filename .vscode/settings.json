@@ -4,9 +4,5 @@
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.preventPinnedEditorClose": "keyboardAndMouse",
     "workbench.editor.highlightModifiedTabs": true,
-    "workbench.editor.showIcons": true,
-
-    // Knip lives under src/configs/ (not repo root); without this the
-    // extension falls back to defaults and flags kitchen-sink deps unused.
-    "knip.configFilePath": "src/configs/knip.ts"
+    "workbench.editor.showIcons": true
 }

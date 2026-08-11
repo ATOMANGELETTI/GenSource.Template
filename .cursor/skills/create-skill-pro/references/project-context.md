@@ -43,7 +43,7 @@ New pages go under `src/app/pages/`. New feature CSS goes under
 All tooling config lives under `src/configs/` (not the repo root):
 
 - `vite.config.ts`, `vitest.config.ts`, `playwright.config.ts`
-- `eslint.config.js`, `knip.ts`, `middleware.ts`
+- `eslint.config.js`, `middleware.ts`
 - `tsconfig.{base,app,build,e2e,node,test}.json`
 
 Root `tsconfig.json` references these. Do not recreate tooling configs at the
@@ -71,7 +71,7 @@ repo root.
 ## Packaging & tooling
 
 - Windows installer: `src-tauri/nsis/installer.nsh`, `other/utilities/7zr.exe`.
-- npm (`.node-version`, `.npmrc`), commitlint, release-it, prettier, knip.
+- npm (`.node-version`, `.npmrc`), commitlint, release-it, prettier.
 - Envs: `.env`, `.env.dev`, `.env.local`, `.env.prod`, `.env.example` (names only).
 
 ## Cursor-native agent config

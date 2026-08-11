@@ -18,7 +18,7 @@ below when extending it.
   Night with a macOS-like traffic-light titlebar.
 - **Config centralization** — all tooling config lives under `src/configs/`
   instead of the repo root: `vite.config.ts`, `vitest.config.ts`,
-  `playwright.config.ts`, `eslint.config.js`, `knip.ts`, `middleware.ts`, and
+  `playwright.config.ts`, `eslint.config.js`, `middleware.ts`, and
   a `tsconfig.*.json` split by purpose (`base`/`app`/`build`/`e2e`/`node`/
   `test`). The root `tsconfig.json` references these.
 - **Backend** — `src-tauri/src/` (`lib.rs`, `main.rs`, `commands/commands.rs`,
@@ -29,7 +29,7 @@ below when extending it.
 - **Packaging** — Windows-first, via `src-tauri/nsis/installer.nsh` and
   `other/utilities/7zr.exe`.
 - **Tooling** — npm (`.node-version`, `.npmrc`), commitlint, release-it,
-  prettier, knip, Vitest, Playwright.
+  prettier, Vitest, Playwright.
 - **Environments** — `.env`, `.env.dev`, `.env.local`, `.env.prod`,
   `.env.example` (names only in `.env.example`; never real secrets).
 - **TypeScript** — pin the newest 5.x that `typescript-eslint` supports
@@ -113,7 +113,6 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Titlebar, content, and tray context menus should share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus).
 - Keep usage comments in `other/configs/settings.json` and `keybindings.json` (JSONC).
 - Packaged splash and early chrome must follow `settings.json` theme (not a hard-coded dark/Polar Night default).
-- Keep knip (`src/configs/knip.ts`) entry coverage for intentionally shipped modules (`src/app/lib/app-store.ts`, `tauri-plugin-bindings.ts`) so kitchen-sink `@tauri-apps/*` deps are not flagged unused.
 
 ## Learned Workspace Facts
 
@@ -123,7 +122,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Opaque app-managed persistence uses `@tauri-apps/plugin-store` via `src/app/lib/app-store.ts` (AppData `app-state.json`); do not route `other/configs/` through the store.
 - Icon sources live in `public/icons/` (`icon.svg`, `icon.png`, `icon.ico`); tray/taskbar/window icons are the bundled set under `src-tauri/icons/` — regenerate with `npm run tauri -- icon ./public/icons/icon.png` after changing sources (updating `public/icons/` alone does not refresh tray/taskbar).
 - Preserve the `src-tauri/src/mdoels/` directory name unless explicitly asked to rename it.
-- Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, Playwright, or knip configs at the repo root.
+- Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, or Playwright configs at the repo root.
 - Themes are independent Nord palettes (polar-night, snow-storm, frost, aurora) with fixed `*-dark`/`*-light` variants; `system`, `frost`, and `aurora` follow OS light/dark via `settings.json` `theme`.
 - Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`; exclude the ephemeral `tray-menu` window from `tauri-plugin-window-state` so it does not restore/auto-open on launch.
 - Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/` (tee from packaging/build wrappers); log files named `[TIME]_[DATE]_[APPVERSION].log`.

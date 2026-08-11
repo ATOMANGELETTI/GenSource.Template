@@ -11,7 +11,6 @@ alwaysApply: false
   `playwright.config.*`, or `eslint.config.*`.
 - Root `tsconfig.json` should continue to **reference** the split configs
   (`tsconfig.app.json`, `tsconfig.node.json`, etc.), not replace them.
-- Knip lives at `src/configs/knip.ts`.
 
 ```text
 ❌ BAD: new eslint.config.js at repo root
