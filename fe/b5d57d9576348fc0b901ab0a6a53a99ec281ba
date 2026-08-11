@@ -1,0 +1,176 @@
+tests/e2e/about.spec.ts
+  s_6de3f94e03564e::t_099918ef6218b8 1-13
+src/app/App.tsx
+  s_6de3f94e03564e::t_b1f8d89f1a4eda 18
+  s_095f409b4b23ff::t_b438754efb4e17 71-72,79
+  s_6de3f94e03564e::t_3a377d9cdb9540 64-69
+  s_6de3f94e03564e::t_3f6e19cedef330 16
+src-tauri/src/lib.rs
+  s_095f409b4b23ff::t_944b8021bdc288 121-125
+  s_095f409b4b23ff::t_012b32bf3b85f7 53-55
+tests/e2e/themes.spec.ts
+  s_6de3f94e03564e::t_cf5b9e952fdc0d 1-22
+src/app/lib/app-store.ts
+  s_092bf3f47e4e59::t_28083fcfb6e42d 1-50
+src/configs/playwright.config.ts
+  s_6de3f94e03564e::t_97cd914048472f 16-19,30-36,40-42,47-51
+  s_6de3f94e03564e::t_38a876043708f7 9-12,38,55-56,58
+tests/e2e/helpers/app.ts
+  s_6de3f94e03564e::t_39dfc10e2b38a9 1-37,57-99
+  s_6de3f94e03564e::t_37f2f5c09ec5dd 38-56
+src/app/pages/tray-menu/TrayMenuWindow.tsx
+  s_6de3f94e03564e::t_6baa88ff467fd4 55-60
+  s_095f409b4b23ff::t_8ac23cdc49fde5 62-63,70
+  s_6de3f94e03564e::t_af4f9d0454e035 18,23-27,110-121
+  s_6de3f94e03564e::t_f53791f81ba782 109
+  s_6de3f94e03564e::t_51b5f893a8d41e 122-124
+  h_90ad036e211778 125
+package.json
+  s_6de3f94e03564e::t_c7012839864bab 19
+src-tauri/src/state/state.rs
+  s_095f409b4b23ff::t_026c4d8f6cc347 19-25,28-29,37-41
+README.md
+  s_6de3f94e03564e::t_74967933ab51e8 34-35
+tests/unit/settings-font.test.ts
+  s_6de3f94e03564e::t_0af1ffd4e3216a 1-25
+src/configs/.tsbuildinfo-app
+  s_092bf3f47e4e59::t_5d52109a28c90c 1
+src/configs/vite.config.ts
+  s_6de3f94e03564e::t_32577586f002b4 33-37
+src/app/lib/settings.ts
+  s_6de3f94e03564e::t_a028b67fa214e1 61-62,73-74
+other/documents/notepads/commands.txt
+  h_90ad036e211778 1-10
+.cursorignore
+  h_90ad036e211778 15-17
+tests/e2e/shell.spec.ts
+  s_6de3f94e03564e::t_ed4d8a734235e9 3-12
+tests/e2e/tray.spec.ts
+  s_6de3f94e03564e::t_cf9c50176c37be 1-14
+tests/surfaces.json
+  s_6de3f94e03564e::t_8dfb2abcf551cd 1-78
+.cursor/commands/tester-pro.md
+  s_6de3f94e03564e::t_7ab320113be654 1-6
+.cursor/AGENTS.md
+  s_6de3f94e03564e::t_bcb9a39422d347 79-83
+  s_6de3f94e03564e::t_92eba135fb7ce1 84
+  s_092bf3f47e4e59::t_7ecf030f9ae8bb 121
+tests/unit/splash-progress.test.ts
+  s_6de3f94e03564e::t_da84ac26d3d6d2 1-75
+src/app/components/ui/TrafficLights.tsx
+  s_6de3f94e03564e::t_a06bdeecb8b67b 20-23,26,28
+tests/unit/e2e-window.test.ts
+  s_6de3f94e03564e::t_292b3be963caa4 1-43
+src/app/lib/e2e-window.ts
+  s_6de3f94e03564e::t_a5a7c5b46a364a 3-4,9-26
+src/configs/.tsbuildinfo-node
+  s_6de3f94e03564e::t_05ac4a67ce469a 1
+.cursor/skills/tester-pro/SKILL.md
+  s_6de3f94e03564e::t_f1e2dd49a6329c 11-74
+  s_6de3f94e03564e::t_61f0bf4672585f 1-10
+.cursor/skills/create-skill-pro/references/project-context.md
+  s_6de3f94e03564e::t_b5ab858e7045b5 25-26,31-40
+src/app/pages/splash/SplashWindow.tsx
+  s_6de3f94e03564e::t_37cb580b45d143 11,19-21,28,30,32,71,94-103,169
+  s_6de3f94e03564e::t_1bd89b94eb670d 49-55
+  s_095f409b4b23ff::t_596631ae35794e 57-58,67-70
+src/app/lib/window.ts
+  s_6de3f94e03564e::t_1e096198fe0571 2,4-12,16-20,29-33,54-58,62-66,70-74,78-86,91-95
+tests/e2e/menus.spec.ts
+  s_6de3f94e03564e::t_fa44e1b1f57f03 1-24
+tests/e2e/fonts.spec.ts
+  s_6de3f94e03564e::t_6b19b078e542fd 1-23
+tests/e2e/splash.spec.ts
+  s_6de3f94e03564e::t_a2cfbe721b7fc0 1-12
+src/app/lib/keybindings.ts
+  s_6de3f94e03564e::t_28b2ad650a2748 23-31
+  s_6de3f94e03564e::t_baf2349a11f647 5,8-10
+  s_6de3f94e03564e::t_5ab0bd95b9ad95 105-113
+src/configs/playwright.config.d.ts.map
+  s_6de3f94e03564e::t_53c2c87eef51d0 1
+src/configs/vite.config.d.ts.map
+  s_dd00ae57f6f6fc::t_c3da84717861e5 1
+tests/e2e/baselines/about.spec.ts/about-dialog.png
+  s_6de3f94e03564e::t_27eb6c4bb202b8 1-3
+tests/e2e/baselines/fonts.spec.ts/font-fira-code.png
+  s_6de3f94e03564e::t_ad68ea79b80f51 1-3
+tests/e2e/baselines/fonts.spec.ts/font-plus-jakarta-sans.png
+  s_6de3f94e03564e::t_717016b6c371a3 1-3
+tests/e2e/baselines/fonts.spec.ts/font-terminus.png
+  s_6de3f94e03564e::t_8e9e8159b240b3 1-3
+tests/e2e/baselines/fonts.spec.ts/font-ubuntu.png
+  s_6de3f94e03564e::t_f4ce08fccbe827 1-3
+tests/e2e/baselines/menus.spec.ts/menu-content.png
+  s_6de3f94e03564e::t_ef84dd64a28849 1-3
+tests/e2e/baselines/menus.spec.ts/menu-titlebar.png
+  s_6de3f94e03564e::t_e3e6a0e768b5c4 1-3
+tests/e2e/baselines/shell.spec.ts/shell-default.png
+  s_6de3f94e03564e::t_7420df13d3bac0 1-3
+tests/e2e/baselines/tray.spec.ts/tray-menu.png
+  s_6de3f94e03564e::t_c157776449f4e5 1-3
+.cursor/hooks/state/continual-learning.json
+  h_90ad036e211778 4,6
+src/configs/.tsbuildinfo-e2e
+  h_90ad036e211778 1
+src/configs/.tsbuildinfo-test
+  h_90ad036e211778 1
+tests/e2e/baselines/splash.spec.ts/splash-frozen.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-aurora-light.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-aurora.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-frost-light.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-frost.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-polar-night.png
+  h_90ad036e211778 1-3
+tests/e2e/baselines/themes.spec.ts/theme-nord-snow-storm.png
+  h_90ad036e211778 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "feb5d57d9576348fc0b901ab0a6a53a99ec281ba",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_092bf3f47e4e59": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "a96a15fa-fa2a-4de8-94a3-a996373785fa",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_095f409b4b23ff": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "ea76f50d-4a54-432e-8e7f-325719ee2cbe",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_6de3f94e03564e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "e8bf9586-54bd-4c18-a4eb-a811e48e33c5",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_dd00ae57f6f6fc": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "71984593-b4af-4859-9d8a-7566a85474cf",
+        "model": "grok-4.5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
