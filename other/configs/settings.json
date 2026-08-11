@@ -6,36 +6,44 @@
 //
 // How to use:
 //   1. Edit values below and save.
-//   2. Changes are picked up automatically while the app is running
-//      (file watcher). You can also use Ctrl+, to open this folder.
+//   2. Changes apply automatically while the app is running (file watcher).
+//      Use Ctrl+, to open this folder from the app.
 //   3. Unknown keys are ignored; missing keys fall back to defaults.
 //   4. Comments (// and /* */) are allowed — this is JSONC, not strict JSON.
 //
 // Do NOT store window width/height/position here (geometry is handled by the
-// window-state plugin and writing it caused move/flash issues).
+// window-state plugin; writing it caused move/flash issues).
 // =============================================================================
 {
-  // Theme preference applied to the UI shell.
-  // Allowed values (full id or short alias):
-  //   "nord-polar-night" | "polar-night"  — fixed dark Polar Night
-  //   "nord-snow-storm"  | "snow-storm"   — fixed light Snow Storm
-  //   "nord-frost"       | "frost"        — Frost; follows OS light/dark
-  //   "nord-aurora"      | "aurora"       — Aurora; follows OS light/dark
-  //   "frost-dark" / "frost-light"        — lock Frost to one ambiance
-  //   "aurora-dark" / "aurora-light"      — lock Aurora to one ambiance
+  // Theme preference for the UI shell (case-insensitive; short aliases OK).
+  //
+  // Fixed (ignore OS light/dark):
+  //   "nord-polar-night" | "polar-night"     — dark Polar Night
+  //   "nord-snow-storm"  | "snow-storm"      — light Snow Storm
+  //   "nord-frost-dark"  | "frost-dark"      — Frost dark only
+  //   "nord-frost-light" | "frost-light"     — Frost light only
+  //   "nord-aurora-dark" | "aurora-dark"     — Aurora dark only
+  //   "nord-aurora-light"| "aurora-light"    — Aurora light only
+  //
+  // Follow OS light/dark (re-apply when the system scheme changes):
+  //   "system"                               — polar-night ↔ snow-storm
+  //   "nord-frost"       | "frost"           — frost dark ↔ frost light
+  //   "nord-aurora"      | "aurora"          — aurora dark ↔ aurora light
   "theme": "nord-polar-night",
 
-  // CSS font-family for the app chrome (must be installed on the machine,
-  // or a web-safe / bundled face the frontend already loads).
+  // Font family for the app chrome.
+  // Known mapped faces (recommended):
+  //   "Plus Jakarta Sans" (default), "Fira Code", "Ubuntu", "Terminus"
+  // Any other name is used as a CSS font-family with Plus Jakarta Sans fallback.
   "fontFamily": "Plus Jakarta Sans",
 
-  // Base UI font size in pixels (number, e.g. 12–18).
+  // Base UI font size in CSS pixels (positive number; default 14).
   "fontSize": 14,
 
-  // If true, the main window starts hidden (useful with tray / global show).
+  // If true, hide the main window on launch (pair with tray / window.show).
   "startMinimized": false,
 
-  // If true, register the app to launch when the OS signs in.
+  // If true, launch the app when the OS signs in.
   "autostart": false,
 
   // If true, keep the main window above other windows.
