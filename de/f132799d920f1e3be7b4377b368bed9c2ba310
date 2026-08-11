@@ -1,0 +1,40 @@
+src/app/styles/modules/context-menus/tray-window.css
+  s_613179f49ab9a9::t_242a04377577f5 2-10,20
+other/configs/settings.json
+  h_90ad036e211778 32
+src/app/pages/tray-menu/TrayMenuWindow.tsx
+  s_613179f49ab9a9::t_50e32719bcd2f0 17-21,42-43,45-69,108-112,129-130
+  s_613179f49ab9a9::t_83959f03dbfc6e 172,174-184
+  s_613179f49ab9a9::t_78f2ba8e1c2d27 15,23-28,40,70-107,121-128
+src-tauri/capabilities/default.json
+  s_613179f49ab9a9::t_e2b85ebd72fa54 19
+src/configs/.tsbuildinfo-app
+  s_613179f49ab9a9::t_3a720efa489d32 1
+src/app/components/icons/MenuIcons.tsx
+  s_613179f49ab9a9::t_d193e3ba078188 156-164
+src/app/lib/window.ts
+  s_613179f49ab9a9::t_6fe73abe834b86 1,8-37
+.cursor/hooks/state/continual-learning.json
+  h_90ad036e211778 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.21",
+  "base_commit_sha": "def132799d920f1e3be7b4377b368bed9c2ba310",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_613179f49ab9a9": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "c3729cbf-2fd2-488a-abef-bca3d26825c8",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
