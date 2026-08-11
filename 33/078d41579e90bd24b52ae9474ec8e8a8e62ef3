@@ -1,0 +1,27 @@
+README.md
+  h_90ad036e211778 5,7,9
+  s_dfddecc4b21ed3::t_2604e2e4a41182 6,8,10
+.cursor/hooks/state/continual-learning.json
+  s_dfddecc4b21ed3::t_7158fa0f23f43c 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "33078d41579e90bd24b52ae9474ec8e8a8e62ef3",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_dfddecc4b21ed3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "7dbf18f2-dc76-4f6b-b15f-b0360f8fd28a",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
