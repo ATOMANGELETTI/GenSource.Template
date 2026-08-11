@@ -3,6 +3,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::mpsc;
+use std::sync::{Arc, RwLock};
 use std::thread;
 use std::time::{Duration, Instant};
 
@@ -13,8 +14,11 @@ use serde::de::DeserializeOwned;
 use tauri::{AppHandle, Emitter, Manager, Runtime, WebviewWindow};
 use tauri_plugin_autostart::ManagerExt as AutostartExt;
 use tauri_plugin_global_shortcut::{GlobalShortcutExt, ShortcutState};
+use time::OffsetDateTime;
 
-use crate::mdoels::{AppInfo, AppInfoFile, AppSettings, KeybindingScope, KeybindingsFile};
+use crate::mdoels::{
+    AppInfo, AppInfoFile, AppSettings, KeybindingScope, KeybindingsFile, LoggingSettings,
+};
 use crate::state::AppState;
 
 pub const SETTINGS_CHANGED_EVENT: &str = "settings-changed";
@@ -22,21 +26,22 @@ pub const SETTINGS_CHANGED_EVENT: &str = "settings-changed";
 const SETTINGS_FILE: &str = "settings.json";
 const KEYBINDINGS_FILE: &str = "keybindings.json";
 const APPINFO_FILE: &str = "appinfo.json";
+const LOGGING_FILE: &str = "logging.json";
 
 const DEFAULT_SETTINGS_JSON: &str = include_str!("../../../other/configs/settings.json");
 const DEFAULT_KEYBINDINGS_JSON: &str = include_str!("../../../other/configs/keybindings.json");
 const DEFAULT_APPINFO_JSON: &str = include_str!("../../../other/configs/appinfo.json");
+const DEFAULT_LOGGING_JSON: &str = include_str!("../../../other/configs/logging.json");
 
-/// Resolve the live `other/configs` directory.
+/// Resolve a directory under the live `other/` tree (no `AppHandle` required).
 ///
-/// Dev (`tauri::is_dev()`): repo `other/configs` via `CARGO_MANIFEST_DIR`
-/// (bundle resources may also exist under `target/debug/other/` — ignore them).
-/// Packaged: `<exe_dir>/other/configs`, with `resource_dir()/other/configs` fallback.
-pub fn resolve_configs_dir<R: Runtime>(app: &AppHandle<R>) -> PathBuf {
+/// Dev (`tauri::is_dev()`): repo `other/<subdir>` via `CARGO_MANIFEST_DIR`.
+/// Packaged: `<exe_dir>/other/<subdir>`.
+pub fn resolve_other_subdir(subdir: &str) -> PathBuf {
+    let relative = PathBuf::from("other").join(subdir);
     let dev_dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("..")
-        .join("other")
-        .join("configs");
+        .join(&relative);
 
     if tauri::is_dev() {
         if let Ok(canonical) = fs::canonicalize(&dev_dir) {
@@ -45,25 +50,11 @@ pub fn resolve_configs_dir<R: Runtime>(app: &AppHandle<R>) -> PathBuf {
         return dev_dir;
     }
 
-    let packaged = std::env::current_exe()
+    if let Some(packaged) = std::env::current_exe()
         .ok()
-        .and_then(|exe| exe.parent().map(|p| p.join("other").join("configs")));
-
-    if let Some(ref path) = packaged {
-        if path.is_dir() {
-            return path.clone();
-        }
-    }
-
-    if let Ok(resource_dir) = app.path().resource_dir() {
-        let candidate = resource_dir.join("other").join("configs");
-        if candidate.is_dir() {
-            return candidate;
-        }
-    }
-
-    if let Some(path) = packaged {
-        return path;
+        .and_then(|exe| exe.parent().map(|p| p.join(&relative)))
+    {
+        return packaged;
     }
 
     if let Ok(canonical) = fs::canonicalize(&dev_dir) {
@@ -73,7 +64,47 @@ pub fn resolve_configs_dir<R: Runtime>(app: &AppHandle<R>) -> PathBuf {
     dev_dir
 }
 
-/// Ensure the three config files exist. Never overwrites an existing
+/// Resolve the live `other/configs` directory.
+///
+/// Dev (`tauri::is_dev()`): repo `other/configs` via `CARGO_MANIFEST_DIR`
+/// (bundle resources may also exist under `target/debug/other/` — ignore them).
+/// Packaged: `<exe_dir>/other/configs`, with `resource_dir()/other/configs` fallback.
+pub fn resolve_configs_dir<R: Runtime>(app: &AppHandle<R>) -> PathBuf {
+    let early = resolve_other_subdir("configs");
+
+    if tauri::is_dev() {
+        return early;
+    }
+
+    if early.is_dir() {
+        return early;
+    }
+
+    if let Ok(resource_dir) = app.path().resource_dir() {
+        let candidate = resource_dir.join("other").join("configs");
+        if candidate.is_dir() {
+            return candidate;
+        }
+    }
+
+    early
+}
+
+/// Runtime app log directory: `other/logging/app`.
+pub fn resolve_logging_app_dir() -> PathBuf {
+    resolve_other_subdir("logging/app")
+}
+
+/// Ensure config + logging directories and default files exist.
+pub fn ensure_logging_dirs() -> Result<(), String> {
+    let app_dir = resolve_logging_app_dir();
+    let build_dir = resolve_other_subdir("logging/build");
+    fs::create_dir_all(&app_dir).map_err(|e| format!("create logging app dir: {e}"))?;
+    fs::create_dir_all(&build_dir).map_err(|e| format!("create logging build dir: {e}"))?;
+    Ok(())
+}
+
+/// Ensure the config files exist. Never overwrites an existing
 /// `appinfo.json` (read-only / user-visible metadata).
 pub fn ensure_config_files(dir: &Path) -> Result<(), String> {
     fs::create_dir_all(dir).map_err(|e| format!("create configs dir: {e}"))?;
@@ -81,8 +112,32 @@ pub fn ensure_config_files(dir: &Path) -> Result<(), String> {
     write_default_if_missing(dir.join(SETTINGS_FILE), DEFAULT_SETTINGS_JSON)?;
     write_default_if_missing(dir.join(KEYBINDINGS_FILE), DEFAULT_KEYBINDINGS_JSON)?;
     write_default_if_missing(dir.join(APPINFO_FILE), DEFAULT_APPINFO_JSON)?;
+    write_default_if_missing(dir.join(LOGGING_FILE), DEFAULT_LOGGING_JSON)?;
 
     Ok(())
+}
+
+/// Build the per-run log file stem: `HH-MM-SS_YYYY-MM-DD_{version}`.
+pub fn format_log_stem(version: &str) -> String {
+    let now = OffsetDateTime::now_local().unwrap_or_else(|_| OffsetDateTime::now_utc());
+    let version = version.trim().replace(['/', '\\', ':', '*', '?', '"', '<', '>', '|'], "_");
+    format!(
+        "{:02}-{:02}-{:02}_{:04}-{:02}-{:02}_{version}",
+        now.hour(),
+        now.minute(),
+        now.second(),
+        now.year(),
+        u8::from(now.month()),
+        now.day(),
+    )
+}
+
+/// Prefer `appinfo.json` version; fall back to the given package version string.
+pub fn resolve_log_version(configs_dir: &Path, package_version: &str) -> String {
+    load_appinfo(configs_dir)
+        .map(|info| info.version)
+        .filter(|v| !v.trim().is_empty())
+        .unwrap_or_else(|| package_version.to_string())
 }
 
 fn write_default_if_missing(path: PathBuf, contents: &str) -> Result<(), String> {
@@ -153,6 +208,48 @@ pub fn load_appinfo(dir: &Path) -> Option<AppInfoFile> {
     let path = dir.join(APPINFO_FILE);
     let raw = fs::read_to_string(&path).ok()?;
     parse_jsonc(&raw).ok()
+}
+
+pub fn load_logging(dir: &Path) -> LoggingSettings {
+    let path = dir.join(LOGGING_FILE);
+    match fs::read_to_string(&path) {
+        Ok(raw) => match parse_jsonc::<LoggingSettings>(&raw) {
+            Ok(settings) => settings,
+            Err(err) => {
+                warn!("corrupt logging.json ({err}); merging with defaults");
+                merge_logging_partial(&raw).unwrap_or_default()
+            }
+        },
+        Err(err) => {
+            warn!("could not read logging.json ({err}); using defaults");
+            LoggingSettings::default()
+        }
+    }
+}
+
+fn merge_logging_partial(raw: &str) -> Option<LoggingSettings> {
+    let value: serde_json::Value = parse_jsonc(raw).ok()?;
+    let defaults = serde_json::to_value(LoggingSettings::default()).ok()?;
+    let merged = merge_json(defaults, value);
+    serde_json::from_value(merged).ok()
+}
+
+pub fn apply_logging_settings(logging: &Arc<RwLock<LoggingSettings>>, next: LoggingSettings) {
+    match logging.write() {
+        Ok(mut guard) => *guard = next,
+        Err(poisoned) => {
+            *poisoned.into_inner() = next;
+        }
+    }
+}
+
+pub fn reload_logging_settings(
+    configs_dir: &Path,
+    logging: &Arc<RwLock<LoggingSettings>>,
+) -> LoggingSettings {
+    let next = load_logging(configs_dir);
+    apply_logging_settings(logging, next.clone());
+    next
 }
 
 pub fn app_info_from_package<R: Runtime>(app: &AppHandle<R>) -> AppInfo {
@@ -307,6 +404,7 @@ pub fn reload_and_apply_settings<R: Runtime>(app: &AppHandle<R>) -> Result<AppSe
 
 pub fn start_settings_watcher<R: Runtime>(app: AppHandle<R>, configs_dir: PathBuf) {
     let settings_path = configs_dir.join(SETTINGS_FILE);
+    let logging_path = configs_dir.join(LOGGING_FILE);
     let (tx, rx) = mpsc::channel();
 
     thread::spawn(move || {
@@ -326,9 +424,16 @@ pub fn start_settings_watcher<R: Runtime>(app: AppHandle<R>, configs_dir: PathBu
             return;
         }
 
-        info!("watching settings at {}", settings_path.display());
+        info!(
+            "watching settings at {} and logging at {}",
+            settings_path.display(),
+            logging_path.display()
+        );
 
-        let mut last_apply = Instant::now()
+        let mut last_settings_apply = Instant::now()
+            .checked_sub(Duration::from_secs(1))
+            .unwrap_or_else(Instant::now);
+        let mut last_logging_apply = Instant::now()
             .checked_sub(Duration::from_secs(1))
             .unwrap_or_else(Instant::now);
 
@@ -337,32 +442,40 @@ pub fn start_settings_watcher<R: Runtime>(app: AppHandle<R>, configs_dir: PathBu
                 continue;
             };
 
-            let touches_settings = event.paths.iter().any(|path| {
-                path.file_name()
-                    .and_then(|name| name.to_str())
-                    .is_some_and(|name| name.eq_ignore_ascii_case(SETTINGS_FILE))
-            });
-
-            if !touches_settings {
-                continue;
-            }
-
             match event.kind {
                 EventKind::Modify(_) | EventKind::Create(_) | EventKind::Remove(_) => {}
                 _ => continue,
             }
 
-            if last_apply.elapsed() < Duration::from_millis(250) {
-                continue;
+            let touches_settings = event.paths.iter().any(|path| {
+                path.file_name()
+                    .and_then(|name| name.to_str())
+                    .is_some_and(|name| name.eq_ignore_ascii_case(SETTINGS_FILE))
+            });
+            let touches_logging = event.paths.iter().any(|path| {
+                path.file_name()
+                    .and_then(|name| name.to_str())
+                    .is_some_and(|name| name.eq_ignore_ascii_case(LOGGING_FILE))
+            });
+
+            if touches_settings && last_settings_apply.elapsed() >= Duration::from_millis(250) {
+                last_settings_apply = Instant::now();
+                thread::sleep(Duration::from_millis(80));
+                match reload_and_apply_settings(&app) {
+                    Ok(_) => info!("reloaded settings.json from disk"),
+                    Err(err) => warn!("settings reload failed: {err}"),
+                }
             }
-            last_apply = Instant::now();
 
-            // Brief delay so editors finish writing the file.
-            thread::sleep(Duration::from_millis(80));
-
-            match reload_and_apply_settings(&app) {
-                Ok(_) => info!("reloaded settings.json from disk"),
-                Err(err) => warn!("settings reload failed: {err}"),
+            if touches_logging && last_logging_apply.elapsed() >= Duration::from_millis(250) {
+                last_logging_apply = Instant::now();
+                thread::sleep(Duration::from_millis(80));
+                let state = app.state::<AppState>();
+                let next = reload_logging_settings(&configs_dir, &state.logging);
+                info!(
+                    "reloaded logging.json (error={}, warn={}, info={}, debug={}, trace={}, fatal={})",
+                    next.error, next.warn, next.info, next.debug, next.trace, next.fatal
+                );
             }
         }
     });
@@ -379,7 +492,7 @@ mod tests {
             .join("other")
             .join("configs");
         let settings = load_settings(&dir);
-        assert_eq!(settings.theme, "nord-polar-night");
+        assert_eq!(settings.theme, "nord-frost");
         assert_eq!(settings.font_family, "Plus Jakarta Sans");
         assert_eq!(settings.font_size, 14.0);
         assert!(!settings.autostart);
@@ -408,6 +521,29 @@ mod tests {
         let info = load_appinfo(&dir).expect("appinfo.json");
         assert_eq!(info.identifier, "com.gensource.template");
         assert_eq!(info.version, "0.1.0");
+    }
+
+    #[test]
+    fn loads_repo_logging() {
+        let dir = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("..")
+            .join("other")
+            .join("configs");
+        let logging = load_logging(&dir);
+        assert!(logging.error);
+        assert!(logging.warn);
+        assert!(logging.info);
+        assert!(!logging.debug);
+        assert!(!logging.trace);
+        assert!(logging.fatal);
+    }
+
+    #[test]
+    fn format_log_stem_includes_version() {
+        let stem = format_log_stem("0.1.0");
+        assert!(stem.ends_with("_0.1.0"), "stem={stem}");
+        assert_eq!(stem.matches('-').count(), 4);
+        assert_eq!(stem.matches('_').count(), 2);
     }
 
     #[test]

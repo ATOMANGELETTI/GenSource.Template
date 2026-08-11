@@ -97,19 +97,24 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 ## Learned User Preferences
 
 - Keep agent context Cursor-native under `.cursor/` only; do not reintroduce `.agents/` or invent non-native trees such as `personas/`, `memory/`, or `workflows/`.
-- Prefer a flat Nord Polar Night UI: no gradients, glow, glass, or multi-layer shadows; macOS-like traffic-light titlebar on the left with centered title.
+- Prefer a flat Nord UI across themes: no gradients, glow, glass, or multi-layer shadows; macOS-like traffic-light titlebar on the left with centered title; keep the titlebar relatively short.
 - Keep CSS modular under `src/app/styles/modules/`; treat `index.css` as an import hub only.
 - Prefer Plus Jakarta Sans via `@fontsource-variable/plus-jakarta-sans` for the app UI.
 - Prefer latest stable package versions, but keep TypeScript on the newest 5.x that `typescript-eslint` supports.
 - Do not place the square app icon in the main content UI; reserve `public/icons/` assets for tray, taskbar, and window icons.
 - Do not persist window width or position in `other/configs/settings.json` (geometry writes caused move/flash issues).
 - When implementing an attached plan, do not edit the plan file; reuse existing todos and mark them in progress rather than recreating them.
+- Titlebar, content, and tray context menus should share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus).
+- Keep usage comments in `other/configs/settings.json` and `keybindings.json` (JSONC).
 
 ## Learned Workspace Facts
 
 - Canonical agent instructions live in `.cursor/AGENTS.md`; root `AGENTS.md` only points there.
 - Runtime app config lives in `other/configs/` (`appinfo.json`, `settings.json`, `keybindings.json`) and ships beside the installed `.exe` under `other/`.
-- `settings.json` and `keybindings.json` are user-editable; prefer `appinfo.json` visible but read-only when the platform allows.
+- `settings.json` and `keybindings.json` are user-editable JSONC; prefer `appinfo.json` visible but read-only when the platform allows.
 - Application icons are under `public/icons/` (`icon.svg`, `icon.png`, `icon.ico`); use the format appropriate to tray, taskbar, or UI.
 - Preserve the `src-tauri/src/mdoels/` directory name unless explicitly asked to rename it.
 - Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, Playwright, or knip configs at the repo root.
+- Themes are independent Nord palettes (polar-night, snow-storm, frost, aurora) with fixed `*-dark`/`*-light` variants; `system`, `frost`, and `aurora` follow OS light/dark via `settings.json` `theme`.
+- Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`.
+- Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/`; log files named `[TIME]_[DATE]_[APPVERSION].log`.

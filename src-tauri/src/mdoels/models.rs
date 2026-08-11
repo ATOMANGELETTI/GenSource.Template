@@ -152,3 +152,36 @@ pub struct KeybindingsFile {
     #[serde(default)]
     pub bindings: Vec<Keybinding>,
 }
+
+/// On-disk `other/configs/logging.json` shape — independent per-level toggles
+/// for file logging under `other/logging/app/`.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct LoggingSettings {
+    #[serde(default = "default_true")]
+    pub error: bool,
+    #[serde(default = "default_true")]
+    pub warn: bool,
+    #[serde(default = "default_true")]
+    pub info: bool,
+    #[serde(default)]
+    pub debug: bool,
+    #[serde(default)]
+    pub trace: bool,
+    /// Separate channel for `log_fatal!` (Error level + `gensource::fatal` target).
+    #[serde(default = "default_true")]
+    pub fatal: bool,
+}
+
+impl Default for LoggingSettings {
+    fn default() -> Self {
+        Self {
+            error: true,
+            warn: true,
+            info: true,
+            debug: false,
+            trace: false,
+            fatal: true,
+        }
+    }
+}

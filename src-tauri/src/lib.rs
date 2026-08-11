@@ -8,15 +8,20 @@
 #[path = "commands/commands.rs"]
 mod commands;
 mod config;
+mod logging;
 #[path = "mdoels/models.rs"]
 mod mdoels;
 #[path = "state/state.rs"]
 mod state;
 
+use std::sync::{Arc, RwLock};
+
+use log::LevelFilter;
 use tauri::image::Image;
 use tauri::tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent};
 use tauri::{Manager, RunEvent, WindowEvent};
 use tauri_plugin_autostart::MacosLauncher;
+use tauri_plugin_log::{Target, TargetKind};
 use tauri_plugin_positioner::{Position, WindowExt};
 
 use state::AppState;
@@ -39,8 +44,44 @@ pub fn run() {
         }));
     }
 
+    let early_configs = config::resolve_other_subdir("configs");
+    let _ = config::ensure_config_files(&early_configs);
+    let _ = config::ensure_logging_dirs();
+
+    let logging_settings = Arc::new(RwLock::new(config::load_logging(&early_configs)));
+    let log_filter_state = Arc::clone(&logging_settings);
+
+    let package_version = env!("CARGO_PKG_VERSION");
+    let log_version = config::resolve_log_version(&early_configs, package_version);
+    // Include the `.log` suffix in `file_name`: tauri-plugin-log calls
+    // `Path::with_extension("log")`, which would otherwise replace the last
+    // semver segment (e.g. `0.1.0` → `0.1.log`).
+    let log_file_name = format!("{}.log", config::format_log_stem(&log_version));
+    let app_log_dir = config::resolve_logging_app_dir();
+
     builder = builder
-        .plugin(tauri_plugin_log::Builder::new().build())
+        .plugin(
+            tauri_plugin_log::Builder::new()
+                .level(LevelFilter::Trace)
+                .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
+                .max_file_size(100_000_000)
+                .filter(move |metadata| {
+                    let guard = log_filter_state
+                        .read()
+                        .unwrap_or_else(|poisoned| poisoned.into_inner());
+                    logging::allows(&guard, metadata)
+                })
+                .clear_targets()
+                .targets([
+                    Target::new(TargetKind::Stdout),
+                    Target::new(TargetKind::Folder {
+                        path: app_log_dir,
+                        file_name: Some(log_file_name),
+                    }),
+                ])
+                .build(),
+        )
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_window_state::Builder::default().build())
         .plugin(tauri_plugin_fs::init())
@@ -74,7 +115,7 @@ pub fn run() {
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_websocket::init())
         .plugin(tauri_plugin_cli::init())
-        .manage(AppState::default())
+        .manage(AppState::new(Arc::clone(&logging_settings)))
         .invoke_handler(tauri::generate_handler![
             commands::greet,
             commands::get_app_info,
@@ -113,9 +154,13 @@ pub fn run() {
             if let Err(err) = config::ensure_config_files(&configs_dir) {
                 log::warn!("ensure config files: {err}");
             }
+            if let Err(err) = config::ensure_logging_dirs() {
+                log::warn!("ensure logging dirs: {err}");
+            }
 
             let settings = config::load_settings(&configs_dir);
             let keybindings = config::load_keybindings(&configs_dir);
+            let logging = config::load_logging(&configs_dir);
             let product_name = config::load_appinfo(&configs_dir)
                 .map(|info| {
                     if !info.product_name.trim().is_empty() {
@@ -133,6 +178,7 @@ pub fn run() {
                     .lock()
                     .unwrap_or_else(|p| p.into_inner()) = Some(configs_dir.clone());
                 *state.settings.lock().unwrap_or_else(|p| p.into_inner()) = settings.clone();
+                config::apply_logging_settings(&state.logging, logging);
             }
 
             if let Some(window) = app.get_webview_window("main") {
@@ -144,6 +190,8 @@ pub fn run() {
             config::register_keybindings(app.handle(), &keybindings);
             config::emit_settings_changed(app.handle(), &settings);
             config::start_settings_watcher(app.handle().clone(), configs_dir);
+
+            log::info!("application logging initialized");
 
             // System tray uses the bundled PNG (RGBA) so the notification-area
             // glyph stays sharp with transparency on Windows. The right-click

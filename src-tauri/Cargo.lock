@@ -2166,6 +2166,7 @@ dependencies = [
  "tauri-plugin-upload",
  "tauri-plugin-websocket",
  "tauri-plugin-window-state",
+ "time",
 ]
 
 [[package]]

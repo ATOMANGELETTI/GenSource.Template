@@ -10,7 +10,7 @@
     "preview": "vite preview --config src/configs/vite.config.ts",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
+    "tauri:build": "node other/utilities/scripts/log-tauri-build.mjs",
     "test": "vitest run --config src/configs/vitest.config.ts",
     "test:watch": "vitest --config src/configs/vitest.config.ts",
     "test:e2e": "playwright test --config src/configs/playwright.config.ts",
