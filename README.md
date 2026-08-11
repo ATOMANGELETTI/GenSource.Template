@@ -1,17 +1,19 @@
-<div align="center">
-
 # GenSource.Template
 
-**Shared Tauri v2 desktop template for the GenSource suite**
+<p align="center">
+  <strong>Shared Tauri v2 desktop template for the GenSource suite</strong>
+</p>
 
-[![Tauri](https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white)](https://tauri.app/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white)](https://www.microsoft.com/windows)
+<p align="center">
+  <a href="https://tauri.app/"><img src="https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri&logoColor=white" alt="Tauri 2" /></a>
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" alt="React 19" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white" alt="TypeScript 5.x" /></a>
+  <a href="https://www.microsoft.com/windows"><img src="https://img.shields.io/badge/Platform-Windows-0078D4?logo=windows&logoColor=white" alt="Windows" /></a>
+</p>
 
-![GenSource Template on Windows](other/screenshots/screenshot-app.png)
-
-</div>
+<p align="center">
+  <img src="./other/screenshots/screenshot-app.png" alt="GenSource Template on Windows" width="900" />
+</p>
 
 A runnable starting point for GenSource desktop apps: React + TypeScript frontend, Rust / Tauri v2 backend, Nord Polar Night shell with a macOS-style custom titlebar, and a kitchen-sink of official Tauri plugins ready for suite reuse.
 
