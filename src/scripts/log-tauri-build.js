@@ -3,10 +3,10 @@
  * Tee `tauri build` stdout/stderr into other/logging/build/[TIME]_[DATE]_[VERSION].log
  * while still streaming to the console. Exit code matches the child process.
  */
-import { spawn } from "node:child_process";
 import { createWriteStream, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnPackageBin } from "./spawn-bin.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, "..", "..");
@@ -63,11 +63,12 @@ process.stdout.write(header);
 logStream.write(header);
 
 const extraArgs = process.argv.slice(2);
-const child = spawn("tauri", ["build", ...extraArgs], {
-  cwd: repoRoot,
-  shell: true,
-  env: process.env,
-});
+const child = spawnPackageBin(
+  "@tauri-apps/cli",
+  ["build", ...extraArgs],
+  { cwd: repoRoot },
+  "tauri",
+);
 
 function tee(chunk, dest) {
   dest.write(chunk);

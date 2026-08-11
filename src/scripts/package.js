@@ -9,7 +9,7 @@ import {
 } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { spawnSync } from "node:child_process";
+import { spawnSyncCommand } from "./spawn-bin.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const releaseDir = path.join(root, "release");
@@ -34,11 +34,9 @@ function fail(message) {
 }
 
 function run(command, args, options = {}) {
-  const result = spawnSync(command, args, {
+  const result = spawnSyncCommand(command, args, {
     cwd: root,
     stdio: "inherit",
-    shell: true,
-    env: process.env,
     ...options,
   });
   if (result.error) {
@@ -50,11 +48,9 @@ function run(command, args, options = {}) {
 }
 
 function runCapture(command, args) {
-  const result = spawnSync(command, args, {
+  const result = spawnSyncCommand(command, args, {
     cwd: root,
     encoding: "utf8",
-    shell: true,
-    env: process.env,
   });
   if (result.error) {
     fail(`Failed to run ${command}: ${result.error.message}`);
@@ -205,7 +201,7 @@ function main() {
 
   for (const target of TARGETS) {
     console.log(`\nBuilding ${target.triple} …`);
-    run("node", [
+    run(process.execPath, [
       "src/scripts/log-tauri-build.js",
       "--target",
       target.triple,

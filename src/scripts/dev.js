@@ -1,18 +1,16 @@
-import { spawn } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnPackageBin } from "./spawn-bin.js";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const args = process.argv.slice(2);
 
-const child = spawn(
+const child = spawnPackageBin(
   "vite",
   ["--config", "src/configs/vite.config.ts", ...args],
   {
     cwd: root,
     stdio: "inherit",
-    shell: true,
-    env: process.env,
   },
 );
 

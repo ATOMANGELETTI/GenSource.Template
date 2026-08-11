@@ -6,10 +6,10 @@
  * Structured in-app logs from tauri-plugin-log also land under other/logging/app/
  * (filtered by logging.json); this wrapper captures the full process transcript.
  */
-import { spawn } from "node:child_process";
 import { createWriteStream, mkdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { spawnPackageBin } from "./spawn-bin.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, "..", "..");
@@ -66,11 +66,12 @@ process.stdout.write(header);
 logStream.write(header);
 
 const extraArgs = process.argv.slice(2);
-const child = spawn("tauri", ["dev", ...extraArgs], {
-  cwd: repoRoot,
-  shell: true,
-  env: process.env,
-});
+const child = spawnPackageBin(
+  "@tauri-apps/cli",
+  ["dev", ...extraArgs],
+  { cwd: repoRoot },
+  "tauri",
+);
 
 function tee(chunk, dest) {
   dest.write(chunk);
