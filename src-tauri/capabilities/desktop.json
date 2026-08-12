@@ -1,8 +1,8 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "desktop",
-  "description": "Grants for plugins that are only meaningful on desktop platforms (Windows/macOS/Linux).",
-  "platforms": ["windows", "macOS", "linux"],
+  "description": "Grants for plugins that are only meaningful on Windows desktop.",
+  "platforms": ["windows"],
   "windows": ["main"],
   "permissions": [
     "deep-link:default",

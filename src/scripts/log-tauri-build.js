@@ -63,9 +63,23 @@ process.stdout.write(header);
 logStream.write(header);
 
 const extraArgs = process.argv.slice(2);
+// Default to Windows x64 so host-arch `target/release` does not grow beside
+// the explicit triples used by `npm run package`. Callers may still pass
+// `--target` (e.g. i686) to override.
+const hasTarget = extraArgs.some(
+  (arg, i) =>
+    arg === "--target" ||
+    arg.startsWith("--target=") ||
+    (arg === "-t" && i + 1 < extraArgs.length) ||
+    arg.startsWith("-t="),
+);
+const buildArgs = hasTarget
+  ? extraArgs
+  : ["--target", "x86_64-pc-windows-msvc", ...extraArgs];
+
 const child = spawnPackageBin(
   "@tauri-apps/cli",
-  ["build", ...extraArgs],
+  ["build", ...buildArgs],
   { cwd: repoRoot },
   "tauri",
 );

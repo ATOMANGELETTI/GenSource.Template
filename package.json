@@ -13,6 +13,7 @@
     "tauri:build": "node src/scripts/log-tauri-build.js",
     "package": "node src/scripts/package.js",
     "package:clean": "node src/scripts/package.js --clean",
+    "cargo:clean": "cargo clean --manifest-path src-tauri/Cargo.toml",
     "test": "vitest run --config src/configs/vitest.config.ts",
     "test:watch": "vitest --config src/configs/vitest.config.ts",
     "test:e2e": "playwright test --config src/configs/playwright.config.ts",
