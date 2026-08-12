@@ -1,0 +1,22 @@
+tsconfig.json
+  s_1eb935c59e3ad3::t_71f182c3b7c0b3 3,5-6
+  s_1eb935c59e3ad3::t_d1484bc74fe47d 4
+.cursor/hooks/state/continual-learning.json
+  s_1eb935c59e3ad3::t_ef0a720095ad2b 4,6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "e353a5915dbb1569505c5243ece6c426b3baac4d",
+  "prompts": {},
+  "sessions": {
+    "s_1eb935c59e3ad3": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "75a5424d-c285-4d49-b396-18933f565cc1",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
