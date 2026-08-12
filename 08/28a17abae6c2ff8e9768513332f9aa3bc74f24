@@ -1,0 +1,31 @@
+src-tauri/tauri.conf.json
+  s_304dc92085f98b::t_6c615ca7520570 4
+src/app/lib/e2e-window.ts
+  s_304dc92085f98b::t_a211b6f395bd90 13
+package.json
+  s_304dc92085f98b::t_ff88bdf47d820e 4
+other/configs/appinfo.json
+  s_304dc92085f98b::t_284fd5e24528df 5
+src-tauri/Cargo.toml
+  s_304dc92085f98b::t_0ab5c50008a434 3
+.cursor/hooks/state/continual-learning.json
+  s_304dc92085f98b::t_f460ba2bcb8b77 4,6
+package-lock.json
+  s_304dc92085f98b::t_24eeddca6bbb72 3,9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "0828a17abae6c2ff8e9768513332f9aa3bc74f24",
+  "prompts": {},
+  "sessions": {
+    "s_304dc92085f98b": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "03523e3b-2250-46d5-b820-cfdc8334b74f",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
