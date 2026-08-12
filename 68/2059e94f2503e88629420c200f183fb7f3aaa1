@@ -1,0 +1,55 @@
+public/fonts/nerdfonts/ubuntu/README.md
+  s_63cd6427da069f::t_2c5219d0350831 1-72
+src/app/pages/window/window.tsx
+  s_512f1a3ad40663::t_8ff9efc1c0ad89 4-5,16,41-44
+  s_512f1a3ad40663::t_25519a4e889aa0 40,45
+  s_a22eef452527b1::t_cf1f639e6b49c1 1-2,6-15,18-37,50
+public/fonts/nerdfonts/firacode/README.md
+  s_63cd6427da069f::t_2c5219d0350831 1-48
+public/fonts/nerdfonts/terminus/README.md
+  s_63cd6427da069f::t_2c5219d0350831 1-64
+public/fonts/nerdfonts/firacode/FiraCodeNerdFont-Bold.ttf
+  s_63cd6427da069f::t_188e0f2c8e91b8 1-3
+public/fonts/nerdfonts/firacode/FiraCodeNerdFont-Regular.ttf
+  s_63cd6427da069f::t_725c0c73057651 1-3
+public/fonts/nerdfonts/terminus/TerminessNerdFont-Bold.ttf
+  s_63cd6427da069f::t_c52994d1de1e68 1-3
+public/fonts/nerdfonts/terminus/TerminessNerdFont-Regular.ttf
+  s_63cd6427da069f::t_eee10e1a81ffdd 1-3
+public/fonts/nerdfonts/ubuntu/UbuntuNerdFont-Bold.ttf
+  s_63cd6427da069f::t_029c202dec9f58 1-3
+public/fonts/nerdfonts/ubuntu/UbuntuNerdFont-Regular.ttf
+  s_63cd6427da069f::t_ee030f0f638157 1-3
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "682059e94f2503e88629420c200f183fb7f3aaa1",
+  "prompts": {},
+  "sessions": {
+    "s_512f1a3ad40663": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "7ab9c89a-32a1-4edc-998e-2fbf80ad0ff8",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_63cd6427da069f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "86b29c55-ee7f-4c06-9b1f-5867603b070b",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_a22eef452527b1": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "77653e9b-e53e-4765-a087-4b799c9e1297",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
