@@ -1,6 +1,6 @@
 [package]
 name = "gensource-template"
-version = "0.1.0"
+version = "0.1.1"
 description = "GenSource Tauri v2 desktop app template"
 authors = ["GenSource"]
 edition = "2021"

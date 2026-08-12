@@ -1,7 +1,7 @@
 {
   "name": "gensource-template",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "GenSource Tauri v2 desktop app template",
   "scripts": {

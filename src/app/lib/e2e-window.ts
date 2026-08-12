@@ -10,7 +10,7 @@ const KNOWN_LABELS = new Set<string>(["main", "splash", "tray-menu"]);
 export const E2E_APP_INFO: AppInfo = {
   name: "gensource-template",
   productName: "GenSource Template",
-  version: "0.1.0",
+  version: "0.1.1",
   description: "GenSource Tauri v2 desktop app template",
   publisher: "GenSource",
 };
