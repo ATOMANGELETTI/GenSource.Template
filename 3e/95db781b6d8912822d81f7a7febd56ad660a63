@@ -1,0 +1,37 @@
+.cursor/hooks/state/continual-learning.json
+  s_e78728b4d2af26::t_7d543593871ffe 4,6
+src/scripts/log-tauri-build.js
+  s_e0ce866398e98f::t_d83578e4509652 66-79,82
+package.json
+  s_e0ce866398e98f::t_2317ce3979b610 16
+other/documents/packaging.md
+  s_e0ce866398e98f::t_3fc4c28a8eea3e 36-37,40-41
+src-tauri/.cargo/config.toml
+  s_e0ce866398e98f::t_b60f93e695dcd4 11-13
+src-tauri/capabilities/desktop.json
+  s_e0ce866398e98f::t_14a8f5a52528a6 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "3e95db781b6d8912822d81f7a7febd56ad660a63",
+  "prompts": {},
+  "sessions": {
+    "s_e0ce866398e98f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "f687bba9-2019-47f6-b5f1-052d2c288be6",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_e78728b4d2af26": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "b9b8e7c7-99e3-42ed-b282-82a9a421bc67",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
