@@ -46,6 +46,10 @@ npm run test:e2e:update   # Regenerate Playwright screenshot baselines
 
 Surface inventory for coverage work lives in [`tests/surfaces.json`](../../tests/surfaces.json).
 
+## Contributing
+
+Issue and pull request templates, security policy, and contributor guide live under [`.github/`](../../.github/CONTRIBUTING.md).
+
 ## Agents
 
 Canonical project instructions for AI coding agents: [`.cursor/AGENTS.md`](../../.cursor/AGENTS.md).

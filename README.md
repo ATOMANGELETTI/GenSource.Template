@@ -62,4 +62,5 @@ npm run dev
 | [Development](other/documents/development.md) | Layout, env files, and test workflows |
 | [Features](other/documents/features.md) | UI shell, themes, menus, plugins, and runtime config |
 | [Packaging](other/documents/packaging.md) | Windows build, NSIS, and release packaging |
+| [Contributing](.github/CONTRIBUTING.md) | Prerequisites, commits, PRs, and community docs |
 | [Agent instructions](.cursor/AGENTS.md) | Canonical guidance for AI coding agents |
