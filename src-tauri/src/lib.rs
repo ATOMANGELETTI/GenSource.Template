@@ -65,10 +65,14 @@ pub fn run() {
     builder = builder
         .plugin(
             tauri_plugin_log::Builder::new()
-                .level(LevelFilter::Trace)
+                .level(if cfg!(debug_assertions) {
+                    LevelFilter::Debug
+                } else {
+                    LevelFilter::Info
+                })
                 .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
-                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
-                .max_file_size(100_000_000)
+                .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepOne)
+                .max_file_size(10_000_000)
                 .filter(move |metadata| {
                     let guard = log_filter_state
                         .read()

@@ -55,6 +55,15 @@ export async function closeWindow(): Promise<void> {
   if (!win) {
     return;
   }
+  // Main window: hide so the tray can restore it. Explicit Quit still exits.
+  try {
+    if (win.label === "main") {
+      await win.hide();
+      return;
+    }
+  } catch {
+    // Outside Tauri or label unavailable — fall through to close.
+  }
   await win.close();
 }
 

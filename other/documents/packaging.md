@@ -36,3 +36,19 @@ Artifacts land in `release/` as NSIS installers (per-user or system-wide, via th
 - Platform focus is **Windows**; macOS/Linux packaging is out of scope for this template.
 - Prefer `package` / `package:clean` when you need both architectures and portable zips in one pass.
 - For a single Tauri NSIS bundle without the multi-arch packaging step, `tauri:build` is enough.
+- **Logging is never bundled.** `tauri.conf.json` resources list `other/configs|documents|screenshots|utilities` only (not `other/logging/`). Portable zips skip `logging/` the same way. Build/app tee logs stay on the developer machine so NSIS never tries to pack an open log file.
+
+## Fork identity checklist
+
+When cloning this template into a new GenSource app, update these in lockstep:
+
+| Field | Locations |
+| --- | --- |
+| Product display name | `src-tauri/tauri.conf.json` `productName`, `other/configs/appinfo.json`, window titles / tray strings |
+| Version | `src-tauri/tauri.conf.json`, `src-tauri/Cargo.toml`, root `package.json`, `other/configs/appinfo.json` |
+| Bundle identifier | `src-tauri/tauri.conf.json` `identifier` (e.g. `com.gensource.myapp`) |
+| Binary / Cargo package name | `src-tauri/Cargo.toml` `[package].name` (also used by `src/scripts/package.js` for the `.exe`) |
+| Deep-link scheme | `src-tauri/tauri.conf.json` `plugins.deep-link.desktop.schemes` — **unique per app** to avoid OS collisions |
+| Updater | Replace empty `plugins.updater.pubkey` / `endpoints` before enabling update checks |
+| Capabilities | Keep splash/tray minimal; grant shell/http/sql/upload/websocket only when the product needs them (`src-tauri/capabilities/`) |
+| npm package name | Root `package.json` `name` |

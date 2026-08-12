@@ -58,16 +58,18 @@ function ensureSystemThemeWatcher(): void {
   });
 }
 
-/** Resolve a settings `fontFamily` key (or custom name) to a CSS font stack. */
+/** Known `settings.json` `fontFamily` keys (reject arbitrary CSS injection). */
+export const ALLOWED_FONT_FAMILIES = Object.freeze(
+  Object.keys(FONT_FAMILY_MAP),
+);
+
+/** Resolve a settings `fontFamily` key to a CSS font stack (allowlisted only). */
 export function resolveFontFamily(name: string): string {
   const trimmed = name.trim();
   if (!trimmed) {
     return FONT_FAMILY_MAP.Terminus;
   }
-  return (
-    FONT_FAMILY_MAP[trimmed] ??
-    `"${trimmed}", Terminus, ui-monospace, monospace`
-  );
+  return FONT_FAMILY_MAP[trimmed] ?? FONT_FAMILY_MAP.Terminus;
 }
 
 export { FONT_FAMILY_MAP };

@@ -28,11 +28,11 @@ type ParticleFieldProps = {
   active?: boolean;
 };
 
-const PARTICLE_COUNT = 260;
-const LINK_DISTANCE = 82;
+const PARTICLE_COUNT = 120;
+const LINK_DISTANCE = 72;
 const LINK_DISTANCE_SQ = LINK_DISTANCE * LINK_DISTANCE;
 /** Hard cap so O(n²) neighbor checks stay smooth on a ~520×340 splash. */
-const MAX_LINKS_PER_FRAME = 180;
+const MAX_LINKS_PER_FRAME = 100;
 const COLOR_VARS = ["--nord7", "--nord8", "--nord9", "--nord10"] as const;
 const COLOR_FALLBACKS = ["#8fbcbb", "#88c0d0", "#81a1c1", "#5e81ac"] as const;
 

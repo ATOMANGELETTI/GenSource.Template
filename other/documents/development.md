@@ -14,22 +14,19 @@ Use `npm run tauri:dev` when you need the desktop window, tray, or native plugin
 
 ## Environment files
 
-Copy names from [`.env.example`](../../.env.example). Do not commit real secrets.
+Copy names from [`.env.example`](../../.env.example). Do **not** commit real secrets.
 
 | File | Typical use |
 | --- | --- |
-| `.env` | Local defaults |
-| `.env.local` | Machine-specific overrides (usually gitignored) |
-| `.env.dev` | Development |
-| `.env.prod` | Production |
-| `.env.example` | Documented variable **names** only |
+| `.env` / `.env.dev` / `.env.prod` / `.env.local` | Local overrides — **gitignored** |
+| `.env.example` | Documented variable **names** only (the only env file that should be tracked) |
 
 ## Layout
 
 | Path | Role |
 | --- | --- |
 | `src/app/` | React UI (`App.tsx`, `main.tsx`, `pages/`, `styles/modules/`, `types/`) |
-| `src/configs/` | Vite, Vitest, Playwright, ESLint, Knip, and purpose-split tsconfigs |
+| `src/configs/` | Vite, Vitest, Playwright, ESLint, and purpose-split tsconfigs |
 | `src/scripts/` | npm runners (`dev`, `tauri:dev` / `tauri:build` logging wrappers, `package`) |
 | `src-tauri/` | Rust backend, capabilities, NSIS hooks |
 | `other/configs/` | Runtime app config shipped beside the installed exe (`appinfo.json`, `settings.json`, `keybindings.json`) |

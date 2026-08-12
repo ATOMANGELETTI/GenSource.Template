@@ -16,9 +16,10 @@ playwright-report/
 test-results/
 *.lcov
 
-# Env secrets (keep examples)
-.env.local
-.env.*.local
+# Env secrets (track `.env.example` names only)
+.env
+.env.*
+!.env.example
 
 # Logs
 *.log

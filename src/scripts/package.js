@@ -119,19 +119,39 @@ function findNsisSetup(nsisDir, nsisArch) {
   return path.join(nsisDir, matches[0]);
 }
 
-function copyDirContents(src, dest) {
+function copyDirContents(src, dest, options = {}) {
+  const skipNames = new Set(options.skipNames ?? []);
   mkdirSync(dest, { recursive: true });
   for (const entry of readdirSync(src)) {
+    if (skipNames.has(entry)) {
+      continue;
+    }
     const from = path.join(src, entry);
     const to = path.join(dest, entry);
     const st = statSync(from);
     if (st.isDirectory()) {
-      copyDirContents(from, to);
+      copyDirContents(from, to, options);
     } else {
       cpSync(from, to);
     }
   }
 }
+
+/** Cargo package name → Windows `.exe` basename (must match tauri product binary). */
+function readCargoPackageName() {
+  const cargoToml = readFileSync(path.join(root, "src-tauri", "Cargo.toml"), "utf8");
+  const match = /^name\s*=\s*"([^"]+)"/m.exec(cargoToml);
+  if (!match) {
+    fail("Could not read [package].name from src-tauri/Cargo.toml");
+  }
+  return match[1];
+}
+
+/**
+ * Subdirs under `other/` that ship with the app. Never include `logging/` —
+ * build tee locks those files and NSIS would fail (and logs must not ship).
+ */
+const OTHER_BUNDLE_SKIP = new Set(["logging"]);
 
 function buildPortableZip({
   triple,
@@ -159,7 +179,9 @@ function buildPortableZip({
 
   const otherSrc = path.join(root, "other");
   if (existsSync(otherSrc)) {
-    copyDirContents(otherSrc, path.join(stagingApp, "other"));
+    copyDirContents(otherSrc, path.join(stagingApp, "other"), {
+      skipNames: OTHER_BUNDLE_SKIP,
+    });
   }
 
   const zipName = `${productSlug}-${version}-${archLabel}-portable.zip`;
@@ -189,7 +211,7 @@ function main() {
   const version = tauriConf.version ?? pkg.version ?? "0.0.0";
   const productName = tauriConf.productName ?? "GenSource Template";
   const productSlug = slugifyProductName(productName);
-  const binaryName = "gensource-template";
+  const binaryName = readCargoPackageName();
 
   mkdirSync(releaseDir, { recursive: true });
   if (clean) {

@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { FONT_FAMILY_MAP, resolveFontFamily } from "@/lib/settings";
+import {
+  ALLOWED_FONT_FAMILIES,
+  FONT_FAMILY_MAP,
+  resolveFontFamily,
+} from "@/lib/settings";
 
 describe("resolveFontFamily", () => {
   it("maps known faces", () => {
@@ -17,9 +21,16 @@ describe("resolveFontFamily", () => {
     expect(resolveFontFamily("   ")).toBe(FONT_FAMILY_MAP.Terminus);
   });
 
-  it("keeps custom names with Terminus as ultimate fallback", () => {
-    expect(resolveFontFamily("Comic Sans")).toBe(
-      '"Comic Sans", Terminus, ui-monospace, monospace',
+  it("rejects unknown names instead of interpolating into CSS", () => {
+    expect(resolveFontFamily("Comic Sans")).toBe(FONT_FAMILY_MAP.Terminus);
+    expect(resolveFontFamily('"); url(https://evil.example)')).toBe(
+      FONT_FAMILY_MAP.Terminus,
+    );
+  });
+
+  it("exposes an allowlist matching FONT_FAMILY_MAP keys", () => {
+    expect([...ALLOWED_FONT_FAMILIES].sort()).toEqual(
+      Object.keys(FONT_FAMILY_MAP).sort(),
     );
   });
 });

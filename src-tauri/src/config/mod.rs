@@ -443,6 +443,7 @@ fn appearance_changed(previous: &AppSettings, next: &AppSettings) -> bool {
         || (previous.font_size - next.font_size).abs() > f64::EPSILON
         || previous.start_minimized != next.start_minimized
         || previous.always_on_top != next.always_on_top
+        || previous.autostart != next.autostart
 }
 
 pub fn reload_and_apply_settings<R: Runtime>(app: &AppHandle<R>) -> Result<AppSettings, String> {

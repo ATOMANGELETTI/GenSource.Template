@@ -21,19 +21,32 @@ export default function TrafficLights({ className }: TrafficLightsProps) {
       return;
     }
 
+    let cancelled = false;
     let unlisten: (() => void) | undefined;
 
-    void isWindowMaximized().then(setMaximized);
+    void isWindowMaximized().then((value) => {
+      if (!cancelled) {
+        setMaximized(value);
+      }
+    });
 
     void win
       .onResized(async () => {
-        setMaximized(await isWindowMaximized());
+        const next = await isWindowMaximized();
+        if (!cancelled) {
+          setMaximized(next);
+        }
       })
       .then((fn) => {
-        unlisten = fn;
+        if (cancelled) {
+          fn();
+        } else {
+          unlisten = fn;
+        }
       });
 
     return () => {
+      cancelled = true;
       unlisten?.();
     };
   }, []);

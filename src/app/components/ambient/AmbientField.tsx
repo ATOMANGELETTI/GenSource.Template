@@ -27,7 +27,7 @@ type AmbientFieldProps = {
   active?: boolean;
 };
 
-const PARTICLE_COUNT = 120;
+const PARTICLE_COUNT = 60;
 /** Theme semantic tokens that change with `data-theme` (not fixed --nordN). */
 const COLOR_VARS = ["--accent", "--info", "--text-muted"] as const;
 const COLOR_FALLBACKS = ["#88c0d0", "#b48ead", "#d8dee9"] as const;

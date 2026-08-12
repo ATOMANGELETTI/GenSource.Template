@@ -31,7 +31,14 @@ The template includes a kitchen-sink of official Tauri v2 desktop plugins so sui
 - **Data** — store, SQL (SQLite), Stronghold
 - **Lifecycle** — deep link, notification, updater, log
 
-Wire only what each product needs; capabilities live under `src-tauri/capabilities/`.
+**Default capabilities are intentionally narrow.** Splash and tray-menu only get minimal window/IPC grants (`capabilities/splash.json`, `tray-menu.json`). The main window (`capabilities/default.json`) includes store, clipboard, opener, updater, and scoped FS — but **not** `shell`, `http`, `sql`, `upload`, or `websocket`. Custom IPC is gated by `permissions/app-commands.toml` (`allow-app-commands`).
+
+When a fork needs a dangerous plugin:
+
+1. Keep the plugin registration in `src-tauri/src/lib.rs` / `Cargo.toml` (or remove unused crates to shrink the binary).
+2. Add a scoped permission to a **main-only** capability (never splash/tray unless required).
+3. Mirror any frontend `@tauri-apps/plugin-*` dependency in root `package.json`.
+4. For HTTP, set explicit origin allowlists before shipping.
 
 ## Runtime config
 

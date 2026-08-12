@@ -1,8 +1,8 @@
 {
   "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "default",
-  "description": "Base capability for the GenSource Template main window: window controls plus cross-platform plugin permissions.",
-  "windows": ["main", "tray-menu", "splash"],
+  "description": "Main window: chrome, store, clipboard, opener, updater. Dangerous kitchen-sink plugins (shell/http/sql/upload/websocket) are not granted by default — add them in a fork-specific capability when needed.",
+  "windows": ["main"],
   "permissions": [
     "core:default",
     "core:window:allow-start-dragging",
@@ -23,6 +23,8 @@
     "core:tray:default",
     "core:webview:allow-set-webview-zoom",
 
+    "allow-app-commands",
+
     "log:default",
     "fs:default",
     "fs:allow-app-read",
@@ -33,14 +35,7 @@
     "opener:default",
     "notification:default",
     "os:default",
-    "process:default",
     "clipboard-manager:default",
-    "shell:default",
-    "http:default",
-    "updater:default",
-    "sql:default",
-    "sql:allow-execute",
-    "upload:default",
-    "websocket:default"
+    "updater:default"
   ]
 }

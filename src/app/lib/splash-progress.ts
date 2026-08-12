@@ -1,6 +1,6 @@
 /** Hybrid splash progress: milestone floor + timed ease over a minimum duration. */
 
-export const SPLASH_MIN_DURATION_MS = 7000;
+export const SPLASH_MIN_DURATION_MS = 4500;
 
 export type SplashMilestone = "settings" | "appinfo";
 

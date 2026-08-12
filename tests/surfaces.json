@@ -21,6 +21,16 @@
       "path": "tests/unit/settings-font.test.ts"
     },
     {
+      "id": "window-close",
+      "kind": "unit",
+      "path": "tests/unit/window-close.test.ts"
+    },
+    {
+      "id": "packaging-invariants",
+      "kind": "unit",
+      "path": "tests/unit/packaging-invariants.test.ts"
+    },
+    {
       "id": "smoke",
       "kind": "unit",
       "path": "tests/unit/smoke.test.ts"
