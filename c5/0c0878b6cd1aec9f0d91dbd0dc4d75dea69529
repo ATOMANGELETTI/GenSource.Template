@@ -1,0 +1,81 @@
+tests/unit/settings-font.test.ts
+  s_63cd6427da069f::t_b8828a214ee427 3-7,24-33
+src-tauri/capabilities/default.json
+  s_63cd6427da069f::t_d5065d2c765363 4-5,26-27,39
+src/app/components/ambient/AmbientField.tsx
+  s_63cd6427da069f::t_242882fdb958da 30
+src/configs/.tsbuildinfo-app
+  s_63cd6427da069f::t_6c1fe798d6c6b1 1
+src/app/components/ui/TrafficLights.tsx
+  s_63cd6427da069f::t_5d99b5e401b9c4 24,27-31,35-38,41-45,49
+src-tauri/capabilities/tray-menu.json
+  s_63cd6427da069f::t_7f1211b0e11744 1-21
+.cursor/AGENTS.md
+  s_022b7f13f2e95e::t_faed8b45aeb2bd 106,108,110,121,123,128,130
+.cursor/hooks/state/continual-learning-index.json
+  s_022b7f13f2e95e::t_6f2c3bb4335ee5 1,3,12,15-18,21,27,30,39-42,45-48,51,60,62-64,72,81,84,89-97,99,105,114,117,120,123,129,132,138,144,146-148,150,155-181,183,189,197-223,228-237,240,243-246,248-250,252,255,261,267,270-276,279,282,285,297,302-304,308-313,315,318-327,330
+src/app/components/splash/ParticleField.tsx
+  s_63cd6427da069f::t_00a1718e87d08d 31-32,35
+src/app/lib/window.ts
+  s_63cd6427da069f::t_d7dd482521ddc2 58-66
+other/documents/features.md
+  s_63cd6427da069f::t_a6fe355873c394 34-41
+src/configs/.tsbuildinfo-test
+  s_63cd6427da069f::t_6c1fe798d6c6b1 1
+other/documents/packaging.md
+  s_63cd6427da069f::t_26df2a9484da09 39-54
+other/documents/development.md
+  s_63cd6427da069f::t_f66fc1305a1ece 29
+  s_63cd6427da069f::t_d849005c83898d 17,21-22
+tests/unit/packaging-invariants.test.ts
+  s_63cd6427da069f::t_5ef8b07a5594ac 1-2,4-6,8-44
+  s_63cd6427da069f::t_3fd18227c9ba86 3,7
+src-tauri/src/config/mod.rs
+  s_63cd6427da069f::t_3aedeeb8966dde 446
+tests/unit/window-close.test.ts
+  s_63cd6427da069f::t_c0f378943a4562 20
+  s_63cd6427da069f::t_aaa13002b018aa 1-19,21-40
+.gitignore
+  s_63cd6427da069f::t_c1d3c0575dc0cf 19-22
+src-tauri/tauri.conf.json
+  s_63cd6427da069f::t_cc4cdfbbe76c0a 63,78-81
+src/app/lib/settings.ts
+  s_63cd6427da069f::t_3c27695f25fc8b 61-66,72
+tests/surfaces.json
+  s_63cd6427da069f::t_bbdc3fb64be8d9 23-32
+src-tauri/permissions/app-commands.toml
+  s_63cd6427da069f::t_c478572b5f9ebc 1-13
+src/app/lib/splash-progress.ts
+  s_63cd6427da069f::t_eecb8ea9e9e503 3
+src-tauri/capabilities/splash.json
+  s_63cd6427da069f::t_e8685359a60d1e 8
+  s_63cd6427da069f::t_1f8ffdd712db61 1-7,9-17
+src-tauri/src/lib.rs
+  s_63cd6427da069f::t_11afa392c81482 68-72,74-75
+src/scripts/package.js
+  s_63cd6427da069f::t_0f1a95cc9f0aea 122-123,126-128,133,140-155,182-184,214
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.22",
+  "base_commit_sha": "c50c0878b6cd1aec9f0d91dbd0dc4d75dea69529",
+  "prompts": {},
+  "sessions": {
+    "s_022b7f13f2e95e": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "5add6b34-33fb-49be-93e9-4c78060c6f3d",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_63cd6427da069f": {
+      "agent_id": {
+        "tool": "cursor",
+        "id": "86b29c55-ee7f-4c06-9b1f-5867603b070b",
+        "model": "default"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
