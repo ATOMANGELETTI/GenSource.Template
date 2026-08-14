@@ -103,7 +103,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 ## Learned User Preferences
 
 - Keep agent context Cursor-native under `.cursor/` only; do not reintroduce `.agents/` or invent non-native trees such as `personas/`, `memory/`, or `workflows/`.
-- Prefer a flat Nord UI across themes: no gradients, glow, glass, or multi-layer shadows; macOS-like traffic-light titlebar on the left with centered title; keep the titlebar relatively short; traffic lights have no interior glyphs.
+- Prefer a flat Nord UI across themes: no gradients, glow, glass, or multi-layer shadows; macOS-like traffic-light titlebar on the left with centered title; keep the titlebar relatively short; traffic lights have no interior glyphs; titlebar, content, and tray context menus share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus); packaged splash and early chrome must follow `settings.json` theme (not a hard-coded dark/Polar Night default).
 - Keep CSS modular under `src/app/styles/modules/`; treat `index.css` as an import hub only.
 - Prefer Terminus as the default UI font; keep bundled Nerd Fonts under `public/fonts/nerdfonts/{firacode,terminus,ubuntu}/` (do not flatten into `public/fonts/`); switch via `settings.json` `fontFamily` (`Terminus`, `Ubuntu`, `Fira Code`, or `Plus Jakarta Sans`).
 - Prefer latest stable package versions, but keep TypeScript on the newest 5.x that `typescript-eslint` supports.
@@ -111,9 +111,9 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Do not place the square app icon in the main content UI; reserve icon assets for tray, taskbar, and window only (`public/icons/` sources, bundled into `src-tauri/icons/).
 - Do not persist window width or position in `other/configs/settings.json` (geometry writes caused move/flash issues).
 - When implementing an attached plan, do not edit the plan file; reuse existing todos and mark them in progress rather than recreating them.
-- Titlebar, content, and tray context menus should share the same custom flat, theme-aware styling (tray must track app themes like the in-app menus).
 - Keep usage comments in `other/configs/settings.json` and `keybindings.json` (JSONC).
-- Packaged splash and early chrome must follow `settings.json` theme (not a hard-coded dark/Polar Night default).
+- Keep the template copy-portable when duplicated to a new folder (Explorer/robocopy preferred over git clone): use repo-relative paths only; no hard links or machine-absolute paths in tracked files; exclude caches such as `node_modules`, `dist`, `src-tauri/target`, `release`, `tests/artifacts`, `other/logging`, and `.cursor/hooks/state/`.
+- Do not change GenSource.Template identity (name, version, identifiers) unless the user explicitly requests a version bump or rebrand — never demo/sample-edit identity files.
 
 ## Learned Workspace Facts
 
@@ -125,7 +125,7 @@ top of `~/.cursor/cli-config.json` for sessions in this repo.
 - Tooling configs stay under `src/configs/`; do not recreate Vite, ESLint, Vitest, or Playwright configs at the repo root.
 - Themes are independent Nord palettes (polar-night, snow-storm, frost, aurora) with fixed `*-dark`/`*-light` variants; `system`, `frost`, and `aurora` follow OS light/dark via `settings.json` `theme`.
 - Custom context menus cover titlebar, content area, and tray; menu action keybindings live in `other/configs/keybindings.json`; exclude the ephemeral `tray-menu` window from `tauri-plugin-window-state` so it does not restore/auto-open on launch.
-- Runtime app logs belong under `other/logging/app/`; build logs under `other/logging/build/` (tee from packaging/build wrappers); log files named `[TIME]_[DATE]_[APPVERSION].log`; user-runnable maintenance bats live in `other/utilities/scripts/` (`archive-logs.bat` via `other/utilities/7zr.exe` → timestamped `.7z` in `scripts/archive/`, plus `clean-logs-app.bat`, `clean-logs-build.bat`, `clean-logs-archive.bat`).
-- npm runners live in `src/scripts/` (`dev.js` → Vite `dev`, `log-tauri-app.js` → `tauri:dev` with tee to `other/logging/app/`, `log-tauri-build.js` → `tauri:build` with tee to `other/logging/build/`, `package.js` → `package` / `package:clean`); Windows release packaging targets `release/` with 32- and 64-bit NSIS installers (custom hooks in `src-tauri/nsis/installer.nsh`, per-user or system-wide) plus matching portable zip builds.
-- Project docs: keep the main `README.md` at the repo root for GitHub; longer split docs live under `other/documents/`; app screenshots live under `other/screenshots/`.
-- Tests live under `tests/` (`unit/`, `e2e/` including Playwright visuals); reports/outputs go in `tests/artifacts/`; surface inventory is `tests/surfaces.json` (used by tester-pro).
+- Runtime app logs belong under `other/logging/app/` (packaged installs create only this tree at runtime); `other/logging/build/` is developer-machine only (Node tee from `log-tauri-build.js`, not shipped in NSIS/portable zips); log files named `[TIME]_[DATE]_[APPVERSION].log`; maintenance bats live in `other/utilities/scripts/` (`archive-logs.bat` via `other/utilities/7zr.exe` → timestamped `.7z` in `scripts/archive/`, plus `clean-logs-app.bat`, `clean-logs-build.bat`, `clean-logs-archive.bat`).
+- npm runners live in `src/scripts/` (`dev.js` → Vite `dev`, `log-tauri-app.js` → `tauri:dev` with tee to `other/logging/app/`, `log-tauri-build.js` → `tauri:build` with tee to `other/logging/build/` and default `--target x86_64-pc-windows-msvc`, `package.js` → `package` / `package:clean`); `npm run cargo:clean` runs `cargo clean --manifest-path src-tauri/Cargo.toml`; Windows release packaging targets `release/` with x86 + x64 NSIS installers (custom hooks in `src-tauri/nsis/installer.nsh`) plus matching portable zips — no macOS/Linux targets.
+- `.cursor/hooks/state/` is machine-local Cursor hook runtime (gitignored); it may store absolute paths outside the repo and must not be tracked or copied into new app folders.
+- Project docs: keep the main `README.md` at the repo root for GitHub; longer split docs live under `other/documents/`; app screenshots live under `other/screenshots/`; tests live under `tests/` (`unit/`, `e2e/` including Playwright visuals) with reports in `tests/artifacts/` and surface inventory in `tests/surfaces.json` (used by tester-pro).
